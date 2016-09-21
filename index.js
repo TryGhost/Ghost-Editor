@@ -7,7 +7,7 @@ var path = require('path');
 
 module.exports = {
   name: 'ghost-ed',
-   treeForVendor: function() {
+    treeForVendor: function() {
     let files = [];
     const MOBILEDOC_DIST_DIRECTORY = path.join(path.dirname(
     	require.resolve(path.join('mobiledoc-kit', 'package.json'))), 'dist');

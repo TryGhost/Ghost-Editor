@@ -1,1 +1,1 @@
-export { default } from 'ghost-ed/components/ghost-ed';
+export { default, BLANK_DOC } from 'ghost-ed/components/ghost-ed';
