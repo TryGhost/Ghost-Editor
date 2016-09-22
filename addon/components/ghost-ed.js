@@ -16,31 +16,34 @@ export const BLANK_DOC = {
 export default Ember.Component.extend({
 	layout,
 	didRender( ) {
-		
-		if(this._cached_doc) {
+		let mobiledoc = this.get('value') || BLANK_DOC;
+		if(typeof mobiledoc === "string") {
+			mobiledoc = JSON.parse(mobiledoc);
+		}
+
+		//if the doc is cached then the editor is loaded and we don't need to continue.
+		if(this._cached_doc && this._cached_doc === mobiledoc ) {
 			return;
 		}
 		
 		const options = { 
-			doc : this._cached_doc || this.get('value') || BLANK_DOC,
+			mobiledoc : mobiledoc,
 			cards : this.get('cards') || [],
 			markups : [],
 			atoms : this.get('atoms') || [] 
 		};
+
 		let editor = new Mobiledoc.Editor(options);
 		editor.render(this.$()[0]);
 		editor.postDidChange(()=>{
 			
 			Ember.run.join(() => {
-				this.sendOnChange(editor);
-//				this.sendAction('on-change', editor.serialize('0.3.0'));
+				//store a cache of the local doc so that we don't need to reinitialise it.
+				this._cached_doc = editor.serialize(MOBILEDOC_VERSION); 
+				this.sendAction('onChange', this._cached_doc);
 			});
 		});
     	window.editor = editor; //make editor a global so that I can inspect it's state with the console.
 	},
-	sendOnChange(editor) {
-		console.log("SENDONCHANGE");
-		this._cached_doc = editor.serialize(MOBILEDOC_VERSION);
-		this.sendAction('on-change', JSON.stringify(this._cached_doc));
-	}
+	
 });
