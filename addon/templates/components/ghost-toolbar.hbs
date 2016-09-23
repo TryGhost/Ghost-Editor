@@ -1,0 +1,6 @@
+<ul>
+  {{#each toolbar as |tool|}}
+    <li>{{ghost-toolbar-button tool=tool editor=editor}}</li>
+  {{/each}}
+</ul>
+{{yield}}

@@ -1,0 +1,71 @@
+
+/* Variables
+/* ---------------------------------------------------------- */
+
+:root {
+    /* Colours */
+    --darkgrey: #242628;
+    --midgrey: #7d878a;
+    --lightgrey: #e2edf2;
+    --blue: #5ba4e5;
+    --red: #e25440;
+    --orange: #f2a925;
+    --green: #9fbb58;
+    /* Style values */
+    --border-radius: 4px;
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    --font-family-mono: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+.editor-holder {
+    height: 100%;
+
+}
+.__mobiledoc-editor {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	height:100%;
+	outline:none;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 51px 20px 36px 20px;
+    font-family: var(--font-family);
+    font-size: 1.6rem;
+    line-height: 2.5rem;
+    resize: none;
+}
+/*placeholder toolbar styling*/
+.toolbar {
+    position:absolute;
+    margin-top:10px;
+    padding-left:15px;
+    background-color: #fff;
+}
+.toolbar ul {
+    list-style: none;
+    margin:0px;
+    padding:0px;    
+}
+.toolbar ul li {
+    float:left;
+    margin-left:5px;
+    padding:0;
+}
+.toolbar ul li button {
+    border-radius: 2px;
+    font-family: var(--font-family);
+    font-size: 10px;
+    line-height: 15px;
+    min-width: 36px;
+    text-transform: uppercase;
+    padding: 7px 10px 7px 10px;
+    color: #fff;
+    background-color: var(--midgrey);
+    border: 1px solid var(--darkgrey);
+}
+
+.toolbar ul li button:hover {
+    background-color: var(--lightgrey);
+    border: 1px solid var(--midgrey);
+    color: var(--darkgrey);
+}
