@@ -6,7 +6,7 @@ var path = require('path');
 
 
 module.exports = {
-    name: 'ghost-ed',
+    name: 'ghost-editor',
         treeForVendor: function() {
         let files = [];
         const MOBILEDOC_DIST_DIRECTORY = path.join(path.dirname(

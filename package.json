@@ -1,7 +1,7 @@
 {
-  "name": "ghost-ed",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "name": "ghost-editor",
+  "version": "0.0.2",
+  "description": "A mobiledoc-kit based editor for Ghost. WARNING DO NOT USE!",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -15,7 +15,9 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": {
+    "name": "ryan@ghost.org"
+  },
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
@@ -51,5 +53,11 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
-  }
+  },
+  "readme": "# Ghost-editor\n\nThis is the new mobiledoc editor for Ghost, it's very much a WIP so **PLEASE DO NOT USE!**\n\n",
+  "readmeFilename": "README.md",
+  "gitHead": "69ea8886e6d63202c267f37baa3ffa98ae65f3e4",
+  "_id": "ghost-editor@0.0.2",
+  "_shasum": "32cc128a935a22510e421f2beaa20314edfd4560",
+  "_from": "ghost-editor@latest"
 }

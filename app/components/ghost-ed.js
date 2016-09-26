@@ -1,1 +1,0 @@
-export { default, BLANK_DOC } from 'ghost-ed/components/ghost-ed';

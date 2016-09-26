@@ -1,1 +1,1 @@
-export { default } from 'ghost-ed/components/ghost-toolbar-button';
+export { default } from 'ghost-editor/components/ghost-toolbar-button';
