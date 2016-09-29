@@ -28,5 +28,7 @@ module.exports = {
       included: function(app) {
             app.import('vendor/mobiledoc-kit/amd/mobiledoc-kit.js');
             app.import('app/styles/ghost-editor.css');
+            app.import('app/styles/ghost-toolbar.css');
+            app.import('app/styles/card-picker.css');
       }
 };

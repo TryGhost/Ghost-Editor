@@ -2,7 +2,9 @@ import Ember from 'ember';
 import layout from '../templates/components/ghost-editor';
 import Mobiledoc from 'mobiledoc-kit';
 import { MOBILEDOC_VERSION } from 'mobiledoc-kit/renderers/mobiledoc';
-
+import createCardFactory from 'ghost-editor/cards/cardFactory';
+import defaultCards from 'ghost-editor/cards';
+//import { VALID_MARKUP_SECTION_TAGNAMES } from 'mobiledoc-kit/models/markup-section'; //the block elements supported by mobile-doc
 
 export const BLANK_DOC = {
     version: MOBILEDOC_VERSION,
@@ -18,7 +20,10 @@ export default Ember.Component.extend({
     classNames: ['editor-holder'],
     init( ) {
         this._super(...arguments);
+
         let mobiledoc = this.get('value') || BLANK_DOC;
+        let cards = this.get('cards');
+
         if(typeof mobiledoc === "string") {
             mobiledoc = JSON.parse(mobiledoc);
         }
@@ -30,15 +35,23 @@ export default Ember.Component.extend({
         
         const options = { 
             mobiledoc : mobiledoc,
-            cards : this.get('cards') || [],
+            cards : [],
             markups : [],
-            atoms : this.get('atoms') || [],
+            atoms : [],
             spellcheck: true,
             autofocus: this.get('shouldFocusEditor')
         };
 
         let editor = this.editor = new Mobiledoc.Editor(options);
         
+        // reset cards
+        editor.cards = [];
+        editor.createCard = createCardFactory(editor, {}); //TODO add toolbar
+        editor.createCard(defaultCards);
+        if(cards && cards.length > 0) {
+            editor.createCard(cards);
+        }
+
         editor.postDidChange(()=>{
             Ember.run.join(() => {
                 //store a cache of the local doc so that we don't need to reinitialise it.
@@ -51,17 +64,30 @@ export default Ember.Component.extend({
                 }
             });
         });
+
+
+        //editor.didRender(() => {
+        //     this.editor.post.sections.forEach( item => console.log(item.renderNode._element));
+        //});
     },
     didRender( ) {
         
         if(this._rendered) {
             return;
         }
-        let editorDom = this.$('.editor')[0];
+        let editorDom = this.$('.surface')[0];
         editorDom.__GHOST_EDITOR = this.editor; // attach reference of editor to dom for debugging and testing.
                                                 // TODO - only do the above when in debug or testing mode
         this.editor.render(editorDom);
         this._rendered = true;
+
+        window.editor = this.editor;
+
+
+        //VALID_MARKUP_SECTION_TAGNAMES
+       
+
+
         /*if(this.get('container').lookup('controller:application').currentPath === 'editor.edit') {
 
         }*/

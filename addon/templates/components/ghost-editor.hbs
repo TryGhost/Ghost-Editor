@@ -1,3 +1,5 @@
-{{ghost-toolbar editor=editor}}
-<div class='editor' />
-{{yield}}
+<div class='ghost-editor'>
+	<div class='surface' />
+	{{ghost-toolbar editor=editor}}
+</div>
+{{ghost-cards editor=editor cards=editor.cards}}
