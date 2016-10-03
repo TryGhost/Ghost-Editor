@@ -1,10 +1,13 @@
 import Ember from 'ember';
-// currys a createCard method
+
+// returns a create card factory that takes a generic mobiledoc card and adds a ghost specific wrapper around it.
+// it also provides helper functionality for Ember based cards.
+
 export default function createCardFactory(toolbar) {
     let self = this;
 
     function createCard(card_object) {
-        // if we have an array of cards then we import them one by one.
+        // if we have an array of cards then we convert them one by one.
         if (card_object instanceof Array) {
             return card_object.map(card => createCard(card));
         }
@@ -110,10 +113,10 @@ class Handle {
         dragger.type = "button";
         dragger.className = 'move';
         dragger.innerHTML = "&nbsp;";
-        dragger.draggable = "true";
+        //dragger.draggable = "true";
        // dragger.addEventListener('dragstart', event => window.dragel = this);
        // dragger.addEventListener('drag', event => console.log("DRAGGING", event));
-        // holder.appendChild( dragger );
+        holder.appendChild( dragger );
 
         let delButtion = document.createElement('button');
         delButtion.value = "Del";
