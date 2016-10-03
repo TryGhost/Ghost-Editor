@@ -51,7 +51,7 @@ export default function createCardFactory(toolbar) {
 
         };
 
-        function setupEmberCard({env, options, payload}, mode = "render") {
+        function setupEmberCard({env, options, payload}, mode = "render", save) {
             const id = "GHOST_CARD_" + Ember.uuid();
             let card = Ember.Object.create({
                 id,
@@ -59,7 +59,8 @@ export default function createCardFactory(toolbar) {
                 options,
                 payload,
                 card: card_object,
-                mode
+                mode,
+                save
             });
 
             self.emberCards.pushObject(card);
@@ -71,7 +72,7 @@ export default function createCardFactory(toolbar) {
             return card;
         }
 
-        function setupUI({env, options, payload}) {
+        function setupUI({env, options, payload}, save) {
             let el = env.postModel.renderNode.element;
             el.draggable = "false";
             el.addEventListener('dragstart', e => {
@@ -98,7 +99,7 @@ export default function createCardFactory(toolbar) {
 
 
 class Handle {
-    constructor({env, options, payload}) {
+    constructor({env, options, payload}, save) {
         let holder = this.holder = document.createElement('div');
 
         holder.contentEditable = "false";
@@ -110,8 +111,8 @@ class Handle {
         dragger.className = 'move';
         dragger.innerHTML = "&nbsp;";
         dragger.draggable = "true";
-        dragger.addEventListener('dragstart', event => window.dragel = this);
-        dragger.addEventListener('drag', event => console.log("DRAGGING", event));
+       // dragger.addEventListener('dragstart', event => window.dragel = this);
+       // dragger.addEventListener('drag', event => console.log("DRAGGING", event));
         // holder.appendChild( dragger );
 
         let delButtion = document.createElement('button');
@@ -139,6 +140,10 @@ class Handle {
         });
 
         holder.appendChild(delButtion);
+
+        this.addButton('edit', (el)=>{
+
+        });
 
     }
 

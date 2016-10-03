@@ -32,7 +32,15 @@ module.exports = {
         app.import('app/styles/card-picker.css');
     },
 
-    frontEndCards: function () {
-        return []
-    }
+    // temp
+    frontEndCards: [
+             {
+                name: 'html-card',
+                type: 'html',
+                render: function(opts) {
+                    return opts.payload.html;
+                }
+            }
+        ]
+
 };
