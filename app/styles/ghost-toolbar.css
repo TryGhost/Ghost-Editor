@@ -1,20 +1,24 @@
 /*placeholder toolbar styling*/
 .toolbar {
-    position:absolute;
-    margin-top:10px;
-    padding-left:15px;
+    position: fixed;
+    margin-top: 10px;
+    padding-left: 15px;
     background-color: #fff;
+    top: 60px
 }
+
 .toolbar ul {
     list-style: none;
-    margin:0px;
-    padding:0px;    
+    margin: 0px;
+    padding: 0px;
 }
+
 .toolbar ul li {
-    float:left;
-    margin-left:5px;
-    padding:0;
+    float: left;
+    margin-left: 5px;
+    padding: 0;
 }
+
 .toolbar ul li button {
     border-radius: 2px;
     font-family: var(--font-family);
@@ -28,12 +32,8 @@
     border: 1px solid var(--darkgrey);
 }
 
-.toolbar ul li button:hover {
+.toolbar ul li button:hover, .toolbar ul li button.selected {
     background-color: var(--lightgrey);
     border: 1px solid var(--midgrey);
     color: var(--darkgrey);
 }
-
-.toolbar ul li button.selected{
-    border:10px solid;
-} 

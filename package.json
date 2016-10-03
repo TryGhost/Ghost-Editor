@@ -40,6 +40,8 @@
     "ember-load-initializers": "^0.5.1",
     "ember-resolver": "^2.0.3",
     "ember-welcome-page": "^1.0.1",
+    "ember-wormhole": "0.4.1",
+    "ivy-codemirror": "2.0.2",
     "loader.js": "^4.0.1",
     "mobiledoc-kit": "^0.10.10"
   },

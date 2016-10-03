@@ -1,8 +1,4 @@
-import placeholder from 'ghost-editor/cards/placeholder';
-
-export default [
-	placeholder
-]
+export default [];
 
 
 import cardFactory from 'ghost-editor/cards/cardFactory';

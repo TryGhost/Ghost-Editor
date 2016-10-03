@@ -1,1 +1,6 @@
-<button {{action "click"}}>{{tool.name}}{{tool.selected}}</button>
+{{!--for some reason binding the class isn't working--}}
+{{#if tool.selected}}
+    <button {{action "click"}} class="selected">{{tool.name}}</button>
+{{else}}
+    <button {{action "click"}}>{{tool.name}}</button>
+{{/if}}

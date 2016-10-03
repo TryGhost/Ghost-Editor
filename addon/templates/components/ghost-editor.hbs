@@ -1,5 +1,13 @@
+{{#each emberCards as |card|}}
+    {{#ember-wormhole to=card.id}}
+        {{component card.card.name env=card.env payload=card.payload options=card.options}}
+    {{/ember-wormhole}}
+{{/each}}
+
 <div class='ghost-editor'>
-	<div class='surface' />
-	{{ghost-toolbar editor=editor}}
+    <div class='surface'/>
+    {{ghost-toolbar editor=editor}}
 </div>
 {{ghost-cards editor=editor cards=editor.cards}}
+
+

@@ -1,4 +1,3 @@
-
 /* Variables
 /* ---------------------------------------------------------- */
 
@@ -16,21 +15,24 @@
     --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     --font-family-mono: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
+
 .editor-holder {
     height: 100%;
 }
+
 .ghost-editor {
-    height:100%;
-    overflow:auto;
-    position:relative;
+    height: 100%;
+    overflow: auto;
+    position: relative;
     -webkit-overflow-scrolling: touch;
 }
+
 .__mobiledoc-editor {
-	width: 100%;
-	margin-left: auto;
-	margin-right: auto;
-	min-height:100%;
-	outline:none;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 100%;
+    outline: none;
     padding: 51px 20px 36px 20px;
     font-family: var(--font-family);
     font-size: 1.6rem;
@@ -38,35 +40,111 @@
     resize: none;
 }
 
+.__mobiledoc-editor p {
+    margin: 0;
+    padding: 0;
+}
 
 .ghost-editor .surface {
-    max-width:800px;
+    max-width: 800px;
 }
 
 .__mobiledoc-tooltip {
-    position:absolute;
-    padding:33px;
+    position: absolute;
+    padding: 33px;
     background-color: #5ba4e5;
-    color:#fff;
+    color: #fff;
 }
 
-p,h2,h3,ul,ol {
-    border-top:0px;
-    border-bottom:0px;
-    border-left:0px;
-    border-right:0px;
+p, h2, h3, ul, ol {
+    border: 0;
     transition: border-width 0.1s ease-in-out;
 }
+
 .dropper-bottom {
-    border-bottom:66px solid #5ba4e5;
+    border-bottom: 66px solid #5ba4e5;
 }
+
 .dropper-top {
     border-top: 66px solid #5ba4e5;
 }
 
 .dropper-left {
-    border-left:66px solid #5ba4e5;
+    border-left: 66px solid #5ba4e5;
 }
+
 .dropper-right {
-    border-right:66px solid #5ba4e5;
+    border-right: 66px solid #5ba4e5;
+}
+
+.__mobiledoc-card {
+    border: 1px solid;
+    min-height: 100px;
+}
+
+.__mobiledoc-card .card-handle {
+    position: absolute;
+    margin-top: -40px;
+    height: 40px;
+    padding: 0 10px 0 10px;
+    text-align: right;
+    overflow: hidden;
+    display: block;
+
+}
+
+.card-handle button {
+    margin-top: 1px;
+    color: #718087;
+    background-color: #fff;
+    border-radius: 15px;
+    margin-left: 10px;
+    height: 30px;
+    min-width: 30px;
+    border: 1px solid;
+    font-size: 20px;
+
+}
+
+.card-handle button:hover {
+    background-color: #718087;
+    color: #fff;
+}
+
+.card-handle button.confirm {
+    animation-duration: 1s;
+    animation-name: rotate;
+    background-color: red;
+    color: #e9e8dd;
+}
+
+.card-handle button.move {
+    background-image: url('http://localhost:4200/assets/move.png');
+    background-color: #9fbb58;
+    margin-left: -10px;
+    margin-right: 20px;
+
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+
+}
+
+@keyframes rotate {
+    from {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+        background-color: #fff;
+        color: #718087;
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(-360deg);
+        transform: rotate(360deg);
+        background-color: red;
+        color: #e9e8dd;
+    }
 }

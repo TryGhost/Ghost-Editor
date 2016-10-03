@@ -1,9 +1,10 @@
 import Ember from 'ember';
 import layout from '../templates/components/ghost-editor';
 import Mobiledoc from 'mobiledoc-kit';
-import { MOBILEDOC_VERSION } from 'mobiledoc-kit/renderers/mobiledoc';
-import createCardFactory from 'ghost-editor/cards/cardFactory';
-import defaultCards from 'ghost-editor/cards';
+import {MOBILEDOC_VERSION} from 'mobiledoc-kit/renderers/mobiledoc';
+import createCardFactory from '../utils/cardFactory';
+//import defaultCards from 'ghost-editor/cards';
+//import htmlCard from 'ghost-editor/components/html-card';
 //import { VALID_MARKUP_SECTION_TAGNAMES } from 'mobiledoc-kit/models/markup-section'; //the block elements supported by mobile-doc
 
 export const BLANK_DOC = {
@@ -11,68 +12,100 @@ export const BLANK_DOC = {
     markups: [],
     atoms: [],
     cards: [],
-    sections: [] 
+    sections: []
 };
 
 
 export default Ember.Component.extend({
     layout,
     classNames: ['editor-holder'],
-    init( ) {
+    emberCards: Ember.A([]),
+    init() {
         this._super(...arguments);
 
-        let mobiledoc = this.get('value') || BLANK_DOC;
-        let cards = this.get('cards');
 
-        if(typeof mobiledoc === "string") {
+        let mobiledoc = this.get('value') || BLANK_DOC;
+        let userCards = this.get('cards') || [];
+
+        if (typeof mobiledoc === "string") {
             mobiledoc = JSON.parse(mobiledoc);
         }
 
         //if the doc is cached then the editor is loaded and we don't need to continue.
-        if(this._cached_doc && this._cached_doc === mobiledoc ) {
+        if (this._cached_doc && this._cached_doc === mobiledoc) {
             return;
         }
-        
-        const options = { 
-            mobiledoc : mobiledoc,
-            cards : [],
-            markups : [],
-            atoms : [],
+
+
+        let createCard = createCardFactory.apply(this, {}); //need to pass the toolbar
+
+
+        const options = {
+            mobiledoc: mobiledoc,
+            cards: [createCard({
+                name: 'html-card',
+                label: 'HTML CARD',
+                type: 'dom',
+                genus: 'ember',
+                didRender: function () {
+
+                },
+                didPlace: function () {
+
+                }
+            })],
+            markups: [],
+            atoms: [],
             spellcheck: true,
             autofocus: this.get('shouldFocusEditor')
         };
 
-        let editor = this.editor = new Mobiledoc.Editor(options);
-        
-        // reset cards
-        editor.cards = [];
-        editor.createCard = createCardFactory(editor, {}); //TODO add toolbar
-        editor.createCard(defaultCards);
-        if(cards && cards.length > 0) {
-            editor.createCard(cards);
-        }
 
-        editor.postDidChange(()=>{
+        let editor = this.editor = new Mobiledoc.Editor(options);
+
+        /*editor.cards = [];
+
+
+         editor.createCard({
+         name: 'html-card',
+         label: 'HTML CARD',
+         type: 'dom',
+         didRender: function() {
+
+         },
+         didPlace: function() {
+
+         }
+         });*/
+        //createCard(defaultCards).concat(createCard(cards)).concat([createComponentCard('html-card')])
+        //editor.createCard(defaultCards);
+        //editor.createCard(userCards);
+        //temp
+        /*  editor.createCard({
+         genus: 'ember',
+         name: 'html-card',
+         label: 'HTML CARD',
+         didRender: function() {
+
+         }
+         });*/
+
+        editor.postDidChange(()=> {
             Ember.run.join(() => {
                 //store a cache of the local doc so that we don't need to reinitialise it.
-                this._cached_doc = editor.serialize(MOBILEDOC_VERSION); 
+                this._cached_doc = editor.serialize(MOBILEDOC_VERSION);
                 this.sendAction('onChange', this._cached_doc);
-                if(this._cached_doc !== BLANK_DOC && !this._firstChange) {
+                if (this._cached_doc !== BLANK_DOC && !this._firstChange) {
                     this._firstChange = true;
                     this.sendAction('onFirstChange', this._cached_doc);
-                    //editor.selectRange(editor.post.headPosition());
                 }
             });
         });
 
-
-        //editor.didRender(() => {
-        //     this.editor.post.sections.forEach( item => console.log(item.renderNode._element));
-        //});
     },
-    didRender( ) {
-        
-        if(this._rendered) {
+    didRender() {
+
+        if (this._rendered) {
             return;
         }
         let editorDom = this.$('.surface')[0];
@@ -85,17 +118,16 @@ export default Ember.Component.extend({
 
 
         //VALID_MARKUP_SECTION_TAGNAMES
-       
 
 
         /*if(this.get('container').lookup('controller:application').currentPath === 'editor.edit') {
 
-        }*/
+         }*/
 
         // shouldFocusEditor is only true when transitionaing from new to edit, otherwise it's false or undefined.
         // therefore, if it's true it's after the first lot of content is entered and we expect the caret to be at the
         // end of the document.
-        if(this.get('shouldFocusEditor')) {
+        if (this.get('shouldFocusEditor')) {
             var range = document.createRange();
             range.selectNodeContents(this.editor.element);
             range.collapse(false);
@@ -104,5 +136,50 @@ export default Ember.Component.extend({
             sel.addRange(range);
         }
     }
-    
+
 });
+
+
+function renderFallback(doc) {
+    let element = doc.createElement('div');
+    let text = doc.createTextNode('[placeholder for Ember component card]');
+    element.appendChild(text);
+    return element;
+}
+
+
+function createComponentCard(name, doc = window.document) {
+
+    return {
+        name,
+        type: 'dom',
+        label: 'stsst',
+        render(cardArg) {
+            let {env, options} = cardArg;
+            if (!options.addEmberCard) {
+                return renderFallback(doc);
+            }
+
+            let {card, element} = options.addEmberCard(cardArg);
+            let {onTeardown} = env;
+
+            onTeardown(() => options.removeComponent(card));
+
+            return element;
+        },
+        edit(cardArg) {
+            let {env, options} = cardArg;
+            if (!options.addEmberCard) {
+                return renderFallback(doc);
+            }
+
+            let isEditing = true;
+            let {card, element} = options.addEmberCard(cardArg, isEditing);
+            let {onTeardown} = env;
+
+            onTeardown(() => options.removeComponent(card));
+
+            return element;
+        }
+    };
+}

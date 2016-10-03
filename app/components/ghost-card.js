@@ -1,1 +1,1 @@
-export { default } from 'ghost-editor/components/ghost-card';
+export {default} from 'ghost-editor/components/ghost-card';
