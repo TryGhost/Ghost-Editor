@@ -93,6 +93,13 @@ p, h2, h3, ul, ol {
 
 }
 
+.card-handle {
+    height:40px;
+    margin-bottom:-30px;
+    margin-left:-50px;
+}
+
+
 .card-handle button {
     margin-top: 1px;
     color: #718087;
@@ -100,7 +107,11 @@ p, h2, h3, ul, ol {
     border-radius: 15px;
     margin-left: 10px;
     height: 30px;
-    min-width: 30px;
+    width: 30px;
+    overflow:hidden;
+    line-height:30px;
+    text-align: center;
+    font-size:2em;
     border: 1px solid;
     font-size: 20px;
 
@@ -126,7 +137,6 @@ p, h2, h3, ul, ol {
 
     cursor: -webkit-grab;
     cursor: -moz-grab;
-
 }
 
 @keyframes rotate {
@@ -148,3 +158,10 @@ p, h2, h3, ul, ol {
         color: #e9e8dd;
     }
 }
+
+textarea.ed_code {
+    width:100%;
+    height:100%;
+    border:none;
+}
+

@@ -11,3 +11,16 @@
     list-style: none;
 
 }
+/*temp styling*/
+.card-picker li div {
+    border:1px solid;
+    width:130px;
+    height:80px;
+    text-align:center;
+    line-height:80px;
+    background-color:#242628;
+    color:#e2edf2;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    border-radius: 4px
+}
+

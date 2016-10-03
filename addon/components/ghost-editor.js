@@ -3,8 +3,7 @@ import layout from '../templates/components/ghost-editor';
 import Mobiledoc from 'mobiledoc-kit';
 import {MOBILEDOC_VERSION} from 'mobiledoc-kit/renderers/mobiledoc';
 import createCardFactory from '../utils/cardFactory';
-//import defaultCards from 'ghost-editor/cards';
-//import htmlCard from 'ghost-editor/components/html-card';
+import defaultCards from 'ghost-editor/cards';
 //import { VALID_MARKUP_SECTION_TAGNAMES } from 'mobiledoc-kit/models/markup-section'; //the block elements supported by mobile-doc
 
 export const BLANK_DOC = {
@@ -42,18 +41,21 @@ export default Ember.Component.extend({
 
         const options = {
             mobiledoc: mobiledoc,
-            cards: [createCard({
-                name: 'html-card',
-                label: 'HTML CARD',
-                type: 'dom',
-                genus: 'ember',
-                didRender: function () {
+            //temp
+            cards: [
+                createCard(
+                {
+                    name: 'html-card',
+                    label: 'EMBED HTML',
+                    type: 'dom',
+                    genus: 'ember',
+                    didRender: function () {
 
-                },
-                didPlace: function () {
+                    },
+                    didPlace: function () {
 
-                }
-            })],
+                    }
+                })],
             markups: [],
             atoms: [],
             spellcheck: true,
@@ -63,34 +65,7 @@ export default Ember.Component.extend({
 
         let editor = this.editor = new Mobiledoc.Editor(options);
 
-        /*editor.cards = [];
-
-
-         editor.createCard({
-         name: 'html-card',
-         label: 'HTML CARD',
-         type: 'dom',
-         didRender: function() {
-
-         },
-         didPlace: function() {
-
-         }
-         });*/
-        //createCard(defaultCards).concat(createCard(cards)).concat([createComponentCard('html-card')])
-        //editor.createCard(defaultCards);
-        //editor.createCard(userCards);
-        //temp
-        /*  editor.createCard({
-         genus: 'ember',
-         name: 'html-card',
-         label: 'HTML CARD',
-         didRender: function() {
-
-         }
-         });*/
-
-        editor.postDidChange(()=> {
+               editor.postDidChange(()=> {
             Ember.run.join(() => {
                 //store a cache of the local doc so that we don't need to reinitialise it.
                 this._cached_doc = editor.serialize(MOBILEDOC_VERSION);
@@ -139,47 +114,3 @@ export default Ember.Component.extend({
 
 });
 
-
-function renderFallback(doc) {
-    let element = doc.createElement('div');
-    let text = doc.createTextNode('[placeholder for Ember component card]');
-    element.appendChild(text);
-    return element;
-}
-
-
-function createComponentCard(name, doc = window.document) {
-
-    return {
-        name,
-        type: 'dom',
-        label: 'stsst',
-        render(cardArg) {
-            let {env, options} = cardArg;
-            if (!options.addEmberCard) {
-                return renderFallback(doc);
-            }
-
-            let {card, element} = options.addEmberCard(cardArg);
-            let {onTeardown} = env;
-
-            onTeardown(() => options.removeComponent(card));
-
-            return element;
-        },
-        edit(cardArg) {
-            let {env, options} = cardArg;
-            if (!options.addEmberCard) {
-                return renderFallback(doc);
-            }
-
-            let isEditing = true;
-            let {card, element} = options.addEmberCard(cardArg, isEditing);
-            let {onTeardown} = env;
-
-            onTeardown(() => options.removeComponent(card));
-
-            return element;
-        }
-    };
-}

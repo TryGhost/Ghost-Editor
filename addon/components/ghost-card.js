@@ -44,14 +44,14 @@ function dragover(editor, item, event) {
     } else {
         $el.removeClass('dropper-left dropper-right dropper-top dropper-bottom'); // should probably cache the position, but premature optimisation and all that.
     }
-    if (mouseX < 100) { //&& window.dragel.card.resizeMode != "full_width_only"
+    if (mouseX < 100 && false) { //&& window.dragel.card.resizeMode != "full_width_only"
         $el.addClass('dropper-left');
     } else if (mouseX > offset.width - 100) { //  && window.dragel.card.resizeMode != "full_width_only"
-        $el.addClass('dropper-right');
+        $el.addClass('dropper-right' && false);
     } else if (mouseY > offset.height / 2) {
         $el.addClass('dropper-bottom');
     } else {
-        $el.addClass('dropper-top');
+        $el.addClass('dropper-top' && false);
 
     }
 

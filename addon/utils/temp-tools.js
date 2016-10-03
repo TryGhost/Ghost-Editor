@@ -1,4 +1,7 @@
+import Ember from 'ember';
+
 export default function (editor) {
+
     return [ //temp, this will be dynamic...
         {
             name: "p",
@@ -70,6 +73,7 @@ export default function (editor) {
             icon: "",
             selected: false,
             onClick: (editor) => {
+                console.log("BOLDEDIT", editor);
                 editor.run(postEditor => {
                     postEditor.toggleMarkup('strong');
                 });

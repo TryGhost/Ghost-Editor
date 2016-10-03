@@ -141,9 +141,9 @@ class Handle {
 
         holder.appendChild(delButtion);
 
-        this.addButton('edit', (el)=>{
+     /*   this.addButton('edit', (el)=>{
 
-        });
+        });*/
 
     }
 

@@ -1,5 +1,13 @@
-export default [];
+// exports the various built in cards
+/*
+import {htmlEditor, html as htmlHtml} from 'mobiledoc-kit/components/html-card';
+
+let editor = [htmlEditor];
+let html = [htmlHtml];
 
 
-import cardFactory from 'ghost-editor/cards/cardFactory';
-export let createCardFactory = cardFactory;
+export {
+    editor as default,
+    html
+};
+*/
