@@ -59,13 +59,14 @@ export default Ember.Component.extend({
             markups: [],
             atoms: [],
             spellcheck: true,
-            autofocus: this.get('shouldFocusEditor')
+            autofocus: this.get('shouldFocusEditor'),
+            placeholder: 'Click here to start ...'
         };
 
 
-        let editor = this.editor = new Mobiledoc.Editor(options);
+       let editor = this.editor = new Mobiledoc.Editor(options);
 
-               editor.postDidChange(()=> {
+       editor.postDidChange(()=> {
             Ember.run.join(() => {
                 //store a cache of the local doc so that we don't need to reinitialise it.
                 this._cached_doc = editor.serialize(MOBILEDOC_VERSION);
