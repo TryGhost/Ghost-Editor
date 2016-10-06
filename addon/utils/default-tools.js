@@ -50,7 +50,7 @@ export default function (editor) {
             icon: "assets/tools/paragraph.svg",
             selected: false,
             type: 'block',
-            visibility: 'secondary',
+            visibility: 'primary',
             onClick: (editor) => {
                 editor.run(postEditor => {
                     postEditor.toggleSection('p');
@@ -61,11 +61,26 @@ export default function (editor) {
             }
         },
         {
-            name: "h2",
+            name: "h1",
             icon: "",
             visibility: 'primary',
             selected: false,
             type: 'block',
+            onClick: (editor) => {
+                editor.run(postEditor => {
+                    postEditor.toggleSection('h1');
+                });
+            },
+            checkElements: function (elements) {
+                Ember.set(this, "selected", elements.filter(element => element.tagName === 'h1').length > 0);
+            }
+        },
+        {
+            name: "h2",
+            icon: "",
+            selected: false,
+            type: 'block',
+            visibility: 'primary',
             onClick: (editor) => {
                 editor.run(postEditor => {
                     postEditor.toggleSection('h2');
@@ -73,21 +88,6 @@ export default function (editor) {
             },
             checkElements: function (elements) {
                 Ember.set(this, "selected", elements.filter(element => element.tagName === 'h2').length > 0);
-            }
-        },
-        {
-            name: "h3",
-            icon: "",
-            selected: false,
-            type: 'block',
-            visibility: 'primary',
-            onClick: (editor) => {
-                editor.run(postEditor => {
-                    postEditor.toggleSection('h3');
-                });
-            },
-            checkElements: function (elements) {
-                Ember.set(this, "selected", elements.filter(element => element.tagName === 'h3').length > 0);
             }
         },
         {

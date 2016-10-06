@@ -55,7 +55,21 @@ export default Ember.Component.extend({
                     didPlace: function () {
 
                     }
-                })],
+                }),
+                createCard(
+                    {
+                        name: 'image-card',
+                        label: 'EMBED IMAGE',
+                        type: 'dom',
+                        genus: 'ember',
+                        didRender: function () {
+
+                        },
+                        didPlace: function () {
+
+                        }
+                    })
+            ],
             markups: [],
             atoms: [],
             spellcheck: true,

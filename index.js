@@ -33,6 +33,7 @@ module.exports = {
         app.import('app/styles/ghost-editor.css');
         app.import('app/styles/ghost-toolbar.css');
         app.import('app/styles/card-picker.css');
+        app.import('app/styles/globals.css');
        // app.import('public/tools/bold.svg');
     },
 

@@ -1,3 +1,1 @@
-/**
- * Created by ryanmccarvill on 6/10/16.
- */
+export {default, BLANK_DOC} from 'ghost-editor/components/gh-file-input';

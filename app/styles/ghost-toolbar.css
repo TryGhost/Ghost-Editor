@@ -1,14 +1,42 @@
-/*placeholder toolbar styling*/
+/* for some reason imports aren't working.... */
+@import "globals.css";
+
+
+:root {
+    /* Colours */
+    --darkgrey: #242628;
+    --midgrey: #7d878a;
+    --lightgrey: #e2edf2;
+    --blue: #5ba4e5;
+    --red: #e25440;
+    --orange: #f2a925;
+    --green: #9fbb58;
+    /* Style values */
+    --border-radius: 4px;
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    --font-family-mono: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+
+    --button-size: 32px;
+}
+
+
+
 .toolbar {
     position: absolute;
     margin: 0;
-    padding:5px;
-    background-color: var(--midgrey);
-    border:1px var(--midgrey) solid;
+    background-color: #fff;
+    border:1px var(--lightgrey) solid;
     transition: margin-left 0.1s;
 }
+
+
 .toolbar:hover {
-    margin-left:-130px;
+    margin-left:-96px;/*calc(0 - (var(--button-size)*3))*/;
+    transition: margin-left 0.1s;
+}
+
+.non-primary-block-selected:hover {
+    margin-left:-64px;/*calc(0 - (var(--button-size)*3))*/;
     transition: margin-left 0.1s;
 }
 
@@ -30,8 +58,7 @@
 
 .toolbar:hover ul li {
     display:block;
-    width:26px;
-    padding-left:5px;
+    width:var(--button-size);
     opacity:0.3;
     animation-delay: 2s;
     transition: width 0.1s;
@@ -40,8 +67,7 @@
 .toolbar ul li.selected, .toolbar ul li.primary {
     display:block;
     opacity:1;
-    width:26px;
-    padding-left:5px;
+    width:var(--button-size);
 }
 
 
@@ -53,12 +79,12 @@
     text-transform: uppercase;
     padding:0;
     margin:0;
-    height:26px;
-    min-width:26px;
-    color: #fff;
-    background-color: var(--midgrey);
-    border: 1px solid var(--darkgrey);
-    transition: 1s;
+    height:var(--button-size);
+    min-width:var(--button-size);
+    color: var(--darkgrey);
+    background-color: #fff;
+    border: none;
+    transition: 0.3s;
 }
 
 .toolbar ul li.primary button {
@@ -71,9 +97,8 @@
 
 .toolbar ul li:hover button, .toolbar ul li.selected button {
     background-color: var(--lightgrey);
-    border: 1px solid var(--midgrey);
     color: var(--darkgrey);
-    transition: 1s;
+    transition: 0.3s;
 }
 
 .toolbar ul li button img {

@@ -7,8 +7,12 @@ import Tools from '../utils/default-tools';
 export default Ember.Component.extend({
     layout,
     classNames: ['toolbar'],
+    classNameBindings: ['non-primary-block-selected'],
     tools: [],
     toolbar: Ember.computed(function () {
+        // TODO if a block section other than a primary section is selected then
+        // the returned list removes one of the primary sections to compensate,
+        // so that there are only ever four primary sections.
         let visibleTools = [ ];
         if(this.isBlank) {
             this.tools.forEach(tool => {
@@ -17,11 +21,17 @@ export default Ember.Component.extend({
                 }
             });
         } else {
+            let isNonPrimaryToolSelected = false;   // if a non primary tool is selected then the offset for the
+                                                    // negatie margin in the CSS animation needs to change.
             this.tools.forEach(tool => {
                 if(tool.type !== 'newline') {
                     visibleTools.push(tool);
+                    if(tool.type === 'block' && tool.selected && tool.visibility !== 'primary') {
+                        isNonPrimaryToolSelected = true;
+                    }
                 }
             });
+            this.set('non-primary-block-selected', isNonPrimaryToolSelected);
         }
         return visibleTools;
     }).property('tools.@each.selected'),
@@ -51,8 +61,14 @@ export default Ember.Component.extend({
             let element = editor.range.head.section.renderNode._element;
             let offset =  this.$(element).offset();
             if (this._element !== element) {
-                $this.css('top', (offset.top + Ember.$('.ghost-editor').scrollTop()-height-20) + 'px');
-                $this.css('left', (offset.left + Ember.$('.ghost-editor').scrollLeft()) + 'px');
+                let $editor = Ember.$('.ghost-editor');
+
+                $this.animate({
+                    top: offset.top + $editor.scrollTop()-height-20,
+                    left: offset.left + $editor.scrollLeft()
+                }, 50);
+             //   $this.css('top', (offset.top + $editor.scrollTop()-height-20) + 'px');
+             //   $this.css('left', (offset.left + $editor.scrollLeft()) + 'px');
                 $this.fadeIn();
                 this._element = element;
             }
@@ -63,7 +79,11 @@ export default Ember.Component.extend({
 
             this.tools.forEach(tool => {
                 if (tool.hasOwnProperty('checkElements')) {
-                    tool.checkElements(editor.activeMarkups.concat([{tagName: editor.activeSection._tagName}]));
+                    // if its a list we want to know what type
+                    let sectionTagName = editor.activeSection._tagName === 'li'
+                        ? editor.activeSection.parent._tagName
+                        : editor.activeSection._tagName;
+                    tool.checkElements(editor.activeMarkups.concat([{tagName: sectionTagName}]));
                 }
             });
 
