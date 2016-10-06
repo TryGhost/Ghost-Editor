@@ -4,8 +4,36 @@ export default function (editor) {
 
     return [
         {
+            name: "p",
+            icon: "paragraph.svg",
+            selected: false,
+            type: 'block',
+            onClick: (editor) => {
+                editor.run(postEditor => {
+                    postEditor.toggleSection('p');
+                });
+            },
+            checkElements: function (elements) {
+                Ember.set(this, "selected", elements.filter(element => element.tagName === 'p').length > 0);
+            }
+        },
+        {
+            name: "blockquote",
+            icon: "quote.svg",
+            selected: false,
+            type: 'block',
+            onClick: (editor) => {
+                editor.run(postEditor => {
+                    postEditor.toggleSection('blockquote');
+                });
+            },
+            checkElements: function (elements) {
+                Ember.set(this, "selected", elements.filter(element => element.tagName === 'blockquote').length > 0);
+            }
+        },
+        {
             name: "pull-quote",
-            icon: "assets/tools/pullquote.svg",
+            icon: "pullquote.svg",
             selected: false,
             type: 'block',
             onClick: (editor) => {
@@ -19,7 +47,7 @@ export default function (editor) {
         },
         {
             name: "ul",
-            icon: "assets/tools/list-bullets.svg",
+            icon: "list-bullets.svg",
             selected: false,
             type: 'block',
             onClick: (editor) => {
@@ -33,7 +61,7 @@ export default function (editor) {
         },
         {
             name: "ol",
-            icon: "assets/tools/list-number.svg",
+            icon: "list-number.svg",
             selected: false,
             type: 'block',
             onClick: (editor) => {
@@ -45,21 +73,7 @@ export default function (editor) {
                 Ember.set(this, "selected", elements.filter(element => element.tagName === 'ol').length > 0);
             }
         },
-        {
-            name: "p",
-            icon: "assets/tools/paragraph.svg",
-            selected: false,
-            type: 'block',
-            visibility: 'primary',
-            onClick: (editor) => {
-                editor.run(postEditor => {
-                    postEditor.toggleSection('p');
-                });
-            },
-            checkElements: function (elements) {
-                Ember.set(this, "selected", elements.filter(element => element.tagName === 'p').length > 0);
-            }
-        },
+
         {
             name: "h1",
             icon: "",
@@ -90,24 +104,10 @@ export default function (editor) {
                 Ember.set(this, "selected", elements.filter(element => element.tagName === 'h2').length > 0);
             }
         },
-        {
-            name: "blockquote",
-            icon: "assets/tools/quote.svg",
-            selected: false,
-            type: 'block',
-            visibility: 'primary',
-            onClick: (editor) => {
-                editor.run(postEditor => {
-                    postEditor.toggleSection('blockquote');
-                });
-            },
-            checkElements: function (elements) {
-                Ember.set(this, "selected", elements.filter(element => element.tagName === 'blockquote').length > 0);
-            }
-        },
+
         {
             name: "b",
-            icon: "assets/tools/bold.svg",
+            icon: "bold.svg",
             selected: false,
             visibility: 'primary',
             onClick: (editor) => {
@@ -121,7 +121,7 @@ export default function (editor) {
         },
         {
             name: "i",
-            icon: "assets/tools/italic.svg",
+            icon: "italic.svg",
             selected: false,
             visibility: 'primary',
             onClick: (editor) => {
@@ -135,7 +135,7 @@ export default function (editor) {
         },
         {
             name: "a",
-            icon: "assets/tools/link.svg",
+            icon: "link.svg",
             selected: false,
             visibility: 'primary',
             onClick: (editor) => {
@@ -149,7 +149,7 @@ export default function (editor) {
         },
         {
             name: "u",
-            icon: "assets/tools/underline.svg",
+            icon: "underline.svg",
             selected: false,
             onClick: (editor) => {
                 editor.run(postEditor => {
@@ -162,7 +162,7 @@ export default function (editor) {
         },
         {
             name: "s",
-            icon: "assets/tools/strikethrough.svg",
+            icon: "strikethrough.svg",
             selected: false,
             onClick: (editor) => {
                 editor.run(postEditor => {
@@ -175,7 +175,7 @@ export default function (editor) {
         },
         {
             name: "sub",
-            icon: "assets/tools/subscript.svg",
+            icon: "subscript.svg",
             selected: false,
             onClick: (editor) => {
                 editor.run(postEditor => {
@@ -188,7 +188,7 @@ export default function (editor) {
         },
         {
             name: "sup",
-            icon: "assets/tools/superscript.svg",
+            icon: "superscript.svg",
             selected: false,
             onClick: (editor) => {
                 editor.run(postEditor => {

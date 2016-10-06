@@ -6,7 +6,7 @@ import {isBlank} from 'ember-utils';
 import {isEmberArray} from 'ember-array/utils';
 import run from 'ember-runloop';
 import layout from '../../templates/components/image-card';
-/*
+
 import {invokeAction} from 'ember-invoke-action';
 import ghostPaths from 'ghost-editor/utils/ghost-paths';
 import {
@@ -15,7 +15,7 @@ import {
     isVersionMismatchError,
     UnsupportedMediaTypeError
 } from 'ghost-editor/services/ajax';
-*/
+
 export default Component.extend({
     layout,
     name: 'image-card',
@@ -50,7 +50,7 @@ export default Component.extend({
     formData: computed('file', function () {
         let file = this.get('file');
         let formData = new FormData();
-
+        console.log("FORMDATA" , file );
         formData.append('uploadimage', file);
 
         return formData;
@@ -182,11 +182,19 @@ export default Component.extend({
 
     generateRequest() {
         let ajax = this.get('ajax');
-        let formData = this.get('formData');
+        //let formData = this.get('formData');
+
+
+        let file = this.get('file');
+        let formData = new FormData();
+        console.log("FILEX" , file  );
+        formData.append('uploadimage', file);
+        console.log("FORMDATAX", formData);
+
         let url = `${ghostPaths().apiRoot}/uploads/`;
-
+        console.log("AJAX", ajax);
         this._uploadStarted();
-
+        console.log("FORM DATA, look for get('uploadimage')", formData);
         ajax.post(url, {
             data: formData,
             processData: false,
@@ -198,6 +206,9 @@ export default Component.extend({
                 xhr.upload.addEventListener('progress', (event) => {
                     this._uploadProgress(event);
                 }, false);
+
+                xhr.addEventListener('error', event => console.log("error", event));
+                xhr.upload.addEventListener('error', event => console.log("errorupload", event));
 
                 return xhr;
             }
@@ -240,10 +251,12 @@ export default Component.extend({
             // array and fails in Safari
             // jscs:disable requireArrayDestructuring
             let file = fileList[0];
+
             // jscs:enable requireArrayDestructuring
             let validationResult = this._validate(file);
 
             this.set('file', file);
+
             invokeAction(this, 'fileSelected', file);
 
             if (validationResult === true) {

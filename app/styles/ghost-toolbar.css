@@ -31,12 +31,12 @@
 
 
 .toolbar:hover {
-    margin-left:-96px;/*calc(0 - (var(--button-size)*3))*/;
+    margin-left:-160px;/*calc(0 - (var(--button-size)*3))*/;
     transition: margin-left 0.1s;
 }
 
 .non-primary-block-selected:hover {
-    margin-left:-64px;/*calc(0 - (var(--button-size)*3))*/;
+    margin-left:-128px;/*calc(0 - (var(--button-size)*3))*/;
     transition: margin-left 0.1s;
 }
 

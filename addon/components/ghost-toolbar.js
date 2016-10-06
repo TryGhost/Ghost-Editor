@@ -2,7 +2,7 @@ import Ember from 'ember';
 import layout from '../templates/components/ghost-toolbar';
 
 import Tools from '../utils/default-tools';
-
+import ghostPaths from 'ghost-editor/utils/ghost-paths';
 
 export default Ember.Component.extend({
     layout,
@@ -39,6 +39,8 @@ export default Ember.Component.extend({
         this._super(...arguments);
         let editor = this.editor = this.get('editor');
         this.tools = Tools(editor);
+
+        this.iconURL = ghostPaths().adminRoot + '/tools/';
     },
     didRender() {
         let $this = this.$();
