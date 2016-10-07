@@ -19,7 +19,7 @@ export default function createCardFactory(toolbar) {
 
         card_object.render = ({env, options, payload}) => {
 
-            setupUI({env, options, payload});
+            //setupUI({env, options, payload});
 
             if (card_object.genus === 'ember') {
                 let card = setupEmberCard({env, options, payload}, "render");
@@ -32,7 +32,7 @@ export default function createCardFactory(toolbar) {
 
         card_object.edit = ({env, options, payload}) => {
 
-            setupUI({env, options, payload});
+            //setupUI({env, options, payload});
 
             if (card_object.genus === 'ember') {
                 let card = setupEmberCard({env, options, payload}, "edit");
@@ -84,11 +84,11 @@ export default function createCardFactory(toolbar) {
             });
 
 
-//            let handle = new Handle({env, options, payload});
-//            if( buttons ) {
+            let handle = new Handle({env, options, payload});
+            if( buttons ) {
 
-//                buttons.forEach( item => handle.addButton( item.name , _ => { el.removeChild( handle.holder ); item.onclick( ); }) );
-//            }
+                buttons.forEach( item => handle.addButton( item.name , _ => { el.removeChild( handle.holder ); item.onclick( ); }) );
+            }
             el.insertBefore(handle.holder, el.firstChild);
         }
 

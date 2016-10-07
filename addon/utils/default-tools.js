@@ -220,7 +220,8 @@ export default function (editor) {
             visibility: "primary",
             onClick: (editor) => {
                 editor.run(postEditor => {
-                    postEditor.toggleMarkup('sup');
+                    let card = postEditor.builder.createCardSection('html-card', {pos: "top"});
+                    postEditor.replaceSection(editor.range.headSection, card);
                 });
             },
             checkElements: function (elements) {

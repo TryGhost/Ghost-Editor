@@ -3,7 +3,7 @@
 var MergeTrees = require('broccoli-merge-trees');
 var Funnel = require('broccoli-funnel');
 var path = require('path');
-var cards = require('./addon/cards/index.js');
+var cards = require('./addon/cards/common.js');
 
 
 
@@ -36,7 +36,7 @@ module.exports = {
         app.import('app/styles/ghost-toolbar.css');
         app.import('app/styles/card-picker.css');
         app.import('app/styles/globals.css');
-       // app.import('public/tools/bold.svg');
+
     },
 
     // temp

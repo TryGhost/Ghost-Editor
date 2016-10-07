@@ -3,7 +3,7 @@ import layout from '../templates/components/ghost-editor';
 import Mobiledoc from 'mobiledoc-kit';
 import {MOBILEDOC_VERSION} from 'mobiledoc-kit/renderers/mobiledoc';
 import createCardFactory from '../utils/cardFactory';
-import {editor as editorCards } from 'ghost-editor/cards';
+import {editorCards } from '../cards/index';
 //import { VALID_MARKUP_SECTION_TAGNAMES } from 'mobiledoc-kit/models/markup-section'; //the block elements supported by mobile-doc
 
 export const BLANK_DOC = {
@@ -42,7 +42,7 @@ export default Ember.Component.extend({
         const options = {
             mobiledoc: mobiledoc,
             //temp
-            cards: createCard(editorCards)/*[
+            cards: [
                 createCard(
                 {
                     name: 'html-card',
@@ -69,7 +69,7 @@ export default Ember.Component.extend({
 
                         }
                     })
-            ]*/,
+            ],
             markups: [],
             atoms: [],
             spellcheck: true,
