@@ -84,7 +84,7 @@ export default function createCardFactory(toolbar) {
             });
 
 
-            let handle = new Handle({env, options, payload});
+//            let handle = new Handle({env, options, payload});
 //            if( buttons ) {
 
 //                buttons.forEach( item => handle.addButton( item.name , _ => { el.removeChild( handle.holder ); item.onclick( ); }) );

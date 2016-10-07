@@ -3,6 +3,8 @@
 var MergeTrees = require('broccoli-merge-trees');
 var Funnel = require('broccoli-funnel');
 var path = require('path');
+var cards = require('./addon/cards/index.js');
+
 
 
 module.exports = {
@@ -38,7 +40,12 @@ module.exports = {
     },
 
     // temp
-    frontEndCards: [
+    htmlOptions:
+        {
+            cards: cards.html
+        }
+/*
+        [
              {
                 name: 'html-card',
                 type: 'html',
@@ -47,5 +54,5 @@ module.exports = {
                 }
             }
         ]
-
+*/
 };
