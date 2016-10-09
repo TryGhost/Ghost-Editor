@@ -40,7 +40,7 @@ export default Ember.Component.extend({
         let editor = this.editor = this.get('editor');
         this.tools = Tools(editor);
 
-        this.iconURL = ghostPaths().adminRoot + '/tools/';
+        this.iconURL = ghostPaths().assetRoot + 'tools/';
     },
     didRender() {
         let $this = this.$();
