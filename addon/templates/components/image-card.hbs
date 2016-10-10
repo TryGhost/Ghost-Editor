@@ -1,4 +1,6 @@
-{{#if file}}
+{{#if url}}
+    <img src="{{url}}" />
+{{else if file}}
 {{!-- Upload in progress! --}}
     {{#if failureMessage}}
         <div class="failed">{{failureMessage}}</div>

@@ -30,14 +30,18 @@
 }
 
 
-.toolbar:hover {
+.gh-normal:hover {
     margin-left:-160px;/*calc(0 - (var(--button-size)*3))*/;
     transition: margin-left 0.1s;
 }
 
-.non-primary-block-selected:hover {
-    margin-left:-128px;/*calc(0 - (var(--button-size)*3))*/;
+.gh-selection:hover {
+    margin-left:-64px;/*calc(0 - (var(--button-size)*2))*/;
     transition: margin-left 0.1s;
+}
+
+.gh-newline:hover {
+
 }
 
 .toolbar ul {
@@ -104,4 +108,33 @@
 .toolbar ul li button img {
     width:20px;
     height:20px;
+}
+
+
+/* tick */
+
+.toolbar.gh-selection:before {
+    content: "";
+    border-bottom: 10px solid black;
+    border-bottom-color: inherit;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    left: 50px;
+    left: calc(50% - 10px);
+    top:-10px;
+    position:absolute;
+
+}
+
+.toolbar.gh-newline:before {
+    content: "";
+    border-right: 10px solid black;
+    border-right-color: inherit;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    top: 10px;
+    top: calc(50% - 10px);
+    left:-10px;
+    position:absolute;
+
 }

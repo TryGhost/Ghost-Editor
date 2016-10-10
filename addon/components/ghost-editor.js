@@ -11,7 +11,7 @@ export const BLANK_DOC = {
     markups: [],
     atoms: [],
     cards: [],
-    sections: []
+    sections: [[1,"p",[[0,[],0,""]]]]
 };
 
 
@@ -124,7 +124,10 @@ export default Ember.Component.extend({
             var sel = window.getSelection();
             sel.removeAllRanges();
             sel.addRange(range);
+            editor._ensureFocus();
         }
+
+
     }
 
 });

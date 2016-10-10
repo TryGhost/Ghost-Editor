@@ -4,7 +4,7 @@
 module.exports = {
         name: 'image-card',
         render: function(opts) {
-
+            return '<img src="' + opts.payload.img + '" />';
         }
 };
 

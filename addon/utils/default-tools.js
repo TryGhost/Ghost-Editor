@@ -105,10 +105,40 @@ export default function (editor) {
             }
         },
 
+
+        {
+            name: "u",
+            icon: "underline.svg",
+            selected: false,
+            type: 'markup',
+            onClick: (editor) => {
+                editor.run(postEditor => {
+                    postEditor.toggleMarkup('u');
+                });
+            },
+            checkElements: function (elements) {
+                Ember.set(this, "selected", elements.filter(element => element.tagName === 'u').length > 0);
+            }
+        },
+        {
+            name: "s",
+            icon: "strikethrough.svg",
+            selected: false,
+            type: 'markup',
+            onClick: (editor) => {
+                editor.run(postEditor => {
+                    postEditor.toggleMarkup('s');
+                });
+            },
+            checkElements: function (elements) {
+                Ember.set(this, "selected", elements.filter(element => element.tagName === 's').length > 0);
+            }
+        },
         {
             name: "b",
             icon: "bold.svg",
             selected: false,
+            type: 'markup',
             visibility: 'primary',
             onClick: (editor) => {
                 editor.run(postEditor => {
@@ -123,6 +153,7 @@ export default function (editor) {
             name: "i",
             icon: "italic.svg",
             selected: false,
+            type: 'markup',
             visibility: 'primary',
             onClick: (editor) => {
                 editor.run(postEditor => {
@@ -137,6 +168,7 @@ export default function (editor) {
             name: "a",
             icon: "link.svg",
             selected: false,
+            type: 'markup',
             visibility: 'primary',
             onClick: (editor) => {
                 editor.run(postEditor => {
@@ -148,35 +180,10 @@ export default function (editor) {
             }
         },
         {
-            name: "u",
-            icon: "underline.svg",
-            selected: false,
-            onClick: (editor) => {
-                editor.run(postEditor => {
-                    postEditor.toggleMarkup('u');
-                });
-            },
-            checkElements: function (elements) {
-                Ember.set(this, "selected", elements.filter(element => element.tagName === 'u').length > 0);
-            }
-        },
-        {
-            name: "s",
-            icon: "strikethrough.svg",
-            selected: false,
-            onClick: (editor) => {
-                editor.run(postEditor => {
-                    postEditor.toggleMarkup('s');
-                });
-            },
-            checkElements: function (elements) {
-                Ember.set(this, "selected", elements.filter(element => element.tagName === 's').length > 0);
-            }
-        },
-        {
             name: "sub",
             icon: "subscript.svg",
             selected: false,
+            type: 'markup',
             onClick: (editor) => {
                 editor.run(postEditor => {
                     postEditor.toggleMarkup('sub');
@@ -190,6 +197,7 @@ export default function (editor) {
             name: "sup",
             icon: "superscript.svg",
             selected: false,
+            type: 'markup',
             onClick: (editor) => {
                 editor.run(postEditor => {
                     postEditor.toggleMarkup('sup');
@@ -203,10 +211,13 @@ export default function (editor) {
             name: "img",
             selected: false,
             type: 'newline',
+            icon: 'file-picture-add.svg',
             visibility: "primary",
             onClick: (editor) => {
                 editor.run(postEditor => {
-                    postEditor.toggleMarkup('sup');
+                    let card = postEditor.builder.createCardSection('image-card', {pos: "top"});
+                    postEditor.replaceSection(editor.range.headSection, card);
+
                 });
             },
             checkElements: function (elements) {
@@ -217,6 +228,7 @@ export default function (editor) {
             name: "html",
             selected: false,
             type: 'newline',
+            icon: 'html-five.svg',
             visibility: "primary",
             onClick: (editor) => {
                 editor.run(postEditor => {
@@ -225,7 +237,7 @@ export default function (editor) {
                 });
             },
             checkElements: function (elements) {
-                Ember.set(this, "selected", elements.filter(element => element.tagName === 'sup').length > 0);
+
             }
         },
         {
@@ -233,14 +245,34 @@ export default function (editor) {
             selected: false,
             type: 'newline',
             visibility: "primary",
+            icon: 'file-code-1.svg',
             onClick: (editor) => {
                 editor.run(postEditor => {
-                    postEditor.toggleMarkup('sup');
+                    alert("Markdown card not implemented.")
                 });
             },
             checkElements: function (elements) {
-                Ember.set(this, "selected", elements.filter(element => element.tagName === 'sup').length > 0);
+
             }
+        },
+        {
+            name: 'edit',
+            selected: false,
+            type: 'card',
+            visibility: 'primary',
+            icon: 'file-code-edit.svg',
+            onClick: ()=>{},
+            checkElements:()=>{}
+        }
+        ,
+        {
+            name: 'delete',
+            selected: false,
+            type: 'card',
+            visibility: 'primary',
+            icon: 'close.svg',
+            onClick: ()=>{},
+            checkElements:()=>{}
         }
     ];
 }

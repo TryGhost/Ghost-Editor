@@ -50,8 +50,7 @@ export default Component.extend({
     formData: computed('file', function () {
         let file = this.get('file');
         let formData = new FormData();
-        console.log("FORMDATA" , file );
-        formData.append('uploadimage', file);
+        formData.append('file', file);
 
         return formData;
     }),
@@ -87,8 +86,8 @@ export default Component.extend({
     }),
 
     didReceiveAttrs() {
-        let image = this.get('image');
-        this.set('url', image);
+        let image = this.get('payload');
+        this.set('url', image.img);
     },
 
     dragOver(event) {
@@ -154,6 +153,10 @@ export default Component.extend({
 
     _uploadSuccess(response) {
         this.set('url', response);
+
+        this.get('payload').img =response;
+        this.get('env').save(this.get('payload'), false);
+
         this.send('saveUrl');
         this.send('reset');
         invokeAction(this, 'uploadSuccess', response);

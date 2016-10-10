@@ -22,7 +22,7 @@
     font-size: 1.6rem;
     line-height: 2.5rem;
     resize: none;
-}
+ }
 
 .__mobiledoc-editor p {
     margin: 0;
@@ -62,8 +62,9 @@ p, h2, h3, ul, ol {
 }
 
 .__mobiledoc-card {
-    border: 1px solid;
+    border: 1px solid #5ba4e5;
     min-height: 100px;
+    display: inline-block;
 }
 
 .__mobiledoc-card .card-handle {
