@@ -13,11 +13,8 @@
 
 .__mobiledoc-editor {
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
     min-height: 100%;
     outline: none;
-    padding: 51px 20px 36px 20px;
     font-family: var(--font-family);
     font-size: 1.6rem;
     line-height: 2.5rem;
@@ -27,10 +24,6 @@
 .__mobiledoc-editor p {
     margin: 0;
     padding: 0;
-}
-
-.ghost-editor .surface {
-    max-width: 800px;
 }
 
 .__mobiledoc-tooltip {
@@ -149,4 +142,3 @@ textarea.ed_code {
     height:100%;
     border:none;
 }
-
