@@ -1,12 +1,19 @@
 {{#each emberCards as |card|}}
     {{#ember-wormhole to=card.id}}
-        {{component card.card.name env=card.env payload=card.payload options=card.options}}
+        <label class="card-label">{{card.card.label}}</label>
+        {{component card.card.name
+        env=card.env
+        payload=card.payload
+        options=card.options
+        apiRoot=apiRoot
+        assetPath=assetPath
+        }}
     {{/ember-wormhole}}
 {{/each}}
 
 <div class='ghost-editor'>
     <div class='surface'/>
-    {{ghost-toolbar editor=editor}}
+    {{ghost-toolbar editor=editor assetPath=assetPath}}
 </div>
 {{!--ghost-cards editor=editor cards=editor.cards--}}
 

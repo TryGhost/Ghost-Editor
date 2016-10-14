@@ -39,14 +39,16 @@ export default Ember.Component.extend({
         let createCard = createCardFactory.apply(this, {}); //need to pass the toolbar
 
 
+
         const options = {
             mobiledoc: mobiledoc,
             //temp
             cards: [
+
                 createCard(
                 {
                     name: 'html-card',
-                    label: 'EMBED HTML',
+                    label: 'HTML',
                     type: 'dom',
                     genus: 'ember',
                     didRender: function () {
@@ -59,7 +61,20 @@ export default Ember.Component.extend({
                 createCard(
                     {
                         name: 'image-card',
-                        label: 'EMBED IMAGE',
+                        label: 'IMAGE',
+                        type: 'dom',
+                        genus: 'ember',
+                        didRender: function () {
+
+                        },
+                        didPlace: function () {
+
+                        }
+                    }),
+                createCard(
+                    {
+                        name: 'markdown-card',
+                        label: 'MARKDOWN',
                         type: 'dom',
                         genus: 'ember',
                         didRender: function () {

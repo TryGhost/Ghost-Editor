@@ -1,27 +1,26 @@
 
-
-.editor-holder {
-    height: 100%;
-}
-
 .ghost-editor {
-    height: 100%;
-    overflow: auto;
-    position: relative;
-    -webkit-overflow-scrolling: touch;
+    position:absolute;
+    height:calc(100% - 70px);
+    width:100%;
+    overflow-y:auto;
+    overflow-x:hidden;
+    border:1px solid;
+
 }
 
 .__mobiledoc-editor {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    min-height: 100%;
     outline: none;
     padding: 51px 20px 36px 20px;
     font-family: var(--font-family);
     font-size: 1.6rem;
     line-height: 2.5rem;
     resize: none;
+
+
  }
 
 .__mobiledoc-editor p {
@@ -65,6 +64,7 @@ p, h2, h3, ul, ol {
     border: 1px solid #5ba4e5;
     min-height: 100px;
     display: inline-block;
+    width:100%;
 }
 
 .__mobiledoc-card .card-handle {
@@ -96,7 +96,6 @@ p, h2, h3, ul, ol {
     overflow:hidden;
     line-height:30px;
     text-align: center;
-    font-size:2em;
     border: 1px solid;
     font-size: 20px;
 
@@ -122,6 +121,10 @@ p, h2, h3, ul, ol {
 
     cursor: -webkit-grab;
     cursor: -moz-grab;
+}
+
+.card-label {
+    float:right;
 }
 
 @keyframes rotate {

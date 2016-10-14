@@ -8,7 +8,7 @@ import run from 'ember-runloop';
 import layout from '../../templates/components/image-card';
 
 import {invokeAction} from 'ember-invoke-action';
-import ghostPaths from 'ghost-editor/utils/ghost-paths';
+//import ghostPaths from 'ghost-editor/utils/ghost-paths';
 import {
     isRequestEntityTooLargeError,
     isUnsupportedMediaTypeError,
@@ -19,7 +19,7 @@ import {
 export default Component.extend({
     layout,
     name: 'image-card',
-    label: 'EMBED IMAGE',
+    label: 'IMAGE',
     type: 'dom',
     genus: 'ember',
     tagName: 'section',
@@ -190,14 +190,11 @@ export default Component.extend({
 
         let file = this.get('file');
         let formData = new FormData();
-        console.log("FILEX" , file  );
         formData.append('uploadimage', file);
-        console.log("FORMDATAX", formData);
 
-        let url = `${ghostPaths().apiRoot}/uploads/`;
-        console.log("AJAX", ajax);
+        let url = `${this.get('apiRoot')}/uploads/`;
         this._uploadStarted();
-        console.log("FORM DATA, look for get('uploadimage')", formData);
+
         ajax.post(url, {
             data: formData,
             processData: false,

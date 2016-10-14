@@ -248,7 +248,8 @@ export default function (editor) {
             icon: 'file-code-1.svg',
             onClick: (editor) => {
                 editor.run(postEditor => {
-                    alert("Markdown card not implemented.")
+                    let card = postEditor.builder.createCardSection('markdown-card', {pos: "top"});
+                    postEditor.replaceSection(editor.range.headSection, card);
                 });
             },
             checkElements: function (elements) {

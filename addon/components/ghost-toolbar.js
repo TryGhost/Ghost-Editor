@@ -2,7 +2,6 @@ import Ember from 'ember';
 import layout from '../templates/components/ghost-toolbar';
 
 import Tools from '../utils/default-tools';
-import ghostPaths from 'ghost-editor/utils/ghost-paths';
 
 export default Ember.Component.extend({
     layout,
@@ -17,7 +16,6 @@ export default Ember.Component.extend({
 
 
         if(this.__state === 'newline') {
-            console.log("STATE NEWLINE", this.__state);
             let postTools = [ ];
             let selectedPostTools = [ ];
             let newlineTools = [ ];
@@ -94,7 +92,7 @@ export default Ember.Component.extend({
         let editor = this.editor = this.get('editor');
         this.tools = Tools(editor);
 
-        this.iconURL = ghostPaths().adminRoot + '/tools/';
+        this.iconURL = this.get('assetPath') + '/tools/';
     },
     didRender() {
         let $this = this.$();
