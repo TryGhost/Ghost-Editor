@@ -7,12 +7,17 @@ export default Ember.Component.extend({
     isEditing: false,
     value : Ember.computed('payload', {
         get(key) {
+            console.log("HTMLCARDPAYLOADGET", this.get('payload'));
+            console.log(this.get('env'));
             return this.get('payload').html || '';
         },
 
         set(key, value) {
+
             this.get('payload').html = value;
+            console.log(this.get('env'));
             this.get('env').save(this.get('payload'), false);
+            console.log("HTMLCARDPAYLOADSAVE", this.get('payload'));
             return this.get('payload').html;
         }
 
@@ -31,10 +36,10 @@ export default Ember.Component.extend({
         }
     },
     didRender() {
-        Ember.$('textarea').on('change', (e) => {
-            this.get('payload').html = e.target.value;
-            this.get('env').save(this.get('payload'), false);
-        });
+        //Ember.$('textarea').on('change', (e) => {
+        //    this.get('payload').html = e.target.value;
+        //    this.get('env').save(this.get('payload'), false);
+        //});
     }
 });
 

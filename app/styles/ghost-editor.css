@@ -1,35 +1,30 @@
 
-.ghost-editor {
-    position:absolute;
-    height:calc(100% - 70px);
-    width:100%;
-    overflow-y:auto;
-    overflow-x:hidden;
-    border:1px solid;
 
+.editor-holder {
+    height: 100%;
+}
+
+.ghost-editor {
+    height: 100%;
+    overflow: auto;
+    position: relative;
+    -webkit-overflow-scrolling: touch;
 }
 
 .__mobiledoc-editor {
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+    min-height: 100%;
     outline: none;
-    padding: 51px 20px 36px 20px;
     font-family: var(--font-family);
     font-size: 1.6rem;
     line-height: 2.5rem;
     resize: none;
-
-
- }
+    padding-bottom:50px;
+}
 
 .__mobiledoc-editor p {
     margin: 0;
     padding: 0;
-}
-
-.ghost-editor .surface {
-    max-width: 800px;
 }
 
 .__mobiledoc-tooltip {
@@ -64,7 +59,8 @@ p, h2, h3, ul, ol {
     border: 1px solid #5ba4e5;
     min-height: 100px;
     display: inline-block;
-    width:100%;
+    width:calc(100% - 4px);
+    margin:2px;
 }
 
 .__mobiledoc-card .card-handle {
@@ -96,6 +92,7 @@ p, h2, h3, ul, ol {
     overflow:hidden;
     line-height:30px;
     text-align: center;
+    font-size:2em;
     border: 1px solid;
     font-size: 20px;
 
@@ -123,10 +120,6 @@ p, h2, h3, ul, ol {
     cursor: -moz-grab;
 }
 
-.card-label {
-    float:right;
-}
-
 @keyframes rotate {
     from {
         -webkit-transform: rotate(0deg);
@@ -152,4 +145,3 @@ textarea.ed_code {
     height:100%;
     border:none;
 }
-

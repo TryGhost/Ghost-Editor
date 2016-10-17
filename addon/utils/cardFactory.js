@@ -17,10 +17,11 @@ export default function createCardFactory(toolbar) {
             throw new Error("A card must have a name and didRender method");
         }
 
-        card_object.render = ({env, options, payload}) => {
+        card_object.render = ({env, options, payload: _payload}) => {
 
             //setupUI({env, options, payload});
-
+            let payload = Ember.copy(_payload);
+            payload.card_name = env.name;
             if (card_object.genus === 'ember') {
                 let card = setupEmberCard({env, options, payload}, "render");
                 let div = document.createElement('div');
@@ -30,10 +31,11 @@ export default function createCardFactory(toolbar) {
             return card_object.didRender({env, options, payload});
         };
 
-        card_object.edit = ({env, options, payload}) => {
+        card_object.edit = ({env, options, payload: _payload}) => {
 
             //setupUI({env, options, payload});
-
+            let payload = Ember.copy(_payload);
+            payload.card_name = env.name;
             if (card_object.genus === 'ember') {
                 let card = setupEmberCard({env, options, payload}, "edit");
                 let div = document.createElement('div');
