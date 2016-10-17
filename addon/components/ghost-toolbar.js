@@ -224,7 +224,7 @@ export default Ember.Component.extend({
 
                 } else {
                     // if we are editing, then the toolbar is in the top left hand corner:
-                    
+
                     let element = editor.range.head.section.renderNode._element;
                     let offset =  this.$(element).position();
                     let height = this.$(element).height();
