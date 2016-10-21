@@ -13,8 +13,8 @@ export default function createCardFactory(toolbar) {
         }
 
         // an ember card doesn't need a render or edit method
-        if (!card_object.name || (!card_object.didRender && card_object.genus !== 'ember')) {
-            throw new Error("A card must have a name and didRender method");
+        if (!card_object.name || (!card_object.willRender && card_object.genus !== 'ember')) {
+            throw new Error("A card must have a name and willRender method");
         }
 
         card_object.render = ({env, options, payload: _payload}) => {
@@ -28,7 +28,7 @@ export default function createCardFactory(toolbar) {
                 div.id = card.id;
                 return div;
             }
-            return card_object.didRender({env, options, payload});
+            return card_object.willRender({env, options, payload});
         };
 
         card_object.edit = ({env, options, payload: _payload}) => {
@@ -42,10 +42,10 @@ export default function createCardFactory(toolbar) {
                 div.id = card.id;
                 return div;
             }
-            if (card_object.hasOwnProperty('didEdit')) {
-                return card_object.didEdit({env, options, payload, toolbar});
+            if (card_object.hasOwnProperty('willRender')) {
+                return card_object.willEdit({env, options, payload, toolbar});
             } else {
-                return card_object.didRender({env, options, payload, toolbar});
+                return card_object.willRender({env, options, payload, toolbar});
             }
             //do handle and delete stuff
         };

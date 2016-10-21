@@ -188,7 +188,7 @@ export default Ember.Component.extend({
                             left: offset.left + $editor.scrollLeft()
                         }, 50);
 
-                        $this.fadeIn();
+                        $this.fadeIn(50);
                         this._element = element;
                    // }
 
@@ -210,10 +210,10 @@ export default Ember.Component.extend({
                         $this.stop();
                         $this.animate({
                             top: offset.top + $editor.scrollTop() - 5,
-                            left: offset.left + $editor.scrollLeft() + 20
+                            left: offset.left + $editor.scrollLeft() + 50
                         }, 50);
 
-                        $this.fadeIn();
+                        $this.fadeIn(50);
                         this._element = element;
                   //  }
 
@@ -231,7 +231,8 @@ export default Ember.Component.extend({
                     if (this._element !== element || this.__state !== 'normal' || this.__height !== height) {
                         let $editor = Ember.$('.ghost-editor');
                         $this.stop();
-                        $this.animate({
+                        $this.fadeOut(50);
+                        /*$this.animate({
                             top: offset.top + $editor.scrollTop() + Ember.$(element).outerHeight(),
                             left: offset.left + $editor.scrollLeft()
                         }, 50);
@@ -239,7 +240,7 @@ export default Ember.Component.extend({
                         $this.fadeIn();
                         this._element = element;
                         this.__state = 'normal';
-                        this.__height = height;
+                        this.__height = height;*/
                         $this.toggleClass("gh-newline", false);
                         $this.toggleClass("gh-card", false);
                         $this.toggleClass("gh-selection", false);

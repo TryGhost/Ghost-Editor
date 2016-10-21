@@ -3,17 +3,16 @@ import layout from '../templates/components/ghost-editor';
 import Mobiledoc from 'mobiledoc-kit';
 import {MOBILEDOC_VERSION} from 'mobiledoc-kit/renderers/mobiledoc';
 import createCardFactory from '../utils/cardFactory';
-import {editorCards } from '../cards/index';
+import editorCards  from '../cards/index';
 //import { VALID_MARKUP_SECTION_TAGNAMES } from 'mobiledoc-kit/models/markup-section'; //the block elements supported by mobile-doc
 
 export const BLANK_DOC = {
     version: MOBILEDOC_VERSION,
-    markups: [],
     atoms: [],
+    markups: [],
     cards: [],
-    sections: [[1,"p",[[0,[],0,""]]]]
+    sections: [[1,"p",[]]]
 };
-
 
 export default Ember.Component.extend({
     layout,
@@ -38,53 +37,12 @@ export default Ember.Component.extend({
 
         let createCard = createCardFactory.apply(this, {}); //need to pass the toolbar
 
-
+        console.log("CARDS", editorCards);
 
         const options = {
             mobiledoc: mobiledoc,
             //temp
-            cards: [
-
-                createCard(
-                {
-                    name: 'html-card',
-                    label: 'HTML',
-                    type: 'dom',
-                    genus: 'ember',
-                    didRender: function () {
-
-                    },
-                    didPlace: function () {
-
-                    }
-                }),
-                createCard(
-                    {
-                        name: 'image-card',
-                        label: 'IMAGE',
-                        type: 'dom',
-                        genus: 'ember',
-                        didRender: function () {
-
-                        },
-                        didPlace: function () {
-
-                        }
-                    }),
-                createCard(
-                    {
-                        name: 'markdown-card',
-                        label: 'MARKDOWN',
-                        type: 'dom',
-                        genus: 'ember',
-                        didRender: function () {
-
-                        },
-                        didPlace: function () {
-
-                        }
-                    })
-            ],
+            cards: createCard(editorCards),
             markups: [],
             atoms: [],
             spellcheck: true,
@@ -121,6 +79,75 @@ export default Ember.Component.extend({
 
         window.editor = this.editor;
 
+        this.editor.onTextInput(
+
+            {
+                name: 'bold',
+                match: /\*\*(.+?)\*\*/,
+                run(editor, matches) {
+                    let range = editor.range;
+                    range = range.extend(-(matches[0].length));
+                    editor.run(postEditor => {
+                        let position = postEditor.deleteRange(range);
+                        let bold = postEditor.builder.createMarkup('strong');
+                        let nextPosition = postEditor.insertTextWithMarkup(position, matches[1], [bold]);
+                        postEditor.insertTextWithMarkup(nextPosition, '', []); // insert the un-marked-up space
+                    });
+                }
+            });
+
+
+        this.editor.onTextInput(
+
+            {
+                name: 'em',
+                match: /[^\*]\*[^\*](.+?)\*/,
+                run(editor, matches) {
+                    let range = editor.range;
+                    range = range.extend(-(matches[0].length));
+                    editor.run(postEditor => {
+                        let position = postEditor.deleteRange(range);
+                        let em = postEditor.builder.createMarkup('em');
+                        let nextPosition = postEditor.insertTextWithMarkup(position, matches[1], [em]);
+                        postEditor.insertTextWithMarkup(nextPosition, '', []); // insert the un-marked-up space
+                    });
+                }
+            });
+
+        this.editor.onTextInput(
+
+            {
+                name: 'link',
+                match: /\[(.*)?\]\((.*)?\)/,
+                run(editor, matches) {
+                    let url = matches[2];
+                    let text = matches[1];
+
+                    let range = editor.range;
+                    range = range.extend(-(matches[0].length));
+                    editor.run(postEditor => {
+                        let position = postEditor.deleteRange(range);
+                        let a = postEditor.builder.createMarkup('a', {href: url});
+                        let nextPosition = postEditor.insertTextWithMarkup(position, text, [a]);
+                        postEditor.insertTextWithMarkup(nextPosition, '', []); // insert the un-marked-up space
+                    });
+
+                    //let markup = postEditor.builder.createMarkup('a', {href: url});
+                }
+            });
+/*
+        this.editor.onTextinput(
+
+        {
+            name: 'heading',
+                // "# " -> h1, "## " -> h2, "### " -> h3
+                match: /(?:__|[*#])|\[(.*?)\]\(.*?\)$/,
+            run(editor, matches) {
+                console.log("LINK MATCHES", matches);
+            }
+        });*/
+
+
 
         //VALID_MARKUP_SECTION_TAGNAMES
 
@@ -146,4 +173,20 @@ export default Ember.Component.extend({
     }
 
 });
+
+
+function replaceWithHeaderSection(editor, headingTagName) {
+    let { range: { head, head: { section } } } = editor;
+    // Skip if cursor is not at end of section
+    if (!head.isTail()) {
+        return;
+    }
+
+    editor.run(postEditor => {
+        let { builder } = postEditor;
+        let newSection = builder.createMarkupSection(headingTagName);
+        postEditor.replaceSection(section, newSection);
+        postEditor.setRange(newSection.headPosition());
+    });
+}
 

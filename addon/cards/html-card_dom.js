@@ -1,6 +1,6 @@
 export default {
     name: 'html-card',
-        label: 'HTML Card',
-        icon: '',
-        genus: 'ember'
+    label: 'HTML Card',
+    icon: '',
+    genus: 'ember'
 };
