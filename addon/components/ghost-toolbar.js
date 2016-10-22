@@ -90,7 +90,7 @@ export default Ember.Component.extend({
     init() {
         this._super(...arguments);
         let editor = this.editor = this.get('editor');
-        this.tools = Tools(editor);
+        this.tools = Tools(editor, this);
 
         this.iconURL = this.get('assetPath') + '/tools/';
     },
@@ -134,15 +134,16 @@ export default Ember.Component.extend({
 
         editor.cursorDidChange(() => {
             // if there is no cursor:
-            if(!editor.range || editor.range.head.isBlank) {
-                $this.fadeOut();
+            if((!editor.range || editor.range.head.isBlank)) {
+                if(!this.get('isLink')) {
+                    $this.fadeOut();
+                }
                 return;
             }
             this.propertyWillChange('toolbar');
 
-                if(editor.range.head.section.renderNode.element !== editor.range.tail.section.renderNode.element
-                    || editor.range.head.offset !== editor.range.tail.offset) {
-                    // if we have a selection, then the toolbar appears just above said selection:
+                if(!editor.range.isCollapsed) {
+                    // if we have a selection, then the toolbar appears just below said selection:
 
                     let range = window.getSelection().getRangeAt(0); // get the actual range within the DOM.
 
@@ -161,10 +162,11 @@ export default Ember.Component.extend({
                         top: position.bottom + $editor.scrollTop() - edOffset.top + 20,
                         left: position.left + (position.width / 2) + $editor.scrollLeft() - edOffset.left - 30
                     }, 50);
+                    $this.fadeIn(50);
+                    this._visible = true;
 
-                    $this.fadeIn();
                     this._element = element;
-
+                    this.set('isLink', false);
 
 
                     $this.toggleClass("gh-newline", false);
@@ -173,36 +175,10 @@ export default Ember.Component.extend({
                     $this.toggleClass("gh-normal", false);
 
 
-                } else if(editor.range.head.section.renderNode.element === editor.range.tail.section.renderNode.element
-                    && editor.range.head.section.isCardSection) {
-                    // if we have a card selected, then the toolbar appears just below the card:
-                    this.__state = 'card';
-
-                    let element = editor.range.head.section.renderNode._element;
-                    let offset =  this.$(element).position();
-                   // if (this._element !== element) {
-                        let $editor = Ember.$('.ghost-editor');
-                        $this.stop();
-                        $this.animate({
-                            top: offset.top + $editor.scrollTop() + Ember.$(element).find('.__mobiledoc-card').outerHeight(),
-                            left: offset.left + $editor.scrollLeft()
-                        }, 50);
-
-                        $this.fadeIn(50);
-                        this._element = element;
-                   // }
-
-                    $this.toggleClass("gh-newline", false);
-                    $this.toggleClass("gh-card", true);
-                    $this.toggleClass("gh-selection", false);
-                    $this.toggleClass("gh-normal", false);
-
-
-                } else if(editor.range.head.section.isBlank &&
-                    editor.range.head.section.renderNode.element === editor.range.tail.section.renderNode.element) {
+                } else if(editor.range.head.section.isBlank) {
                     // if we have a new line then the toolbar appears just to the right of the cursor:
                     this.__state = 'newline';
-
+                    this.isBlank = true;
                     let element = editor.range.head.section.renderNode._element;
                     let offset =  this.$(element).position();
                    // if (this._element !== element) {
@@ -212,60 +188,38 @@ export default Ember.Component.extend({
                             top: offset.top + $editor.scrollTop() - 5,
                             left: offset.left + $editor.scrollLeft() + 50
                         }, 50);
-
                         $this.fadeIn(50);
+                        this._visible = true;
+
                         this._element = element;
                   //  }
-
+                    this.set('isLink', false);
                     $this.toggleClass("gh-newline", true);
                     $this.toggleClass("gh-card", false);
                     $this.toggleClass("gh-selection", false);
                     $this.toggleClass("gh-normal", false);
 
                 } else {
-                    // if we are editing, then the toolbar is in the top left hand corner:
-
-                    let element = editor.range.head.section.renderNode._element;
-                    let offset =  this.$(element).position();
-                    let height = this.$(element).height();
-                    if (this._element !== element || this.__state !== 'normal' || this.__height !== height) {
-                        let $editor = Ember.$('.ghost-editor');
+                    if(this._visible) {
+                        this.set('isLink', false);
                         $this.stop();
                         $this.fadeOut(50);
-                        /*$this.animate({
-                            top: offset.top + $editor.scrollTop() + Ember.$(element).outerHeight(),
-                            left: offset.left + $editor.scrollLeft()
-                        }, 50);
-
-                        $this.fadeIn();
-                        this._element = element;
-                        this.__state = 'normal';
-                        this.__height = height;*/
-                        $this.toggleClass("gh-newline", false);
-                        $this.toggleClass("gh-card", false);
-                        $this.toggleClass("gh-selection", false);
-                        $this.toggleClass("gh-normal", true);
+                        this._visible = false;
                     }
-
-
-
                 }
 
-               //o0 console.log("toolbar state", this.__state);
-
-
-            this.isBlank = editor.range.head.section.isBlank && editor.range.head.isTail();
-
-            this.tools.forEach(tool => {
-                if (tool.hasOwnProperty('checkElements')) {
-                    // if its a list we want to know what type
-                    let sectionTagName = editor.activeSection._tagName === 'li'
-                        ? editor.activeSection.parent._tagName
-                        : editor.activeSection._tagName;
-                    tool.checkElements(editor.activeMarkups.concat([{tagName: sectionTagName}]));
-                }
-            });
-
+            if(this._visible) {
+                console.log('visible');
+                this.tools.forEach(tool => {
+                    if (tool.hasOwnProperty('checkElements')) {
+                        // if its a list we want to know what type
+                        let sectionTagName = editor.activeSection._tagName === 'li'
+                            ? editor.activeSection.parent._tagName
+                            : editor.activeSection._tagName;
+                        tool.checkElements(editor.activeMarkups.concat([{tagName: sectionTagName}]));
+                    }
+                });
+            }
             this.propertyDidChange('toolbar');
         });
     }

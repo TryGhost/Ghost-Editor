@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export default function (editor) {
+export default function (editor, toolbar) {
 
     return [
         {
@@ -171,9 +171,10 @@ export default function (editor) {
             type: 'markup',
             visibility: 'primary',
             onClick: (editor) => {
-                editor.run(postEditor => {
-                    postEditor.toggleMarkup('a');
-                });
+                //editor.run(postEditor => {
+                    toolbar.set('isLink', true);
+                    toolbar.$('input').focus();
+                //});
             },
             checkElements: function (elements) {
                 Ember.set(this, "selected", elements.filter(element => element.tagName === 'a').length > 0);

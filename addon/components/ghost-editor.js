@@ -2,9 +2,12 @@ import Ember from 'ember';
 import layout from '../templates/components/ghost-editor';
 import Mobiledoc from 'mobiledoc-kit';
 import {MOBILEDOC_VERSION} from 'mobiledoc-kit/renderers/mobiledoc';
+import {replaceWithListSection, replaceWithHeaderSection} from 'mobiledoc-kit/editor/text-input-handlers';
 import createCardFactory from '../utils/cardFactory';
 import editorCards  from '../cards/index';
 //import { VALID_MARKUP_SECTION_TAGNAMES } from 'mobiledoc-kit/models/markup-section'; //the block elements supported by mobile-doc
+
+
 
 export const BLANK_DOC = {
     version: MOBILEDOC_VERSION,
@@ -20,6 +23,7 @@ export default Ember.Component.extend({
     emberCards: Ember.A([]),
     init() {
         this._super(...arguments);
+
 
 
         let mobiledoc = this.get('value') || BLANK_DOC;
@@ -80,7 +84,6 @@ export default Ember.Component.extend({
         window.editor = this.editor;
 
         this.editor.onTextInput(
-
             {
                 name: 'bold',
                 match: /\*\*(.+?)\*\*/,
@@ -95,7 +98,22 @@ export default Ember.Component.extend({
                     });
                 }
             });
+        this.editor.onTextInput(
 
+            {
+                name: 'ubold',
+                match: /__(.+?)__/,
+                run(editor, matches) {
+                    let range = editor.range;
+                    range = range.extend(-(matches[0].length));
+                    editor.run(postEditor => {
+                        let position = postEditor.deleteRange(range);
+                        let bold = postEditor.builder.createMarkup('strong');
+                        let nextPosition = postEditor.insertTextWithMarkup(position, matches[1], [bold]);
+                        postEditor.insertTextWithMarkup(nextPosition, '', []); // insert the un-marked-up space
+                    });
+                }
+            });
 
         this.editor.onTextInput(
 
@@ -115,10 +133,25 @@ export default Ember.Component.extend({
             });
 
         this.editor.onTextInput(
+            {
+                name: 'uem',
+                match: /[^_]_[^_](.+?)_/,
+                run(editor, matches) {
+                    let range = editor.range;
+                    range = range.extend(-(matches[0].length));
+                    editor.run(postEditor => {
+                        let position = postEditor.deleteRange(range);
+                        let em = postEditor.builder.createMarkup('em');
+                        let nextPosition = postEditor.insertTextWithMarkup(position, matches[1], [em]);
+                        postEditor.insertTextWithMarkup(nextPosition, '', []); // insert the un-marked-up space
+                    });
+                }
+            });
 
+        this.editor.onTextInput(
             {
                 name: 'link',
-                match: /\[(.*)?\]\((.*)?\)/,
+                match: /[^!]\[(.*?)\]\((.*?)\)/,
                 run(editor, matches) {
                     let url = matches[2];
                     let text = matches[1];
@@ -131,22 +164,60 @@ export default Ember.Component.extend({
                         let nextPosition = postEditor.insertTextWithMarkup(position, text, [a]);
                         postEditor.insertTextWithMarkup(nextPosition, '', []); // insert the un-marked-up space
                     });
-
-                    //let markup = postEditor.builder.createMarkup('a', {href: url});
                 }
             });
-/*
-        this.editor.onTextinput(
 
-        {
-            name: 'heading',
-                // "# " -> h1, "## " -> h2, "### " -> h3
-                match: /(?:__|[*#])|\[(.*?)\]\(.*?\)$/,
-            run(editor, matches) {
-                console.log("LINK MATCHES", matches);
-            }
-        });*/
+        this.editor.onTextInput(
+            {
+                name: 'image',
+                match: /!\[(.*?)\]\((.*?)\)/,
+                run(editor, matches) {
+                    let url = matches[2];
+                    let alt = matches[1];
 
+                    let range = editor.range;
+                    range = range.extend(-(matches[0].length));
+                    editor.run(postEditor => {
+                        let card = postEditor.builder.createCardSection('image-card', {pos: "top", img:url});
+                        postEditor.replaceSection(editor.range.headSection, card);
+                    });
+                }
+            });
+
+        this.editor.onTextInput(
+            {
+                name: 'strikethrough',
+                match: /~~(.+?)~~/,
+                run(editor, matches) {
+                    let range = editor.range;
+                    range = range.extend(-(matches[0].length));
+                    editor.run(postEditor => {
+                        let position = postEditor.deleteRange(range);
+                        let s = postEditor.builder.createMarkup('s');
+                        let nextPosition = postEditor.insertTextWithMarkup(position, matches[1], [s]);
+                        postEditor.insertTextWithMarkup(nextPosition, '', []); // insert the un-marked-up space
+                    });
+                }
+            });
+
+        this.editor.onTextInput(
+
+            {
+                name: 'dashul',
+                match: /^- $/,
+                run(editor, matches) {
+                    replaceWithListSection(editor, 'ul');
+                }
+            });
+        this.editor.onTextInput(
+
+            {
+                name: 'blockquote',
+                match: /^> $/,
+                run(editor, matches) {
+                    replaceWithHeaderSection(editor, 'blockquote');
+                }
+            });
 
 
         //VALID_MARKUP_SECTION_TAGNAMES
@@ -174,19 +245,4 @@ export default Ember.Component.extend({
 
 });
 
-
-function replaceWithHeaderSection(editor, headingTagName) {
-    let { range: { head, head: { section } } } = editor;
-    // Skip if cursor is not at end of section
-    if (!head.isTail()) {
-        return;
-    }
-
-    editor.run(postEditor => {
-        let { builder } = postEditor;
-        let newSection = builder.createMarkupSection(headingTagName);
-        postEditor.replaceSection(section, newSection);
-        postEditor.setRange(newSection.headPosition());
-    });
-}
 

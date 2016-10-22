@@ -1,6 +1,6 @@
 {{#each emberCards as |card|}}
     {{#ember-wormhole to=card.id}}
-        <label class="card-label">{{card.card.label}}</label>
+        {{!--<label class="card-label">{{card.card.label}}</label>--}}
         {{component card.card.name
         env=card.env
         payload=card.payload
