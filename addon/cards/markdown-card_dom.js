@@ -1,5 +1,5 @@
 export default {
-    name: 'gh-editor',
+    name: 'markdown-card',
     label: 'Markdown Card',
     icon: '',
     genus: 'ember'

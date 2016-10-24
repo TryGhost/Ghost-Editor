@@ -4,6 +4,10 @@ import layout from '../../templates/components/html-card';
 
 export default Ember.Component.extend({
     layout,
+    name: 'html-card',
+    label: 'HTML',
+    type: 'dom',
+    genus: 'ember',
     isEditing: false,
     value : Ember.computed('payload', {
         get(key) {
