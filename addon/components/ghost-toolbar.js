@@ -245,28 +245,30 @@ export default Ember.Component.extend({
             this.propertyDidChange('toolbar');
         });
     },
-    linkKeyDown: task(function(event) {
-        // if escape close link
-        if (event.keyCode === 27) {
-            this.set('isLink', false);
+    actions: {
+        linkKeyDown(event) {
+            // if escape close link
+            if (event.keyCode === 27) {
+                this.set('isLink', false);
+            }
+        },
+        linkKeyPress(event) {
+            // if enter run link
+            if (event.keyCode == 13) {
+                this.set('isLink', false);
+
+
+
+                this.editor.run(postEditor => {
+                    let markup = postEditor.builder.createMarkup('a', {href: event.target.value});
+                    postEditor.addMarkupToRange(this.get('linkRange'), markup);
+                });
+
+                this.set('linkRange', null);
+                event.stopPropagation();
+            }
         }
-    }),
-    linkKeyPress: task(function(event) {
-        // if enter run link
-        if (event.keyCode == 13) {
-            this.set('isLink', false);
-
-
-
-            this.editor.run(postEditor => {
-                let markup = postEditor.builder.createMarkup('a', {href: event.target.value});
-                postEditor.addMarkupToRange(this.get('linkRange'), markup);
-            });
-
-            this.set('linkRange', null);
-            event.stopPropagation();
-        }
-    }),
+    },
     doLink(range) {
 
         this.set('isLink', true);

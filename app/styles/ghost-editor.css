@@ -2,15 +2,11 @@
 
 .editor-holder {
     height: 100%;
-    /*margin: 0 auto;
-    max-width: 700px;*/
-}
-.editor-holder *:after {
-    user-select: auto; /* overide parent css */
 }
 .ghost-editor {
     height: 100%;
     -webkit-overflow-scrolling: touch;
+    padding-bottom:200px;
 }
 
 .__mobiledoc-editor {

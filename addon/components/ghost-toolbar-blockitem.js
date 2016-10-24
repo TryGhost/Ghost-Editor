@@ -80,9 +80,9 @@ export default Ember.Component.extend({
 
             $this.css('top', offset.top + $editor.scrollTop() - edOffset.top - 5);
             if(element.tagName.toLowerCase()==='li') {
-                $this.css('left', this.$(element.parentNode).position().left + $editor.scrollLeft() - 50);
+                $this.css('left', this.$(element.parentNode).position().left + $editor.scrollLeft() - 60);
             } else {
-                $this.css('left', offset.left + $editor.scrollLeft() - 50);
+                $this.css('left', offset.left + $editor.scrollLeft() - 60);
             }
 
 

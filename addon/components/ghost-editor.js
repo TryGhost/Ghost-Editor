@@ -41,8 +41,6 @@ export default Ember.Component.extend({
 
         let createCard = createCardFactory.apply(this, {}); //need to pass the toolbar
 
-        console.log("CARDS", editorCards);
-
         const options = {
             mobiledoc: mobiledoc,
             //temp
@@ -91,10 +89,11 @@ export default Ember.Component.extend({
                     let range = editor.range;
                     range = range.extend(-(matches[0].length));
                     editor.run(postEditor => {
+
                         let position = postEditor.deleteRange(range);
                         let bold = postEditor.builder.createMarkup('strong');
                         let nextPosition = postEditor.insertTextWithMarkup(position, matches[1], [bold]);
-                        postEditor.insertTextWithMarkup(nextPosition, '', []); // insert the un-marked-up space
+                        postEditor.insertTextWithMarkup(nextPosition, '', []);
                     });
                 }
             });
@@ -110,7 +109,7 @@ export default Ember.Component.extend({
                         let position = postEditor.deleteRange(range);
                         let bold = postEditor.builder.createMarkup('strong');
                         let nextPosition = postEditor.insertTextWithMarkup(position, matches[1], [bold]);
-                        postEditor.insertTextWithMarkup(nextPosition, '', []); // insert the un-marked-up space
+                        postEditor.insertTextWithMarkup(nextPosition, '', []);
                     });
                 }
             });
@@ -119,26 +118,27 @@ export default Ember.Component.extend({
 
             {
                 name: 'em',
-                match: /[^\*]\*[^\*](.+?)\*/,
+                match: /[^\*]\*([^\*].+?)\*/,
                 run(editor, matches) {
                     let range = editor.range;
-                    range = range.extend(-(matches[0].length));
+                    range = range.extend(-(matches[0].length)+1);
                     editor.run(postEditor => {
+                        console.log(matches);
                         let position = postEditor.deleteRange(range);
                         let em = postEditor.builder.createMarkup('em');
                         let nextPosition = postEditor.insertTextWithMarkup(position, matches[1], [em]);
-                        postEditor.insertTextWithMarkup(nextPosition, '', []); // insert the un-marked-up space
+                        postEditor.insertTextWithMarkup(nextPosition, '', []);
                     });
                 }
             });
-
+        // @TODO make the two bold and two italic REGEXES the same.
         this.editor.onTextInput(
             {
                 name: 'uem',
-                match: /[^_]_[^_](.+?)_/,
+                match: /[^_]_([^_].+?)_/,
                 run(editor, matches) {
                     let range = editor.range;
-                    range = range.extend(-(matches[0].length));
+                    range = range.extend(-(matches[0].length)+1);
                     editor.run(postEditor => {
                         let position = postEditor.deleteRange(range);
                         let em = postEditor.builder.createMarkup('em');
@@ -151,13 +151,13 @@ export default Ember.Component.extend({
         this.editor.onTextInput(
             {
                 name: 'link',
-                match: /[^!]\[(.*?)\]\((.*?)\)/,
+                match: /(^|[^!])\[(.*?)\]\((.*?)\)/,
                 run(editor, matches) {
-                    let url = matches[2];
-                    let text = matches[1];
+                    let url = matches[3];
+                    let text = matches[2];
 
                     let range = editor.range;
-                    range = range.extend(-(matches[0].length));
+                    range = range.extend(-(matches[0].length)+1);
                     editor.run(postEditor => {
                         let position = postEditor.deleteRange(range);
                         let a = postEditor.builder.createMarkup('a', {href: url});
