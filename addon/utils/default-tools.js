@@ -104,7 +104,21 @@ export default function (editor, toolbar) {
                 Ember.set(this, "selected", elements.filter(element => element.tagName === 'h2').length > 0);
             }
         },
-
+        {
+            name: "h3",
+            icon: "",
+            selected: false,
+            type: 'block',
+            visibility: 'primary',
+            onClick: (editor) => {
+                editor.run(postEditor => {
+                    postEditor.toggleSection('h3');
+                });
+            },
+            checkElements: function (elements) {
+                Ember.set(this, "selected", elements.filter(element => element.tagName === 'h3').length > 0);
+            }
+        },
 
         {
             name: "u",
@@ -172,8 +186,12 @@ export default function (editor, toolbar) {
             visibility: 'primary',
             onClick: (editor) => {
                 //editor.run(postEditor => {
-                    toolbar.set('isLink', true);
-                    toolbar.$('input').focus();
+                   // let range = window.getSelection().getRangeAt(0).cloneRange();
+                    //toolbar.set('isLink', true);
+
+                    //toolbar.set('linkRange', );
+                    //toolbar.$('input').focus();
+                    toolbar.doLink(editor.range);
                 //});
             },
             checkElements: function (elements) {

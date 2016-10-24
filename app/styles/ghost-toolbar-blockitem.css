@@ -21,7 +21,7 @@
 
 
 
-.toolbar {
+.toolbar-block {
     position: absolute;
     margin: 0;
     background-color: #fff;
@@ -29,52 +29,43 @@
     transition: margin-left 0.1s;
 }
 
-.toolbar input {
-    height: var(--button-size);
-    outline: none;
-}
 
-
-.gh-selection:hover {
-    margin-left:-64px;/*calc(0 - (var(--button-size)*2))*/;
-    transition: margin-left 0.1s;
-}
-
-.gh-newline:hover {
-
-}
-
-.toolbar ul {
+.toolbar-block ul {
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.toolbar ul li {
-    float: left;
+.toolbar-block ul li {
     margin:0;
     padding: 0;
-    width:0;
+    height:0;
     opacity:0;
     overflow:hidden;
-    transition: width 0.1s;
+    transition: height 0.3s;
 }
 
-.toolbar:hover ul li {
+.toolbar-block:hover ul li {
     display:block;
-    width:var(--button-size);
+    height:var(--button-size);
     opacity:0.3;
     animation-delay: 2s;
-    transition: width 0.1s;
+    transition: height 0.3s;
 }
 
-.toolbar ul li.selected, .toolbar ul li.primary {
+.toolbar-block ul li.selected {
     display:block;
-    opacity:1;
-    width:var(--button-size);
+    opacity:0.1;
+    height:var(--button-size);
 }
 
-.toolbar ul li button {
+
+.toolbar-block:hover ul li.selected {
+    opacity:1;
+}
+
+
+.toolbar-block ul li button {
     border-radius: 2px;
     font-family: var(--font-family);
     font-size: 10px;
@@ -90,50 +81,21 @@
     transition: 0.3s;
 }
 
-.toolbar ul li.primary button {
+.toolbar-block ul li.primary button {
     opacity:1;
 }
 
-.toolbar ul li:hover {
+.toolbar-block ul li:hover {
     opacity:1;
 }
 
-.toolbar ul li:hover button, .toolbar ul li.selected button {
+.toolbar-block ul li:hover button, .toolbar-block ul li.selected button {
     background-color: var(--lightgrey);
     color: var(--darkgrey);
     transition: 0.3s;
 }
 
-.toolbar ul li button img {
+.toolbar-block ul li button img {
     width:20px;
     height:20px;
-}
-
-
-/* tick */
-
-.toolbar.gh-selection:before {
-    content: "";
-    border-bottom: 10px solid black;
-    border-bottom-color: inherit;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    left: 50px;
-    left: calc(50% - 10px);
-    top:-10px;
-    position:absolute;
-
-}
-
-.toolbar.gh-newline:before {
-    content: "";
-    border-right: 10px solid black;
-    border-right-color: inherit;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    top: 10px;
-    top: calc(50% - 10px);
-    left:-10px;
-    position:absolute;
-
 }

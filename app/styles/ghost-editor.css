@@ -2,12 +2,14 @@
 
 .editor-holder {
     height: 100%;
+    /*margin: 0 auto;
+    max-width: 700px;*/
 }
-
+.editor-holder *:after {
+    user-select: auto; /* overide parent css */
+}
 .ghost-editor {
     height: 100%;
-    overflow: auto;
-    position: relative;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -27,12 +29,6 @@
     padding: 0;
 }
 
-.__mobiledoc-tooltip {
-    position: absolute;
-    padding: 33px;
-    background-color: #5ba4e5;
-    color: #fff;
-}
 
 p, h2, h3, ul, ol {
     border: 0;
@@ -145,3 +141,46 @@ textarea.ed_code {
     height:100%;
     border:none;
 }
+
+
+
+/**
+ * Tooltip
+ */
+
+@-webkit-keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+@keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.__mobiledoc-tooltip {
+    white-space: nowrap;
+    position: absolute;
+    background-color: #5ba4e5;
+    border-radius: 3px;
+    padding:5px 10px 5px 10px;
+    color: #FFF;
+    -webkit-animation: fade-in 0.2s;
+    animation: fade-in 0.2s;
+}
+.__mobiledoc-tooltip a {
+    color: #FFF;
+}
+.__mobiledoc-tooltip:before {
+    content: '';
+    position: absolute;
+
+    left: 50%;
+    top: -9px;
+
+    margin-left: -10px;
+
+    border-bottom: 10px solid #5ba4e5;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+}
+

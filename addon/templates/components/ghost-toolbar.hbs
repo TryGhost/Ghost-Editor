@@ -1,5 +1,5 @@
 {{#if isLink}}
-    <input type="text">
+    {{input keyDown=(action (perform linkKeyDown)) keyPress=(action (perform linkKeyPress)) autofocus=true placeholder="Enter a link"}}
 {{else}}
 <ul>
     {{#each toolbar as |tool|}}
