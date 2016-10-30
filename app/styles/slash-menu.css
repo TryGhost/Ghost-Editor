@@ -1,0 +1,20 @@
+.slash-menu {
+    border:1px solid var(--bordergrey);
+    position:absolute;
+    background-color: var(--uigrey);
+    min-width:300px;
+}
+
+.slash-menu ul {
+    margin:0;
+    padding:0;
+    list-style: none;
+}
+.slash-menu ul li {
+    line-height: 30px;
+    vertical-align: middle;
+    padding:5px;
+}
+.slash-menu ul li:hover {
+    background-color: var(--uihover);
+}

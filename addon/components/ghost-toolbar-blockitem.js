@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import {task} from 'ember-concurrency';
 import layout from '../templates/components/ghost-toolbar-blockitem';
 
 import Tools from '../utils/default-tools';
@@ -34,7 +33,7 @@ export default Ember.Component.extend({
     init() {
         this._super(...arguments);
         let editor = this.editor = this.get('editor');
-        this.tools = Tools(editor, this);
+        this.tools = new Tools(editor, this);
 
         this.iconURL = this.get('assetPath') + '/tools/';
     },
@@ -43,7 +42,8 @@ export default Ember.Component.extend({
         let editor = this.editor;
         let $editor = Ember.$('.gh-editor-container');
 
-        if(!editor.range || editor.range.head.isBlank) {
+        if(!editor.range || !editor.range.head.section || (editor.range.head.isBlank &&
+            editor.range.head.section.renderNode._element.tagName.toLowerCase() === 'p')) {
             this.$().hide();
         }
 
@@ -80,9 +80,9 @@ export default Ember.Component.extend({
 
             $this.css('top', offset.top + $editor.scrollTop() - edOffset.top - 5);
             if(element.tagName.toLowerCase()==='li') {
-                $this.css('left', this.$(element.parentNode).position().left + $editor.scrollLeft() - 60);
+                $this.css('left', this.$(element.parentNode).position().left + $editor.scrollLeft() - 90);
             } else {
-                $this.css('left', offset.left + $editor.scrollLeft() - 60);
+                $this.css('left', offset.left + $editor.scrollLeft() - 90);
             }
 
 
@@ -94,9 +94,7 @@ export default Ember.Component.extend({
             this.tools.forEach(tool => {
                 if (tool.hasOwnProperty('checkElements')) {
                     // if its a list we want to know what type
-                    let sectionTagName = editor.activeSection._tagName === 'li'
-                        ? editor.activeSection.parent._tagName
-                        : editor.activeSection._tagName;
+                    let sectionTagName = editor.activeSection._tagName === 'li' ? editor.activeSection.parent._tagName : editor.activeSection._tagName;
                     tool.checkElements(editor.activeMarkups.concat([{tagName: sectionTagName}]));
                 }
             });

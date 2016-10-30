@@ -5,6 +5,7 @@ export default function (editor, toolbar) {
     return [
         {
             name: "p",
+            label: "Paragraph",
             icon: "paragraph.svg",
             selected: false,
             type: 'block',
@@ -19,6 +20,7 @@ export default function (editor, toolbar) {
         },
         {
             name: "blockquote",
+            label: "Block Quote",
             icon: "quote.svg",
             selected: false,
             type: 'block',
@@ -32,7 +34,8 @@ export default function (editor, toolbar) {
             }
         },
         {
-            name: "pull-quote",
+            name: "pullquote",
+            label: 'Pull Quote',
             icon: "pullquote.svg",
             selected: false,
             type: 'block',
@@ -47,6 +50,7 @@ export default function (editor, toolbar) {
         },
         {
             name: "ul",
+            label: "List Unordered",
             icon: "list-bullets.svg",
             selected: false,
             type: 'block',
@@ -61,6 +65,7 @@ export default function (editor, toolbar) {
         },
         {
             name: "ol",
+            label: "List Ordered",
             icon: "list-number.svg",
             selected: false,
             type: 'block',
@@ -77,6 +82,7 @@ export default function (editor, toolbar) {
         {
             name: "h1",
             icon: "",
+            label: "Heading One",
             visibility: 'primary',
             selected: false,
             type: 'block',
@@ -91,6 +97,7 @@ export default function (editor, toolbar) {
         },
         {
             name: "h2",
+            label: "Heading Two",
             icon: "",
             selected: false,
             type: 'block',
@@ -106,6 +113,7 @@ export default function (editor, toolbar) {
         },
         {
             name: "h3",
+            label: "Heading Three",
             icon: "",
             selected: false,
             type: 'block',
@@ -122,6 +130,7 @@ export default function (editor, toolbar) {
 
         {
             name: "u",
+            label: "Underline",
             icon: "underline.svg",
             selected: false,
             type: 'markup',
@@ -136,6 +145,7 @@ export default function (editor, toolbar) {
         },
         {
             name: "s",
+            label: "Strikethrough",
             icon: "strikethrough.svg",
             selected: false,
             type: 'markup',
@@ -150,6 +160,7 @@ export default function (editor, toolbar) {
         },
         {
             name: "b",
+            label: "Bold",
             icon: "bold.svg",
             selected: false,
             type: 'markup',
@@ -165,6 +176,7 @@ export default function (editor, toolbar) {
         },
         {
             name: "i",
+            label: "Italic",
             icon: "italic.svg",
             selected: false,
             type: 'markup',
@@ -180,6 +192,7 @@ export default function (editor, toolbar) {
         },
         {
             name: "a",
+            label: "Link",
             icon: "link.svg",
             selected: false,
             type: 'markup',
@@ -200,6 +213,7 @@ export default function (editor, toolbar) {
         },
         {
             name: "sub",
+            label: "Subscript",
             icon: "subscript.svg",
             selected: false,
             type: 'markup',
@@ -214,6 +228,7 @@ export default function (editor, toolbar) {
         },
         {
             name: "sup",
+            label: "Superscript",
             icon: "superscript.svg",
             selected: false,
             type: 'markup',
@@ -228,6 +243,7 @@ export default function (editor, toolbar) {
         },
         {
             name: "img",
+            label: "Image",
             selected: false,
             type: 'newline',
             icon: 'file-picture-add.svg',
@@ -245,6 +261,7 @@ export default function (editor, toolbar) {
         },
         {
             name: "html",
+            label: "HTML Embed",
             selected: false,
             type: 'newline',
             icon: 'html-five.svg',
@@ -255,12 +272,13 @@ export default function (editor, toolbar) {
                     postEditor.replaceSection(editor.range.headSection, card);
                 });
             },
-            checkElements: function (elements) {
+            checkElements: function () {
 
             }
         },
         {
             name: "md",
+            label: "Markdown Embed",
             selected: false,
             type: 'newline',
             visibility: "primary",
@@ -271,7 +289,7 @@ export default function (editor, toolbar) {
                     postEditor.replaceSection(editor.range.headSection, card);
                 });
             },
-            checkElements: function (elements) {
+            checkElements: function () {
 
             }
         },
@@ -283,8 +301,7 @@ export default function (editor, toolbar) {
             icon: 'file-code-edit.svg',
             onClick: ()=>{},
             checkElements:()=>{}
-        }
-        ,
+        },
         {
             name: 'delete',
             selected: false,

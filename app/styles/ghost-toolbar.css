@@ -8,15 +8,20 @@
     --midgrey: #7d878a;
     --lightgrey: #e2edf2;
     --blue: #5ba4e5;
+    --bluehover:rgb(48, 141, 223);
     --red: #e25440;
     --orange: #f2a925;
     --green: #9fbb58;
+    --uigrey: #f5f7f8;
+    --uihover: #deeaf4;
+    --bordergrey: #dfe1e3;
     /* Style values */
     --border-radius: 4px;
     --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     --font-family-mono: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 
-    --button-size: 32px;
+    --button-size-selection: 48px;
+    --button-size-newline:32px;
 }
 
 
@@ -24,24 +29,30 @@
 .toolbar {
     position: absolute;
     margin: 0;
-    background-color: #fff;
-    border:1px var(--lightgrey) solid;
     transition: margin-left 0.1s;
+    padding:5px;
+    -webkit-border-radius:var(--border-radius);
+    -moz-border-radius:var(--border-radius);
+    border-radius:var(--border-radius);
+}
+
+.toolbar.gh-selection {
+    background-color: var(--uigrey);
+    opacity:1;
+    border:1px var(--uigrey) solid;
+    padding:1;
+    float:right;
+
+}
+
+.toolbar.gh-newline {
+    opacity:0.6; !important
+    background-color: transparent; !important;
 }
 
 .toolbar input {
     height: var(--button-size);
     outline: none;
-}
-
-
-.gh-selection:hover {
-    margin-left:-64px;/*calc(0 - (var(--button-size)*2))*/;
-    transition: margin-left 0.1s;
-}
-
-.gh-newline:hover {
-
 }
 
 .toolbar ul {
@@ -52,26 +63,16 @@
 
 .toolbar ul li {
     float: left;
-    margin:0;
+    margin: 0;
     padding: 0;
-    width:0;
-    opacity:0;
-    overflow:hidden;
-    transition: width 0.1s;
+    overflow: hidden;
+
+    display: block;
+    width: var(--button-size-selection);
 }
 
-.toolbar:hover ul li {
-    display:block;
-    width:var(--button-size);
-    opacity:0.3;
-    animation-delay: 2s;
-    transition: width 0.1s;
-}
-
-.toolbar ul li.selected, .toolbar ul li.primary {
-    display:block;
-    opacity:1;
-    width:var(--button-size);
+.toolbar.gh-newline ul li {
+    width: var(--button-size-newline)
 }
 
 .toolbar ul li button {
@@ -82,24 +83,19 @@
     text-transform: uppercase;
     padding:0;
     margin:0;
-    height:var(--button-size);
-    min-width:var(--button-size);
+    height:var(--button-size-selection);
+    min-width:var(--button-size-selection);
     color: var(--darkgrey);
-    background-color: #fff;
+    background-color: var(--uigrey);
     border: none;
-    transition: 0.3s;
 }
-
-.toolbar ul li.primary button {
-    opacity:1;
-}
-
-.toolbar ul li:hover {
-    opacity:1;
+.toolbar.gh-newline ul li {
+    height:var(--button-size-newline);
+    min-width:var(--button-size-newline);
 }
 
 .toolbar ul li:hover button, .toolbar ul li.selected button {
-    background-color: var(--lightgrey);
+    background-color: var(--uihover);
     color: var(--darkgrey);
     transition: 0.3s;
 }
@@ -110,30 +106,17 @@
 }
 
 
-/* tick */
 
-.toolbar.gh-selection:before {
+    /* tick */
+
+.toolbar.gh-selection:after {
     content: "";
-    border-bottom: 10px solid black;
-    border-bottom-color: inherit;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
+    border-top: 13px solid var(--lightgrey);
+    border-top-color: inherit;
+    border-left: 13px solid transparent;
+    border-right: 13px solid transparent;
     left: 50px;
-    left: calc(50% - 10px);
-    top:-10px;
+    left: calc(50% - 13px);
+    top:100%;
     position:absolute;
-
-}
-
-.toolbar.gh-newline:before {
-    content: "";
-    border-right: 10px solid black;
-    border-right-color: inherit;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    top: 10px;
-    top: calc(50% - 10px);
-    left:-10px;
-    position:absolute;
-
 }

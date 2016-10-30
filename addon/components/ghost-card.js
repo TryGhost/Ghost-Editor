@@ -58,7 +58,7 @@ function dragover(editor, item, event) {
     event.preventDefault();
 }
 
-function dragout(editor, item, event) {
+function dragout(editor) { // , item, event
     let $el = Ember.$(this.renderNode._element);
     $el.removeClass('dropper-left dropper-right dropper-top dropper-bottom');
     delete editor.__GHOST_DRAG_ITEM__;

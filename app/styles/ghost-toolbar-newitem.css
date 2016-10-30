@@ -21,52 +21,29 @@
 
 
 
-.toolbar-block {
+.toolbar-newitem {
     position: absolute;
-    margin: 0;
-    background-color: #fff;
-    border:1px var(--lightgrey) solid;
-    transition: margin-left 0.1s;
+    line-height: var(--button-size);
+    opacity:0.4;
 }
 
 
-.toolbar-block ul {
+.toolbar-newitem ul {
     list-style: none;
-    margin: 0;
     padding: 0;
+    float:right;
+    margin: 0 0 0 60px;
 }
 
-.toolbar-block ul li {
+.toolbar-newitem ul li {
     margin:0;
     padding: 0;
-    width:0;
-    opacity:0;
+    width:var(--button-size);
     overflow:hidden;
-    transition: width 0.3s;
     float:left;
 }
 
-.toolbar-block:hover ul li {
-    display:block;
-    width:var(--button-size);
-    opacity:0.3;
-    animation-delay: 2s;
-    transition: width 0.3s;
-}
-
-.toolbar-block ul li.selected {
-    display:block;
-    opacity:0.1;
-    width:var(--button-size);
-}
-
-
-.toolbar-block:hover ul li.selected {
-    opacity:1;
-}
-
-
-.toolbar-block ul li button {
+.toolbar-newitem ul li button {
     border-radius: 2px;
     font-family: var(--font-family);
     font-size: 10px;
@@ -77,26 +54,17 @@
     height:var(--button-size);
     min-width:var(--button-size);
     color: var(--darkgrey);
-    background-color: #fff;
     border: none;
     transition: 0.3s;
 }
 
-.toolbar-block ul li.primary button {
-    opacity:1;
-}
-
-.toolbar-block ul li:hover {
-    opacity:1;
-}
-
-.toolbar-block ul li:hover button, .toolbar-block ul li.selected button {
+.toolbar-newitem ul li:hover button, .toolbar-newitem ul li.selected button {
     background-color: var(--lightgrey);
     color: var(--darkgrey);
     transition: 0.3s;
 }
 
-.toolbar-block ul li button img {
+.toolbar-newitem ul li button img {
     width:20px;
     height:20px;
 }

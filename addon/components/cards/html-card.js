@@ -10,21 +10,17 @@ export default Ember.Component.extend({
     genus: 'ember',
     isEditing: false,
     value : Ember.computed('payload', {
-        get(key) {
+        get() {
             return this.get('payload').html || '';
         },
 
-        set(key, value) {
+        set(_, value) {
             this.get('payload').html = value;
             this.get('env').save(this.get('payload'), false);
             return this.get('payload').html;
         }
 
     }),
-    name: 'html-card',
-    label: 'HTML',
-    type: 'dom',
-    genus: 'ember',
     init() {
         this._super(...arguments);
         let payload = this.get('payload');
@@ -35,10 +31,6 @@ export default Ember.Component.extend({
         }
     },
     didRender() {
-        //Ember.$('textarea').on('change', (e) => {
-        //    this.get('payload').html = e.target.value;
-        //    this.get('env').save(this.get('payload'), false);
-        //});
     }
 });
 

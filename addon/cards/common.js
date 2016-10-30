@@ -33,6 +33,4 @@ module.exports = {
     amp: ampCards,
     text: textCards,
     all: cards
-}
-
-
+};

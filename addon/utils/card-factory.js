@@ -70,7 +70,7 @@ export default function createCardFactory(toolbar) {
 
             self.emberCards.pushObject(card);
 
-            env.onTeardown(_ => {
+            env.onTeardown(() => {
                 self.emberCards.removeObject(card);
             });
 
@@ -89,7 +89,7 @@ export default function createCardFactory(toolbar) {
             let handle = new Handle({env, options, payload});
             if( buttons ) {
 
-                buttons.forEach( item => handle.addButton( item.name , _ => { el.removeChild( handle.holder ); item.onclick( ); }) );
+                buttons.forEach( item => handle.addButton( item.name , () => { el.removeChild( handle.holder ); item.onclick( ); }) );
             }
             el.insertBefore(handle.holder, el.firstChild);
         }
@@ -132,24 +132,16 @@ class Handle {
             if (!env.strikeOne) {
                 delButtion.className = "confirm";
                 env.strikeOne = true;
-                setTimeout(_ => {
+                setTimeout(() => {
                     delButtion.className = "";
                     delete env.strikeOne;
                 }, 3000);
             } else {
-
                 $(env.postModel.renderNode._element).slideUp(env.remove);
-                //env.remove();
             }
-            //env.remove();
         });
 
         holder.appendChild(delButtion);
-
-     /*   this.addButton('edit', (el)=>{
-
-        });*/
-
     }
 
     addButton(name, callback) {

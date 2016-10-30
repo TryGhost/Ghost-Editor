@@ -8,11 +8,11 @@ export default Ember.Component.extend({
     type: 'dom',
     genus: 'ember',
     value : Ember.computed('payload', {
-        get(key) {
+        get() {
             return this.get('payload').markdown || '';
         },
 
-        set(key, value) {
+        set(_, value) {
             this.get('payload').markdown = value;
             this.get('env').save(this.get('payload'), false);
             return this.get('payload').markdown;

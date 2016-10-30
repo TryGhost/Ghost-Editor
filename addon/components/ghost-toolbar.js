@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import {task} from 'ember-concurrency';
 import layout from '../templates/components/ghost-toolbar';
 
 import Tools from '../utils/default-tools';
@@ -10,10 +9,10 @@ export default Ember.Component.extend({
     classNameBindings: ['non-primary-block-selected', 'gh-newline', 'gh-card', 'gh-selected'],
     tools: [],
     isLink: Ember.computed({
-        get(key) {
+        get() {
             return this._isLink;
         },
-        set(key, value) {
+        set(_, value) {
             if(value) {
                 let $this = this.$();
                 $this.toggleClass("gh-newline", false);
@@ -106,8 +105,8 @@ export default Ember.Component.extend({
     }).property('tools.@each.selected'),
     init() {
         this._super(...arguments);
-        let editor = this.editor = this.get('editor');
-        this.tools = Tools(editor, this);
+        let editor = this.get('editor');
+        this.tools =new Tools(editor, this);
 
         this.iconURL = this.get('assetPath') + '/tools/';
     },
@@ -115,15 +114,12 @@ export default Ember.Component.extend({
         let $this = this.$();
         let editor = this.editor;
         let $editor = Ember.$('.gh-editor-container');
-        let height = $this.height();
-
 
         if(!editor.range || editor.range.head.isBlank) {
             this.$().hide();
         }
 
-
-        $editor.click( _ => {
+        $editor.click( () => {
             if(this.editor.mobiledoc.sections.length === 0) {
                 // hack - fix
                 this.propertyWillChange('toolbar');
@@ -168,13 +164,10 @@ export default Ember.Component.extend({
                     let edOffset = $editor.offset();
 
 
-                    $this.stop();
+                    $this.show();
+                    $this.css('top', position.top + $editor.scrollTop() - $this.height()-20); //- edOffset.top+10
+                    $this.css('left', position.left + (position.width / 2) + $editor.scrollLeft() - edOffset.left - ($this.width()/2));
 
-
-                    $this.css('top', position.bottom + $editor.scrollTop() - edOffset.top + 20);
-                    $this.css('left', position.left + (position.width / 2) + $editor.scrollLeft() - edOffset.left - 30);
-
-                    $this.fadeIn(50);
                     this._visible = true;
 
 
@@ -185,9 +178,7 @@ export default Ember.Component.extend({
                     this.tools.forEach(tool => {
                         if (tool.hasOwnProperty('checkElements')) {
                             // if its a list we want to know what type
-                            let sectionTagName = editor.activeSection._tagName === 'li'
-                                ? editor.activeSection.parent._tagName
-                                : editor.activeSection._tagName;
+                            let sectionTagName = editor.activeSection._tagName === 'li' ? editor.activeSection.parent._tagName : editor.activeSection._tagName;
                             tool.checkElements(editor.activeMarkups.concat([{tagName: sectionTagName}]));
                         }
                     });
@@ -198,28 +189,23 @@ export default Ember.Component.extend({
                     $this.toggleClass("gh-normal", false);
 
 
-                } else if(editor.range.head.section.isBlank) {
+                /*} else if(editor.range.head.section.isBlank && editor.range.head.section.renderNode._element.tagName.toLowerCase() === 'p') {
                     // if we have a new line then the toolbar appears just to the right of the cursor:
                     this.__state = 'newline';
                     this.isBlank = true;
-                    if(!editor.range.head.section) alert("NO RENDER NODE");
+
                     let element = editor.range.head.section.renderNode._element;
                     let offset =  this.$(element).position();
                     let edOffset = $editor.offset();
-
-                    $this.stop();
-
-                    $this.css('top', offset.top + $editor.scrollTop() - edOffset.top - 5);
-                    $this.css('left', offset.left + $editor.scrollLeft() + 50);
-                    $this.fadeIn();
+                    $this.show();
+                    $this.css('top', offset.top + $editor.scrollTop() - edOffset.top - ($this.height()/2)+10);
+                    $this.css('left', offset.left + $editor.scrollLeft() );
                     this._visible = true;
 
 
                     this.tools.forEach(tool => {
                         if (tool.hasOwnProperty('checkElements')) {
-                            let sectionTagName = editor.activeSection._tagName === 'li'
-                                ? editor.activeSection.parent._tagName
-                                : editor.activeSection._tagName;
+                            let sectionTagName = editor.activeSection._tagName === 'li' ? editor.activeSection.parent._tagName : editor.activeSection._tagName;
                             tool.checkElements([{tagName: sectionTagName}]);
                         }
                     });
@@ -229,13 +215,12 @@ export default Ember.Component.extend({
                     $this.toggleClass("gh-newline", true);
                     $this.toggleClass("gh-card", false);
                     $this.toggleClass("gh-selection", false);
-                    $this.toggleClass("gh-normal", false);
+                    $this.toggleClass("gh-normal", false);*/
 
                 } else {
                     if(this._visible) {
+                        $this.hide();
                         this.set('isLink', false);
-                        $this.stop();
-                        $this.fadeOut();
                         this._visible = false;
                     }
 
@@ -254,10 +239,8 @@ export default Ember.Component.extend({
         },
         linkKeyPress(event) {
             // if enter run link
-            if (event.keyCode == 13) {
+            if (event.keyCode === 13) {
                 this.set('isLink', false);
-
-
 
                 this.editor.run(postEditor => {
                     let markup = postEditor.builder.createMarkup('a', {href: event.target.value});

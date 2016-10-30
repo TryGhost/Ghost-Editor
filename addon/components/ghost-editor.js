@@ -3,7 +3,7 @@ import layout from '../templates/components/ghost-editor';
 import Mobiledoc from 'mobiledoc-kit';
 import {MOBILEDOC_VERSION} from 'mobiledoc-kit/renderers/mobiledoc';
 import {replaceWithListSection, replaceWithHeaderSection} from 'mobiledoc-kit/editor/text-input-handlers';
-import createCardFactory from '../utils/cardFactory';
+import createCardFactory from '../utils/card-factory';
 import editorCards  from '../cards/index';
 //import { VALID_MARKUP_SECTION_TAGNAMES } from 'mobiledoc-kit/models/markup-section'; //the block elements supported by mobile-doc
 
@@ -44,9 +44,14 @@ export default Ember.Component.extend({
         const options = {
             mobiledoc: mobiledoc,
             //temp
-            cards: createCard(editorCards),
-            markups: [],
-            atoms: [],
+            cards: createCard(editorCards.concat(userCards)),
+            atoms: [{
+                name: 'soft-return',
+                type: 'dom',
+                render() {
+                    return document.createElement('br');
+                }
+            }],
             spellcheck: true,
             autofocus: this.get('shouldFocusEditor'),
             placeholder: 'Click here to start ...'
@@ -83,8 +88,8 @@ export default Ember.Component.extend({
 
         this.editor.onTextInput(
             {
-                name: 'bold',
-                match: /\*\*(.+?)\*\*/,
+                name: 'strong',
+                match: /\*\*(.+?)\*\*$/,
                 run(editor, matches) {
                     let range = editor.range;
                     range = range.extend(-(matches[0].length));
@@ -100,8 +105,8 @@ export default Ember.Component.extend({
         this.editor.onTextInput(
 
             {
-                name: 'ubold',
-                match: /__(.+?)__/,
+                name: 'ustrong',
+                match: /__(.+?)__$/,
                 run(editor, matches) {
                     let range = editor.range;
                     range = range.extend(-(matches[0].length));
@@ -118,7 +123,7 @@ export default Ember.Component.extend({
 
             {
                 name: 'em',
-                match: /[^\*]\*([^\*].+?)\*/,
+                match: /[^\*]\*([^\*].*?)\*$/,
                 run(editor, matches) {
                     let range = editor.range;
                     range = range.extend(-(matches[0].length)+1);
@@ -131,11 +136,11 @@ export default Ember.Component.extend({
                     });
                 }
             });
-        // @TODO make the two bold and two italic REGEXES the same.
+
         this.editor.onTextInput(
             {
                 name: 'uem',
-                match: /[^_]_([^_].+?)_/,
+                match: /[^_]_([^_].+?)_$/,
                 run(editor, matches) {
                     let range = editor.range;
                     range = range.extend(-(matches[0].length)+1);
@@ -151,7 +156,7 @@ export default Ember.Component.extend({
         this.editor.onTextInput(
             {
                 name: 'link',
-                match: /(^|[^!])\[(.*?)\]\((.*?)\)/,
+                match: /(^|[^!])\[(.*?)\]\((.*?)\)$/,
                 run(editor, matches) {
                     let url = matches[3];
                     let text = matches[2];
@@ -170,15 +175,31 @@ export default Ember.Component.extend({
         this.editor.onTextInput(
             {
                 name: 'image',
-                match: /!\[(.*?)\]\((.*?)\)/,
+                match: /!\[(.*?)\]\((.*?)\)$/,
                 run(editor, matches) {
-                    let url = matches[2];
+                    let img = matches[2];
                     let alt = matches[1];
 
                     let range = editor.range;
                     range = range.extend(-(matches[0].length));
                     editor.run(postEditor => {
-                        let card = postEditor.builder.createCardSection('image-card', {pos: "top", img:url});
+                        let card = postEditor.builder.createCardSection('image-card', {pos: "top", img, alt});
+                        postEditor.replaceSection(editor.range.headSection, card);
+                    });
+                }
+            });
+
+        this.editor.onTextInput(
+            {
+                name: 'image',
+                match: /```([\s\S]*?)```$/,
+                run(editor, matches) {
+                    let code = matches[0];
+
+                    let range = editor.range;
+                    range = range.extend(-(matches[0].length));
+                    editor.run(postEditor => {
+                        let card = postEditor.builder.createCardSection('markdown-card', {pos: "top", markdown: code });
                         postEditor.replaceSection(editor.range.headSection, card);
                     });
                 }
@@ -187,7 +208,7 @@ export default Ember.Component.extend({
         this.editor.onTextInput(
             {
                 name: 'strikethrough',
-                match: /~~(.+?)~~/,
+                match: /~~(.+?)~~$/,
                 run(editor, matches) {
                     let range = editor.range;
                     range = range.extend(-(matches[0].length));
@@ -205,20 +226,32 @@ export default Ember.Component.extend({
             {
                 name: 'dashul',
                 match: /^- $/,
-                run(editor, matches) {
+                run(editor) {
                     replaceWithListSection(editor, 'ul');
                 }
             });
         this.editor.onTextInput(
-
             {
                 name: 'blockquote',
                 match: /^> $/,
-                run(editor, matches) {
+                run(editor) {
                     replaceWithHeaderSection(editor, 'blockquote');
                 }
             });
 
+
+        const boldKeyCommand = {
+            str: 'SHIFT+ENTER',
+
+            run(editor) {
+
+                editor.run(postEditor => {
+                    const mention = postEditor.builder.createAtom("soft-return");
+                    postEditor.insertMarkers(editor.range.head, [mention]);
+                });
+            }
+        };
+        this.editor.registerKeyCommand(boldKeyCommand);
 
         //VALID_MARKUP_SECTION_TAGNAMES
 
@@ -237,7 +270,7 @@ export default Ember.Component.extend({
             var sel = window.getSelection();
             sel.removeAllRanges();
             sel.addRange(range);
-            editor._ensureFocus();
+            this.editor._ensureFocus();
         }
 
 
