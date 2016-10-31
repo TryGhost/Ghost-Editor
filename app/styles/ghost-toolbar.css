@@ -36,7 +36,7 @@
     border-radius:var(--border-radius);
 }
 
-.toolbar.gh-selection {
+.toolbar {
     background-color: var(--uigrey);
     opacity:1;
     border:1px var(--uigrey) solid;
@@ -45,13 +45,9 @@
 
 }
 
-.toolbar.gh-newline {
-    opacity:0.6; !important
-    background-color: transparent; !important;
-}
-
 .toolbar input {
     height: var(--button-size);
+    width: 336px;
     outline: none;
 }
 
@@ -109,7 +105,7 @@
 
     /* tick */
 
-.toolbar.gh-selection:after {
+.toolbar:after {
     content: "";
     border-top: 13px solid var(--lightgrey);
     border-top-color: inherit;

@@ -128,7 +128,6 @@ export default Ember.Component.extend({
                     let range = editor.range;
                     range = range.extend(-(matches[0].length)+1);
                     editor.run(postEditor => {
-                        console.log(matches);
                         let position = postEditor.deleteRange(range);
                         let em = postEditor.builder.createMarkup('em');
                         let nextPosition = postEditor.insertTextWithMarkup(position, matches[1], [em]);

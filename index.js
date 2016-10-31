@@ -45,7 +45,15 @@ module.exports = {
     // temp
     htmlOptions:
         {
-            cards: cards.html
+            cards: cards.html,
+            atoms: [{
+                name: 'soft-return',
+                type: 'html',
+                render: function() {
+                    return "<br />";
+                }
+            }
+            ]
         }
 /*
         [

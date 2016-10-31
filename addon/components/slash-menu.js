@@ -5,11 +5,12 @@ import layout from '../templates/components/slash-menu';
 export default Ember.Component.extend({
     layout,
     classNames: ['slash-menu'],
+    range: null,
     toolbar: Ember.computed(function () {
         let tools = [ ];
         let match = (this.query || "").trim().toLowerCase();
         this.tools.forEach((tool) => {
-            if ((tool.type === 'block' || tool.type === 'newline') && (tool.label.toLowerCase().startsWith(match.toLowerCase()) || tool.name.toLowerCase().startsWith(match.toLowerCase()))) {
+            if ((tool.type === 'block' || tool.type === 'newline') && (tool.label.toLowerCase().startsWith(match) || tool.name.toLowerCase().startsWith(match))) {
                 tools.push(tool);
             }
         });
@@ -18,9 +19,8 @@ export default Ember.Component.extend({
             this.isActive = false;
             this.$().hide();
         }
-
         return tools;
-    }).property('query'),
+    }),
 
     init() {
         this._super(...arguments);
@@ -50,8 +50,8 @@ export default Ember.Component.extend({
                 $this.css('top', position.top + $editor.scrollTop() - edOffset.top + 20); //- edOffset.top+10
                 $this.css('left', position.left + (position.width / 2) + $editor.scrollLeft() - edOffset.left );
 
-                this.query="";
-                this.propertyDidChange('toolbar');
+                self.query="";
+                self.propertyDidChange('toolbar');
             }
         });
 
@@ -60,14 +60,22 @@ export default Ember.Component.extend({
         if(this.isActive) {
             if(!this.editor.range.isCollapsed || this.editor.range.head.section !== this._node || this.editor.range.head.offset < 1) {
                 this.isActive = false;
+
                 this.$().hide();
                 return;
             }
-            this.query = this.editor.range.head.section.text.substring( this._offset, this.editor.range.head.offset);
-
+            this.query = this.editor.range.head.section.text.substring(this._offset, this.editor.range.head.offset);
+            this.set('range', {
+                section: this._node,
+                startOffset: this._offset,
+                endOffset: this.editor.range.head.offset
+            });
             this.propertyDidChange('toolbar');
-
         }
 
+
+    },
+    didRender() {
+      //  this.$().hide();
     }
 });
