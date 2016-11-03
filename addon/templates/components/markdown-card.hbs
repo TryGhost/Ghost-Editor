@@ -1,2 +1,5 @@
-{{gh-editor
-value=value}}
+{{#if isEditing}}
+    {{{preview}}}
+{{else}}
+    {{textarea value=value}}
+{{/if}}

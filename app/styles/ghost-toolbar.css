@@ -34,9 +34,7 @@
     -webkit-border-radius:var(--border-radius);
     -moz-border-radius:var(--border-radius);
     border-radius:var(--border-radius);
-}
 
-.toolbar {
     background-color: var(--uigrey);
     opacity:1;
     border:1px var(--uigrey) solid;

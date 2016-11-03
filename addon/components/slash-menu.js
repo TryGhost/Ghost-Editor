@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import Tools from '../utils/default-tools';
+import Tools from '../options/default-tools';
 import layout from '../templates/components/slash-menu';
 
 export default Ember.Component.extend({
@@ -54,6 +54,7 @@ export default Ember.Component.extend({
                 self.propertyDidChange('toolbar');
             }
         });
+
 
     },
     cursorChange() {

@@ -8,18 +8,20 @@ export default Ember.Component.extend({
     label: 'HTML',
     type: 'dom',
     genus: 'ember',
-    isEditing: false,
+    isEditing: true,
+    save: function () {
+        this.get('env').save(this.get('payload'), false);
+    }.observes('doSave'),
+
     value : Ember.computed('payload', {
         get() {
             return this.get('payload').html || '';
         },
-
         set(_, value) {
             this.get('payload').html = value;
-            this.get('env').save(this.get('payload'), false);
+            // this.get('env').save(this.get('payload'), false);
             return this.get('payload').html;
         }
-
     }),
     init() {
         this._super(...arguments);

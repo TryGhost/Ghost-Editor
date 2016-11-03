@@ -1,3 +1,21 @@
-<div draggable="true" style="background-image: url('{{card.previewImage}}')">
-    {{card.label}}
+{{component
+    card.card.name
+    env=card.env
+    payload=card.payload
+    options=card.options
+    apiRoot=apiRoot
+    assetPath=assetPath
+    doSave=doSave
+    isEditing=isEditing
+}}
+<div class="card-handle">
+    <button {{action "toggleState"}}>
+        {{#if isEditing}}
+            Edit
+        {{else}}
+            Preview
+        {{/if}}
+    </button>
+    <button {{action "save"}}>Save</button>
+    {{!--<label class="card-label">{{card.card.label}}</label>--}}
 </div>

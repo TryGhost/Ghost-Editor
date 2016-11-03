@@ -6,7 +6,7 @@
 .ghost-editor {
     height: 100%;
     -webkit-overflow-scrolling: touch;
-    padding-bottom:200px;
+    padding-bottom:333px;
 }
 
 .__mobiledoc-editor {
@@ -25,11 +25,6 @@
     padding: 0;
 }
 
-
-p, h2, h3, ul, ol {
-    border: 0;
-    transition: border-width 0.1s ease-in-out;
-}
 
 .dropper-bottom {
     border-bottom: 66px solid #5ba4e5;
@@ -54,40 +49,28 @@ p, h2, h3, ul, ol {
     width:calc(100% - 4px);
     margin:2px;
 }
+.__mobiledoc-card .ghost-card {
+    position: relative;
+}
 
 .__mobiledoc-card .card-handle {
     position: absolute;
-    margin-top: -40px;
-    height: 40px;
-    padding: 0 10px 0 10px;
-    text-align: right;
-    overflow: hidden;
-    display: block;
-
+    right:0px;
+    top:0px;
+    margin-top:-10px;
+    height:20px;
 }
 
-.card-handle {
-    height:40px;
-    margin-bottom:-30px;
-    margin-left:-50px;
+.__mobiledoc-card .card-handle label {
+    font-size:10px;
 }
 
 
-.card-handle button {
-    margin-top: 1px;
-    color: #718087;
-    background-color: #fff;
-    border-radius: 15px;
-    margin-left: 10px;
-    height: 30px;
-    width: 30px;
-    overflow:hidden;
-    line-height:30px;
-    text-align: center;
-    font-size:2em;
-    border: 1px solid;
-    font-size: 20px;
-
+.__mobiledoc-card .card-handle button {
+    background-color: var(--uigrey);
+    border:1px solid var(--grey);
+    font-size:10px;
+    min-width: 80px;
 }
 
 .card-handle button:hover {

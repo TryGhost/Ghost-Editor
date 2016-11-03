@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import layout from '../templates/components/ghost-toolbar-blockitem';
 
-import Tools from '../utils/default-tools';
+import Tools from '../options/default-tools';
 
 export default Ember.Component.extend({
     layout,

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import layout from '../templates/components/ghost-toolbar-newitem';
-import Tools from '../utils/default-tools';
+import Tools from '../options/default-tools';
 
 export default Ember.Component.extend({
     layout,
@@ -45,7 +45,8 @@ export default Ember.Component.extend({
 
 
 
-            if(!editor.range || !editor.range.head.section || !editor.range.head.section.isBlank) {
+            if(!editor.range || !editor.range.head.section || !editor.range.head.section.isBlank ||
+                editor.range.head.section.renderNode._element.tagName.toLowerCase() !== 'p') {
                 $this.hide();
                 return;
             }

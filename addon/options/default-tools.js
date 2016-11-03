@@ -1,8 +1,55 @@
 import Ember from 'ember';
 
 export default function (editor, toolbar) {
-
     return [
+        {
+            name: "h1",
+            icon: "",
+            label: "Heading One",
+            visibility: 'primary',
+            selected: false,
+            type: 'block',
+            onClick: (editor) => {
+                editor.run(postEditor => {
+                    postEditor.toggleSection('h1');
+                });
+            },
+            checkElements: function (elements) {
+                Ember.set(this, "selected", elements.filter(element => element.tagName === 'h1').length > 0);
+            }
+        },
+        {
+            name: "h2",
+            label: "Heading Two",
+            icon: "",
+            selected: false,
+            type: 'block',
+            visibility: 'primary',
+            onClick: (editor) => {
+                editor.run(postEditor => {
+                    postEditor.toggleSection('h2');
+                });
+            },
+            checkElements: function (elements) {
+                Ember.set(this, "selected", elements.filter(element => element.tagName === 'h2').length > 0);
+            }
+        },
+        {
+            name: "h3",
+            label: "Heading Three",
+            icon: "",
+            selected: false,
+            type: 'block',
+            visibility: 'primary',
+            onClick: (editor) => {
+                editor.run(postEditor => {
+                    postEditor.toggleSection('h3');
+                });
+            },
+            checkElements: function (elements) {
+                Ember.set(this, "selected", elements.filter(element => element.tagName === 'h3').length > 0);
+            }
+        },
         {
             name: "p",
             label: "Paragraph",
@@ -78,86 +125,6 @@ export default function (editor, toolbar) {
                 Ember.set(this, "selected", elements.filter(element => element.tagName === 'ol').length > 0);
             }
         },
-
-        {
-            name: "h1",
-            icon: "",
-            label: "Heading One",
-            visibility: 'primary',
-            selected: false,
-            type: 'block',
-            onClick: (editor) => {
-                editor.run(postEditor => {
-                    postEditor.toggleSection('h1');
-                });
-            },
-            checkElements: function (elements) {
-                Ember.set(this, "selected", elements.filter(element => element.tagName === 'h1').length > 0);
-            }
-        },
-        {
-            name: "h2",
-            label: "Heading Two",
-            icon: "",
-            selected: false,
-            type: 'block',
-            visibility: 'primary',
-            onClick: (editor) => {
-                editor.run(postEditor => {
-                    postEditor.toggleSection('h2');
-                });
-            },
-            checkElements: function (elements) {
-                Ember.set(this, "selected", elements.filter(element => element.tagName === 'h2').length > 0);
-            }
-        },
-        {
-            name: "h3",
-            label: "Heading Three",
-            icon: "",
-            selected: false,
-            type: 'block',
-            visibility: 'primary',
-            onClick: (editor) => {
-                editor.run(postEditor => {
-                    postEditor.toggleSection('h3');
-                });
-            },
-            checkElements: function (elements) {
-                Ember.set(this, "selected", elements.filter(element => element.tagName === 'h3').length > 0);
-            }
-        },
-
-        {
-            name: "u",
-            label: "Underline",
-            icon: "underline.svg",
-            selected: false,
-            type: 'markup',
-            onClick: (editor) => {
-                editor.run(postEditor => {
-                    postEditor.toggleMarkup('u');
-                });
-            },
-            checkElements: function (elements) {
-                Ember.set(this, "selected", elements.filter(element => element.tagName === 'u').length > 0);
-            }
-        },
-        {
-            name: "s",
-            label: "Strikethrough",
-            icon: "strikethrough.svg",
-            selected: false,
-            type: 'markup',
-            onClick: (editor) => {
-                editor.run(postEditor => {
-                    postEditor.toggleMarkup('s');
-                });
-            },
-            checkElements: function (elements) {
-                Ember.set(this, "selected", elements.filter(element => element.tagName === 's').length > 0);
-            }
-        },
         {
             name: "b",
             label: "Bold",
@@ -199,16 +166,46 @@ export default function (editor, toolbar) {
             visibility: 'primary',
             onClick: (editor) => {
                 //editor.run(postEditor => {
-                   // let range = window.getSelection().getRangeAt(0).cloneRange();
-                    //toolbar.set('isLink', true);
+                // let range = window.getSelection().getRangeAt(0).cloneRange();
+                //toolbar.set('isLink', true);
 
-                    //toolbar.set('linkRange', );
-                    //toolbar.$('input').focus();
-                    toolbar.doLink(editor.range);
+                //toolbar.set('linkRange', );
+                //toolbar.$('input').focus();
+                toolbar.doLink(editor.range);
                 //});
             },
             checkElements: function (elements) {
                 Ember.set(this, "selected", elements.filter(element => element.tagName === 'a').length > 0);
+            }
+        },
+        {
+            name: "u",
+            label: "Underline",
+            icon: "underline.svg",
+            selected: false,
+            type: 'markup',
+            onClick: (editor) => {
+                editor.run(postEditor => {
+                    postEditor.toggleMarkup('u');
+                });
+            },
+            checkElements: function (elements) {
+                Ember.set(this, "selected", elements.filter(element => element.tagName === 'u').length > 0);
+            }
+        },
+        {
+            name: "s",
+            label: "Strikethrough",
+            icon: "strikethrough.svg",
+            selected: false,
+            type: 'markup',
+            onClick: (editor) => {
+                editor.run(postEditor => {
+                    postEditor.toggleMarkup('s');
+                });
+            },
+            checkElements: function (elements) {
+                Ember.set(this, "selected", elements.filter(element => element.tagName === 's').length > 0);
             }
         },
         {

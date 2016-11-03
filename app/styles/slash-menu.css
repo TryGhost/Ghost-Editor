@@ -3,6 +3,7 @@
     position:absolute;
     background-color: var(--uigrey);
     min-width:300px;
+    display:none;
 }
 
 .slash-menu ul {

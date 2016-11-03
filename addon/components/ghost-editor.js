@@ -3,7 +3,7 @@ import layout from '../templates/components/ghost-editor';
 import Mobiledoc from 'mobiledoc-kit';
 import {MOBILEDOC_VERSION} from 'mobiledoc-kit/renderers/mobiledoc';
 import {replaceWithListSection, replaceWithHeaderSection} from 'mobiledoc-kit/editor/text-input-handlers';
-import createCardFactory from '../utils/card-factory';
+import createCardFactory from '../helpers/card-factory';
 import editorCards  from '../cards/index';
 //import { VALID_MARKUP_SECTION_TAGNAMES } from 'mobiledoc-kit/models/markup-section'; //the block elements supported by mobile-doc
 
@@ -190,7 +190,7 @@ export default Ember.Component.extend({
 
         this.editor.onTextInput(
             {
-                name: 'image',
+                name: 'markdown',
                 match: /```([\s\S]*?)```$/,
                 run(editor, matches) {
                     let code = matches[0];
@@ -239,25 +239,17 @@ export default Ember.Component.extend({
             });
 
 
-        const boldKeyCommand = {
+        const softReturnKeyCommand = {
             str: 'SHIFT+ENTER',
 
             run(editor) {
-
                 editor.run(postEditor => {
                     const mention = postEditor.builder.createAtom("soft-return");
                     postEditor.insertMarkers(editor.range.head, [mention]);
                 });
             }
         };
-        this.editor.registerKeyCommand(boldKeyCommand);
-
-        //VALID_MARKUP_SECTION_TAGNAMES
-
-
-        /*if(this.get('container').lookup('controller:application').currentPath === 'editor.edit') {
-
-         }*/
+        this.editor.registerKeyCommand(softReturnKeyCommand);
 
         // shouldFocusEditor is only true when transitionaing from new to edit, otherwise it's false or undefined.
         // therefore, if it's true it's after the first lot of content is entered and we expect the caret to be at the

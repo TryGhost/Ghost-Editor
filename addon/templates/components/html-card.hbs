@@ -1,8 +1,5 @@
-{{gh-cm-editor value
-update=(action (mut value))}}
-
-{{!--#if isEditing--}}
-    <!--textarea class="ed_code">{{html}}</textarea-->
-{{!--else}}
-    <div>{{html}}</div>
-{{/if--}}
+{{#if isEditing}}
+    {{{value}}}
+{{else}}
+    {{gh-cm-editor value update=(action (mut value))}} {{!-- codemirror editor component from Ghost-Admin --}}
+{{/if}}
