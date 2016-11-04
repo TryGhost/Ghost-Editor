@@ -73,6 +73,12 @@
     min-width: 80px;
 }
 
+.__mobiledoc-card textarea {
+    min-height:333px;
+    max-width:900px;
+    outline:none;
+}
+
 .card-handle button:hover {
     background-color: #718087;
     color: #fff;
