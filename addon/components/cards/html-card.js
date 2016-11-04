@@ -4,10 +4,6 @@ import layout from '../../templates/components/html-card';
 
 export default Ember.Component.extend({
     layout,
-    name: 'html-card',
-    label: 'HTML',
-    type: 'dom',
-    genus: 'ember',
     isEditing: true,
     save: function () {
         this.get('env').save(this.get('payload'), false);
@@ -19,7 +15,7 @@ export default Ember.Component.extend({
         },
         set(_, value) {
             this.get('payload').html = value;
-            // this.get('env').save(this.get('payload'), false);
+            this.get('env').save(this.get('payload'), false);
             return this.get('payload').html;
         }
     }),

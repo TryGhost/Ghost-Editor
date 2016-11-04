@@ -18,10 +18,6 @@ import {
 
 export default Component.extend({
     layout,
-    name: 'image-card',
-    label: 'IMAGE',
-    type: 'dom',
-    genus: 'ember',
     tagName: 'section',
     classNames: ['gh-image-uploader'],
     classNameBindings: ['dragClass'],

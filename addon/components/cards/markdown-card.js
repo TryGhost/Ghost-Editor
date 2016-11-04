@@ -10,10 +10,7 @@ import {formatMarkdown} from '../../helpers/format-markdown';
 
 export default Ember.Component.extend({
   layout,
-    name: 'markdown-card',
-    label: 'MARKDOWN',
-    type: 'dom',
-    genus: 'ember',
+    isEditing: true,
     editing: function () {
         if(!this.isEditing) {
             this.set('preview', formatMarkdown([this.payload.markdown]));
@@ -26,8 +23,6 @@ export default Ember.Component.extend({
 
         set(_, value) {
             this.get('payload').markdown = value;
-     //       console.log(formatMarkdown);
-            console.log();
             this.get('env').save(this.get('payload'), false);
             return value;
         }

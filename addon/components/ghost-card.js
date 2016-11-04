@@ -15,11 +15,5 @@ export default Ember.Component.extend({
     init() {
         this._super(...arguments);
         this.set('isEditing', true);
-    },
-    didRender() {
-        console.log("RENDERRR");
-    },
-    didEdit() {
-        console.log("EDDIT");
     }
 });

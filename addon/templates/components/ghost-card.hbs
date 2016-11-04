@@ -9,13 +9,16 @@
     isEditing=isEditing
 }}
 <div class="card-handle">
-    <button {{action "toggleState"}}>
-        {{#if isEditing}}
-            Edit
-        {{else}}
-            Preview
-        {{/if}}
-    </button>
-    <button {{action "save"}}>Save</button>
-    {{!--<label class="card-label">{{card.card.label}}</label>--}}
+    {{#if card.card.buttons.preview}}
+        <button {{action "toggleState"}}>
+            {{#if isEditing}}
+                Edit
+            {{else}}
+                Preview
+            {{/if}}
+        </button>
+    {{/if}}
+    {{#if card.card.buttons.save}}
+        <button {{action "save"}}>Save</button>
+    {{/if}}
 </div>

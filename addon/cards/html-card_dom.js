@@ -2,5 +2,8 @@ export default {
     name: 'html-card',
     label: 'HTML Card',
     icon: '',
-    genus: 'ember'
+    genus: 'ember',
+    buttons: {
+        preview: true
+    }
 };
