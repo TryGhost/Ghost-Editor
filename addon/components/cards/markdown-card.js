@@ -13,6 +13,7 @@ export default Ember.Component.extend({
     isEditing: true,
     editing: function () {
         if(!this.isEditing) {
+            // Todo get latest from textarea
             this.set('preview', formatMarkdown([this.payload.markdown]));
         }
     }.observes('isEditing'),

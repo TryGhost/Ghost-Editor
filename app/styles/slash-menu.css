@@ -11,11 +11,15 @@
     padding:0;
     list-style: none;
 }
-.slash-menu ul li {
+.slash-menu ul li button {
     line-height: 30px;
-    vertical-align: middle;
     padding:5px;
+    width:100%;
+    text-align: left;
 }
-.slash-menu ul li:hover {
+
+
+.slash-menu ul li button:hover, .slash-menu ul li button.selected {
     background-color: var(--uihover);
+
 }

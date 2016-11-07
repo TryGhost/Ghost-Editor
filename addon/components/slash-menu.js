@@ -6,14 +6,37 @@ export default Ember.Component.extend({
     layout,
     classNames: ['slash-menu'],
     range: null,
+    menuSelectedItem: 0,
+    toolsLength:0,
+    selectedTool:null,
     toolbar: Ember.computed(function () {
         let tools = [ ];
         let match = (this.query || "").trim().toLowerCase();
+        let i = 0;
         this.tools.forEach((tool) => {
+
             if ((tool.type === 'block' || tool.type === 'newline') && (tool.label.toLowerCase().startsWith(match) || tool.name.toLowerCase().startsWith(match))) {
-                tools.push(tool);
+
+                let t = {
+                    label : tool.label,
+                    name: tool.name,
+                    icon: tool.icon,
+                    selected: i===this.menuSelectedItem,
+                    onClick: tool.onClick
+                };
+                if(i === this.menuSelectedItem) {
+                    this.set('selectedTool', t);
+                }
+
+                tools.push(t);
+                i++;
             }
         });
+        this.set('toolsLength', i);
+        if(this.menuSelectedItem > this.toolsLength) {
+            this.set('menuSelectedItem', this.toolsLength-1);
+           // this.propertyDidChange('toolbar');
+        }
 
         if(tools.length <  1) {
             this.isActive = false;
@@ -34,24 +57,7 @@ export default Ember.Component.extend({
             name: 'slash_menu',
             text: '/',
             run(editor) {
-                let $this = self.$();
-                let $editor = Ember.$('.gh-editor-container');
-
-                self._node = editor.range.head.section;
-                self._offset = editor.range.head.offset;
-                self.isActive = true;
-
-                let range = window.getSelection().getRangeAt(0); // get the actual range within the DOM.
-
-                let position =  range.getBoundingClientRect();
-                let edOffset = $editor.offset();
-
-                $this.show();
-                $this.css('top', position.top + $editor.scrollTop() - edOffset.top + 20); //- edOffset.top+10
-                $this.css('left', position.left + (position.width / 2) + $editor.scrollLeft() - edOffset.left );
-
-                self.query="";
-                self.propertyDidChange('toolbar');
+                self.open(editor);
             }
         });
 
@@ -60,10 +66,7 @@ export default Ember.Component.extend({
     cursorChange() {
         if(this.isActive) {
             if(!this.editor.range.isCollapsed || this.editor.range.head.section !== this._node || this.editor.range.head.offset < 1) {
-                this.isActive = false;
-
-                this.$().hide();
-                return;
+               this.close();
             }
             this.query = this.editor.range.head.section.text.substring(this._offset, this.editor.range.head.offset);
             this.set('range', {
@@ -78,5 +81,87 @@ export default Ember.Component.extend({
     },
     didRender() {
       //  this.$().hide();
+    },
+    open(editor) {
+        let self = this;
+        let $this = this.$();
+        let $editor = Ember.$('.gh-editor-container');
+
+        this._node = editor.range.head.section;
+        this._offset = editor.range.head.offset;
+        this.isActive = true;
+        this.cursorChange();
+        let range = window.getSelection().getRangeAt(0); // get the actual range within the DOM.
+
+        let position =  range.getBoundingClientRect();
+        let edOffset = $editor.offset();
+
+        $this.show();
+        $this.css('top', position.top + $editor.scrollTop() - edOffset.top + 20); //- edOffset.top+10
+        $this.css('left', position.left + (position.width / 2) + $editor.scrollLeft() - edOffset.left );
+
+        this.query="";
+        this.propertyDidChange('toolbar');
+
+
+        const downKeyCommand = {
+            str: 'DOWN',
+            _ghostName: 'slashdown',
+            run() {
+                let item = self.get('menuSelectedItem');
+                if(item < self.get('toolsLength')-1) {
+                    self.set('menuSelectedItem', item + 1);
+                    self.propertyDidChange('toolbar');
+                }
+            }
+        };
+        editor.registerKeyCommand(downKeyCommand);
+
+        const upKeyCommand = {
+            str: 'UP',
+            _ghostName: 'slashup',
+            run() {
+                let item = self.get('menuSelectedItem');
+                if(item > 0) {
+                    self.set('menuSelectedItem', item - 1);
+                    self.propertyDidChange('toolbar');
+                }
+            }
+        };
+        editor.registerKeyCommand(upKeyCommand);
+
+        const enterKeyCommand = {
+            str: 'ENTER',
+            _ghostName: 'slashenter',
+            run() {
+                self.get('selectedTool').onClick(self.get('editor'));
+                self.close();
+            }
+        };
+        editor.registerKeyCommand(enterKeyCommand);
+
+        const escapeKeyCommand = {
+            str: 'ESC',
+            _ghostName: 'slashesc',
+            run() {
+               self.close();
+            }
+        };
+        editor.registerKeyCommand(escapeKeyCommand);
+    },
+    close() {
+        this.isActive = false;
+
+        this.$().hide();
+        // note: below is using a mobiledoc Private API.
+        // there is no way to unregister a keycommand when it's registered so we have to remove it ourselves.
+        for( let i = this.editor._keyCommands.length-1; i > -1; i--) {
+            let keyCommand = this.editor._keyCommands[i];
+
+            if(keyCommand._ghostName === 'slashdown' || keyCommand._ghostName === 'slashup' || keyCommand._ghostName === 'slashenter'|| keyCommand._ghostName === 'slashesc') {
+                this.editor._keyCommands.splice(i,1);
+            }
+        }
+        return;
     }
 });

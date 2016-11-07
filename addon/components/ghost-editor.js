@@ -14,7 +14,7 @@ export const BLANK_DOC = {
     atoms: [],
     markups: [],
     cards: [],
-    sections: [[1,"p",[]]]
+    sections: []
 };
 
 export default Ember.Component.extend({
