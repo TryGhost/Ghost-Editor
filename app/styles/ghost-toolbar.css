@@ -1,28 +1,13 @@
-/* for some reason imports aren't working.... */
-@import "globals.css";
-
+/* Variables
+/* ---------------------------------------------------------- */
 
 :root {
-    /* Colours */
-    --darkgrey: #242628;
-    --midgrey: #7d878a;
-    --lightgrey: #e2edf2;
-    --blue: #5ba4e5;
-    --bluehover:rgb(48, 141, 223);
-    --red: #e25440;
-    --orange: #f2a925;
-    --green: #9fbb58;
-    --uigrey: #f5f7f8;
-    --uihover: #deeaf4;
-    --bordergrey: #dfe1e3;
-    /* Style values */
-    --border-radius: 4px;
-    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    --font-family-mono: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 
     --button-size-selection: 48px;
     --button-size-newline:32px;
 }
+
+
 
 
 

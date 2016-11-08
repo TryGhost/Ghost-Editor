@@ -17,6 +17,9 @@ export default Ember.Component.extend({
 
             const selection = window.getSelection();
             selection.addRange(range);
+
+
+            console.log(startOffset, endOffset, Range);
             //let editor = this.get('editor');
             //let range = editor.range;
             //console.log(endOffset, startOffset);
