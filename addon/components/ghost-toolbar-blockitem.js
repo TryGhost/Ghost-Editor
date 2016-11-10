@@ -76,8 +76,6 @@ export default Ember.Component.extend({
             let offset =  this.$(element).position();
             let edOffset = $editor.offset();
 
-
-
             $this.css('top', offset.top + $editor.scrollTop() - edOffset.top - 5);
             if(element.tagName.toLowerCase()==='li') {
                 $this.css('left', this.$(element.parentNode).position().left + $editor.scrollLeft() - 90);

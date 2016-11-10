@@ -75,7 +75,7 @@ export default Ember.Component.extend({
     },
     didRender() {
 
-        if (this._rendered) {
+        if(this._rendered) {
             return;
         }
         let editorDom = this.$('.surface')[0];
