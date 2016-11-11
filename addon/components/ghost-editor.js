@@ -142,14 +142,15 @@ export default Ember.Component.extend({
 
             {
                 name: 'em',
-                match: /[^\*]\*([^\*].*?)\*$/,
+                match: /(^|[^\*])\*([^\*].*?)\*$/,
                 run(editor, matches) {
                     let range = editor.range;
-                    range = range.extend(-(matches[0].length)+1);
+                    let match = matches[0][0] === '*' ? matches[0] : matches[0].substr(1);
+                    range = range.extend(-(match.length));
                     editor.run(postEditor => {
                         let position = postEditor.deleteRange(range);
                         let em = postEditor.builder.createMarkup('em');
-                        let nextPosition = postEditor.insertTextWithMarkup(position, matches[1], [em]);
+                        let nextPosition = postEditor.insertTextWithMarkup(position, matches[2], [em]);
                         postEditor.insertTextWithMarkup(nextPosition, '', []);
                     });
                 }
@@ -158,14 +159,16 @@ export default Ember.Component.extend({
         this.editor.onTextInput(
             {
                 name: 'uem',
-                match: /[^_]_([^_].+?)_$/,
+                match: /(^|[^_])_([^_].+?)_$/,
                 run(editor, matches) {
                     let range = editor.range;
-                    range = range.extend(-(matches[0].length)+1);
+                    let match = matches[0][0] === '_' ? matches[0] : matches[0].substr(1);
+                    range = range.extend(-(match.length));
+
                     editor.run(postEditor => {
                         let position = postEditor.deleteRange(range);
                         let em = postEditor.builder.createMarkup('em');
-                        let nextPosition = postEditor.insertTextWithMarkup(position, matches[1], [em]);
+                        let nextPosition = postEditor.insertTextWithMarkup(position, matches[2], [em]);
                         postEditor.insertTextWithMarkup(nextPosition, '', []); // insert the un-marked-up space
                     });
                 }
@@ -178,10 +181,11 @@ export default Ember.Component.extend({
                 run(editor, matches) {
                     let url = matches[3];
                     let text = matches[2];
-
+                    let match = matches[0][0] === '[' ? matches[0] : matches[0].substr(1);
                     let range = editor.range;
-                    range = range.extend(-(matches[0].length)+1);
+                    range = range.extend(-match.length);
                     editor.run(postEditor => {
+                        console.log(matches);
                         let position = postEditor.deleteRange(range);
                         let a = postEditor.builder.createMarkup('a', {href: url});
                         let nextPosition = postEditor.insertTextWithMarkup(position, text, [a]);
