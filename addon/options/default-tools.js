@@ -208,7 +208,7 @@ export default function (editor, toolbar) {
                 Ember.set(this, "selected", elements.filter(element => element.tagName === 's').length > 0);
             }
         },
-        {
+        /*{
             name: "sub",
             label: "Subscript",
             icon: "subscript.svg",
@@ -237,12 +237,12 @@ export default function (editor, toolbar) {
             checkElements: function (elements) {
                 Ember.set(this, "selected", elements.filter(element => element.tagName === 'sup').length > 0);
             }
-        },
+        },*/
         {
             name: "img",
             label: "Image",
             selected: false,
-            type: 'newline',
+            type: 'card',
             icon: 'file-picture-add.svg',
             visibility: "primary",
             onClick: (editor) => {
@@ -258,9 +258,9 @@ export default function (editor, toolbar) {
         },
         {
             name: "html",
-            label: "HTML Embed",
+            label: "Embed HTML",
             selected: false,
-            type: 'newline',
+            type: 'card',
             icon: 'html-five.svg',
             visibility: "primary",
             onClick: (editor) => {
@@ -275,9 +275,9 @@ export default function (editor, toolbar) {
         },
         {
             name: "md",
-            label: "Markdown Embed",
+            label: "Embed Markdown",
             selected: false,
-            type: 'newline',
+            type: 'card',
             visibility: "primary",
             icon: 'file-code-1.svg',
             onClick: (editor) => {
@@ -289,24 +289,6 @@ export default function (editor, toolbar) {
             checkElements: function () {
 
             }
-        },
-        {
-            name: 'edit',
-            selected: false,
-            type: 'card',
-            visibility: 'primary',
-            icon: 'file-code-edit.svg',
-            onClick: ()=>{},
-            checkElements:()=>{}
-        },
-        {
-            name: 'delete',
-            selected: false,
-            type: 'card',
-            visibility: 'primary',
-            icon: 'close.svg',
-            onClick: ()=>{},
-            checkElements:()=>{}
         }
     ];
 }

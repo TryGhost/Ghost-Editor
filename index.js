@@ -31,6 +31,7 @@ module.exports = {
          });
     },
     included: function (app) {
+        app.import('app/styles/globals.css');
         app.import('vendor/mobiledoc-kit/amd/mobiledoc-kit.js');
         app.import('app/styles/ghost-editor.css');
         app.import('app/styles/ghost-toolbar.css');
@@ -38,7 +39,6 @@ module.exports = {
         app.import('app/styles/ghost-toolbar-newitem.css');
         app.import('app/styles/card-picker.css');
         app.import('app/styles/slash-menu.css');
-        app.import('app/styles/globals.css');
 
     },
 

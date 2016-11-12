@@ -3,7 +3,7 @@ import layout from '../templates/components/ghost-editor';
 import Mobiledoc from 'mobiledoc-kit';
 import {MOBILEDOC_VERSION} from 'mobiledoc-kit/renderers/mobiledoc';
 import {replaceWithListSection, replaceWithHeaderSection} from 'mobiledoc-kit/editor/text-input-handlers';
-import createCardFactory from '../helpers/card-factory';
+import createCardFactory from '../utils/card-factory';
 import editorCards  from '../cards/index';
 //import { VALID_MARKUP_SECTION_TAGNAMES } from 'mobiledoc-kit/models/markup-section'; //the block elements supported by mobile-doc
 
@@ -23,7 +23,6 @@ export default Ember.Component.extend({
     emberCards: Ember.A([]),
     init() {
         this._super(...arguments);
-
 
 
         let mobiledoc = this.get('value') || BLANK_DOC;
@@ -56,11 +55,31 @@ export default Ember.Component.extend({
             autofocus: this.get('shouldFocusEditor'),
             placeholder: 'Click here to start ...'
         };
+        this.editor = new Mobiledoc.Editor(options);
+    },
+    willRender() {
+        if(this._rendered) {
+            return;
+        }
+        let editor =this.editor;
 
 
-       let editor = this.editor = new Mobiledoc.Editor(options);
+        editor.willRender(() => {
+            //console.log(Ember.run.currentRunLoop);
+            //if (!Ember.run.currentRunLoop) {
+              //  this._startedRunLoop = true;
+              //  Ember.run.begin();
+            //}
+        });
 
-       editor.postDidChange(()=> {
+        editor.didRender(() => {
+
+            this.sendAction('loaded', editor);
+                //Ember.run.end();
+
+
+        });
+        editor.postDidChange(()=> {
             Ember.run.join(() => {
                 //store a cache of the local doc so that we don't need to reinitialise it.
                 this._cached_doc = editor.serialize(MOBILEDOC_VERSION);
@@ -75,7 +94,7 @@ export default Ember.Component.extend({
     },
     didRender() {
 
-        if (this._rendered) {
+        if(this._rendered) {
             return;
         }
         let editorDom = this.$('.surface')[0];
@@ -123,14 +142,15 @@ export default Ember.Component.extend({
 
             {
                 name: 'em',
-                match: /[^\*]\*([^\*].*?)\*$/,
+                match: /(^|[^\*])\*([^\*].*?)\*$/,
                 run(editor, matches) {
                     let range = editor.range;
-                    range = range.extend(-(matches[0].length)+1);
+                    let match = matches[0][0] === '*' ? matches[0] : matches[0].substr(1);
+                    range = range.extend(-(match.length));
                     editor.run(postEditor => {
                         let position = postEditor.deleteRange(range);
                         let em = postEditor.builder.createMarkup('em');
-                        let nextPosition = postEditor.insertTextWithMarkup(position, matches[1], [em]);
+                        let nextPosition = postEditor.insertTextWithMarkup(position, matches[2], [em]);
                         postEditor.insertTextWithMarkup(nextPosition, '', []);
                     });
                 }
@@ -139,14 +159,16 @@ export default Ember.Component.extend({
         this.editor.onTextInput(
             {
                 name: 'uem',
-                match: /[^_]_([^_].+?)_$/,
+                match: /(^|[^_])_([^_].+?)_$/,
                 run(editor, matches) {
                     let range = editor.range;
-                    range = range.extend(-(matches[0].length)+1);
+                    let match = matches[0][0] === '_' ? matches[0] : matches[0].substr(1);
+                    range = range.extend(-(match.length));
+
                     editor.run(postEditor => {
                         let position = postEditor.deleteRange(range);
                         let em = postEditor.builder.createMarkup('em');
-                        let nextPosition = postEditor.insertTextWithMarkup(position, matches[1], [em]);
+                        let nextPosition = postEditor.insertTextWithMarkup(position, matches[2], [em]);
                         postEditor.insertTextWithMarkup(nextPosition, '', []); // insert the un-marked-up space
                     });
                 }
@@ -159,10 +181,11 @@ export default Ember.Component.extend({
                 run(editor, matches) {
                     let url = matches[3];
                     let text = matches[2];
-
+                    let match = matches[0][0] === '[' ? matches[0] : matches[0].substr(1);
                     let range = editor.range;
-                    range = range.extend(-(matches[0].length)+1);
+                    range = range.extend(-match.length);
                     editor.run(postEditor => {
+                        console.log(matches);
                         let position = postEditor.deleteRange(range);
                         let a = postEditor.builder.createMarkup('a', {href: url});
                         let nextPosition = postEditor.insertTextWithMarkup(position, text, [a]);

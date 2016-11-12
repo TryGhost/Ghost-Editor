@@ -1,3 +1,4 @@
+/* jshint ignore:start */
 // Provides a common.js list of all the cards for front end import - this is quite yuck so a new sollution should be found
 
 var fs      = require('fs'),
@@ -34,3 +35,4 @@ module.exports = {
     text: textCards,
     all: cards
 };
+/* jshint ignore:end */

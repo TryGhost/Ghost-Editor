@@ -1,51 +1,32 @@
-/* for some reason imports aren't working.... */
-@import "globals.css";
-
+/* Variables
+/* ---------------------------------------------------------- */
 
 :root {
-    /* Colours */
-    --darkgrey: #242628;
-    --midgrey: #7d878a;
-    --lightgrey: #e2edf2;
-    --blue: #5ba4e5;
-    --bluehover:rgb(48, 141, 223);
-    --red: #e25440;
-    --orange: #f2a925;
-    --green: #9fbb58;
-    --uigrey: #f5f7f8;
-    --uihover: #deeaf4;
-    --bordergrey: #dfe1e3;
-    /* Style values */
-    --border-radius: 4px;
-    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    --font-family-mono: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 
     --button-size-selection: 48px;
     --button-size-newline:32px;
 }
 
 
-
 .toolbar {
     position: absolute;
     margin: 0;
-    transition: margin-left 0.1s;
     padding:5px;
     -webkit-border-radius:var(--border-radius);
     -moz-border-radius:var(--border-radius);
     border-radius:var(--border-radius);
-
     background-color: var(--uigrey);
-    opacity:1;
     border:1px var(--uigrey) solid;
-    padding:1;
-    float:right;
+}
 
+
+.toolbar.is-visible {
+    animation: toolbar-fadein 111ms;
 }
 
 .toolbar input {
-    height: var(--button-size);
-    width: 336px;
+    height: 64px;
+    width: 180px;
     outline: none;
 }
 
@@ -65,9 +46,6 @@
     width: var(--button-size-selection);
 }
 
-.toolbar.gh-newline ul li {
-    width: var(--button-size-newline)
-}
 
 .toolbar ul li button {
     border-radius: 2px;
@@ -83,15 +61,15 @@
     background-color: var(--uigrey);
     border: none;
 }
-.toolbar.gh-newline ul li {
-    height:var(--button-size-newline);
-    min-width:var(--button-size-newline);
+
+.toolbar ul li button label {
+    display:none;
 }
 
 .toolbar ul li:hover button, .toolbar ul li.selected button {
     background-color: var(--uihover);
     color: var(--darkgrey);
-    transition: 0.3s;
+    transition: 300ms;
 }
 
 .toolbar ul li button img {
@@ -113,4 +91,17 @@
     left: calc(50% - 13px);
     top:100%;
     position:absolute;
+}
+
+
+
+@keyframes toolbar-fadein {
+    from {
+        opacity: 0;
+        transform: translateY(-13px);
+    }
+    to   {
+        opacity: 1;
+        transform: translateY(0px);
+    }
 }

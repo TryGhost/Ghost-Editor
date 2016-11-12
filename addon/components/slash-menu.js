@@ -5,17 +5,20 @@ import layout from '../templates/components/slash-menu';
 export default Ember.Component.extend({
     layout,
     classNames: ['slash-menu'],
+    classNameBindings: ['isVisible'],
     range: null,
     menuSelectedItem: 0,
     toolsLength:0,
     selectedTool:null,
+    isVisible:false,
     toolbar: Ember.computed(function () {
         let tools = [ ];
         let match = (this.query || "").trim().toLowerCase();
         let i = 0;
+        // todo cache active tools so we don't need to loop through them on selection change.
         this.tools.forEach((tool) => {
 
-            if ((tool.type === 'block' || tool.type === 'newline') && (tool.label.toLowerCase().startsWith(match) || tool.name.toLowerCase().startsWith(match))) {
+            if ((tool.type === 'block' || tool.type === 'card') && (tool.label.toLowerCase().startsWith(match) || tool.name.toLowerCase().startsWith(match))) {
 
                 let t = {
                     label : tool.label,
@@ -40,7 +43,7 @@ export default Ember.Component.extend({
 
         if(tools.length <  1) {
             this.isActive = false;
-            this.$().hide();
+            this.set('isVisible', false);
         }
         return tools;
     }),
@@ -65,7 +68,7 @@ export default Ember.Component.extend({
     },
     cursorChange() {
         if(this.isActive) {
-            if(!this.editor.range.isCollapsed || this.editor.range.head.section !== this._node || this.editor.range.head.offset < 1) {
+            if(!this.editor.range.isCollapsed || this.editor.range.head.section !== this._node || this.editor.range.head.offset < 1 || !this.editor.range.head.section) {
                this.close();
             }
             this.query = this.editor.range.head.section.text.substring(this._offset, this.editor.range.head.offset);
@@ -79,9 +82,6 @@ export default Ember.Component.extend({
 
 
     },
-    didRender() {
-      //  this.$().hide();
-    },
     open(editor) {
         let self = this;
         let $this = this.$();
@@ -89,6 +89,7 @@ export default Ember.Component.extend({
 
         this._node = editor.range.head.section;
         this._offset = editor.range.head.offset;
+        console.log("OFFSET", this._offset);
         this.isActive = true;
         this.cursorChange();
         let range = window.getSelection().getRangeAt(0); // get the actual range within the DOM.
@@ -96,7 +97,7 @@ export default Ember.Component.extend({
         let position =  range.getBoundingClientRect();
         let edOffset = $editor.offset();
 
-        $this.show();
+        this.set('isVisible', true);
         $this.css('top', position.top + $editor.scrollTop() - edOffset.top + 20); //- edOffset.top+10
         $this.css('left', position.left + (position.width / 2) + $editor.scrollLeft() - edOffset.left );
 
@@ -132,8 +133,13 @@ export default Ember.Component.extend({
 
         const enterKeyCommand = {
             str: 'ENTER',
-            _ghostName: 'slashenter',
-            run() {
+            _ghostName: 'slashdown',
+            run(postEditor) {
+
+                let range = postEditor.range;
+
+                range.head.offset = self._offset - 1;
+                postEditor.deleteRange(range);
                 self.get('selectedTool').onClick(self.get('editor'));
                 self.close();
             }
@@ -152,7 +158,7 @@ export default Ember.Component.extend({
     close() {
         this.isActive = false;
 
-        this.$().hide();
+        this.set('isVisible', false);
         // note: below is using a mobiledoc Private API.
         // there is no way to unregister a keycommand when it's registered so we have to remove it ourselves.
         for( let i = this.editor._keyCommands.length-1; i > -1; i--) {
