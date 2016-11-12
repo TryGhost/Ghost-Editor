@@ -3,7 +3,7 @@ import layout from '../templates/components/ghost-editor';
 import Mobiledoc from 'mobiledoc-kit';
 import {MOBILEDOC_VERSION} from 'mobiledoc-kit/renderers/mobiledoc';
 import {replaceWithListSection, replaceWithHeaderSection} from 'mobiledoc-kit/editor/text-input-handlers';
-import createCardFactory from '../helpers/card-factory';
+import createCardFactory from '../utils/card-factory';
 import editorCards  from '../cards/index';
 //import { VALID_MARKUP_SECTION_TAGNAMES } from 'mobiledoc-kit/models/markup-section'; //the block elements supported by mobile-doc
 

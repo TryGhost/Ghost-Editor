@@ -7,17 +7,14 @@ export default Ember.Component.extend({
     layout,
     classNames: ['toolbar-block'],
     tools: [],
+    isBlank: false,
     toolbar: Ember.computed(function () {
         let postTools = [ ];
         let selectedPostTools = [ ];
 
         this.tools.forEach(tool => {
 
-            if (tool.type === 'block') {
-                if(tool.selected && tool.visibility !== 'primary') {
-                    // we have a one tool difference on the left hand side.
-                    this.set('non-primary-block-selected', true);
-                }
+            if (tool.type === 'block' || (tool.type === 'card' && this.isBlank)) {
                 if (tool.selected) {
                     selectedPostTools.push(tool);
                 } else {
@@ -40,18 +37,12 @@ export default Ember.Component.extend({
     didRender() {
         let $this = this.$();
         let editor = this.editor;
-        let $editor = Ember.$('.gh-editor-container');
-
-        if(!editor.range || !editor.range.head.section || (editor.range.head.isBlank &&
-            editor.range.head.section.renderNode._element.tagName.toLowerCase() === 'p')) {
-            this.$().hide();
-        }
-
+        let $editor = Ember.$('.gh-editor-container'); // TODO this is part of Ghost-Admin
 
         editor.cursorDidChange(() => {
-            // if there is no cursor:
 
-            if((!editor.range || !editor.range.head.section || editor.range.head.isBlank)) {
+            // if there is no cursor:
+            if(!editor.range || !editor.range.head.section) {
                 $this.fadeOut();
                 return;
             }
@@ -62,16 +53,16 @@ export default Ember.Component.extend({
                 return;
             }
 
-            // if the section is a blank section then don't show this menu
+            // if the section is a blank section then we can change it to a card, otherwise we can't.
             if(editor.range.head.section.isBlank) {
-                $this.fadeOut();
-                return;
+                this.set('isBlank', true);
+            } else {
+                this.set('isBlank', false);
             }
 
             this.propertyWillChange('toolbar');
 
             this.__state = 'normal';
-            this.isBlank = true;
 
             let offset =  this.$(element).position();
             let edOffset = $editor.offset();

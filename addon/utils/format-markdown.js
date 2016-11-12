@@ -1,7 +1,7 @@
 /* global Showdown, html_sanitize*/
 import {helper} from 'ember-helper';
 import {htmlSafe} from 'ember-string';
-import cajaSanitizers from '../utils/caja-sanitizers';
+import cajaSanitizers from './caja-sanitizers';
 
 let showdown = new Showdown.converter({extensions: ['ghostimagepreview', 'ghostgfm', 'footnotes', 'highlight']});
 

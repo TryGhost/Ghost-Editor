@@ -6,7 +6,7 @@
 .ghost-editor {
     height: 100%;
     -webkit-overflow-scrolling: touch;
-    padding-bottom:333px;
+    padding-bottom:500px; /* so launching the slash menu doesn't generate scroll bars */
 }
 
 .__mobiledoc-editor {
@@ -48,6 +48,7 @@
     display: inline-block;
     width:calc(100% - 4px);
     margin:2px;
+    padding:0;
 }
 .__mobiledoc-card .ghost-card {
     position: relative;
@@ -77,6 +78,8 @@
     min-height:333px;
     max-width:900px;
     outline:none;
+    border:none;
+    resize: none;
 }
 
 .card-handle button:hover {
@@ -101,25 +104,7 @@
     cursor: -moz-grab;
 }
 
-@keyframes rotate {
-    from {
-        -webkit-transform: rotate(0deg);
-        -moz-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        transform: rotate(0deg);
-        background-color: #fff;
-        color: #718087;
-    }
 
-    to {
-        -webkit-transform: rotate(360deg);
-        -moz-transform: rotate(360deg);
-        -ms-transform: rotate(-360deg);
-        transform: rotate(360deg);
-        background-color: red;
-        color: #e9e8dd;
-    }
-}
 
 textarea.ed_code {
     width:100%;
@@ -133,11 +118,8 @@ textarea.ed_code {
  * Tooltip
  */
 
-@-webkit-keyframes fade-in {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
-@keyframes fade-in {
+
+@keyframes tooltip-fadein {
     0% { opacity: 0; }
     100% { opacity: 1; }
 }
@@ -149,8 +131,8 @@ textarea.ed_code {
     border-radius: 3px;
     padding:5px 10px 5px 10px;
     color: #FFF;
-    -webkit-animation: fade-in 0.2s;
-    animation: fade-in 0.2s;
+    -webkit-animation: tooltip-fadein 0.333s;
+    animation: tooltip-fadein 0.333s;
 }
 .__mobiledoc-tooltip a {
     color: #FFF;

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import layout from '../../templates/components/markdown-card';
-import {formatMarkdown} from '../../helpers/format-markdown';
+import {formatMarkdown} from '../../utils/format-markdown';
 
 
 
