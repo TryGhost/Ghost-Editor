@@ -91,5 +91,8 @@ export default Ember.Component.extend({
             this.propertyDidChange('toolbar');
 
         });
+    },
+    willDestroy() {
+        this.editor.destroy();
     }
 });

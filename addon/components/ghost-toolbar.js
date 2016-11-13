@@ -91,6 +91,9 @@ export default Ember.Component.extend({
             this.propertyDidChange('toolbar');
         });
     },
+    willDestroyElement() {
+        this.editor.destroy();
+    },
     actions: {
         linkKeyDown(event) {
             // if escape close link

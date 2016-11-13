@@ -288,6 +288,9 @@ export default Ember.Component.extend({
         }
 
 
+    },
+    willDestroy() {
+        this.editor.destroy();
     }
 
 });

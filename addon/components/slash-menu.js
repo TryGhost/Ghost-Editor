@@ -66,6 +66,9 @@ export default Ember.Component.extend({
 
 
     },
+    willDestroy() {
+        this.editor.destroy();
+    },
     cursorChange() {
         if(this.isActive) {
             if(!this.editor.range.isCollapsed || this.editor.range.head.section !== this._node || this.editor.range.head.offset < 1 || !this.editor.range.head.section) {
