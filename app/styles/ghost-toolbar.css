@@ -98,10 +98,10 @@
 @keyframes toolbar-fadein {
     from {
         opacity: 0;
-        transform: translateY(-13px);
+        /*transform: translateY(-13px);*/
     }
     to   {
         opacity: 1;
-        transform: translateY(0px);
+        /*transform: translateY(0px);*/
     }
 }
