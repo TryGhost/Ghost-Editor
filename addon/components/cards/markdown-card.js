@@ -13,8 +13,7 @@ export default Ember.Component.extend({
     isEditing: true,
     editing: function () {
         if(!this.isEditing) {
-            // Todo get latest from textarea
-            this.set('preview', formatMarkdown([this.payload.markdown]));
+            this.set('preview', formatMarkdown([this.get('payload').markdown]));
         }
     }.observes('isEditing'),
     value : Ember.computed('payload', {
@@ -28,6 +27,13 @@ export default Ember.Component.extend({
             return value;
         }
 
-    })
+    }),
+    actions: {
+        updateValue( ) {
+            this.get('payload').markdown = this.$('textarea').val();
+            this.get('env').save(this.get('payload'), false);
+            this.set('preview', formatMarkdown([this.get('payload').markdown]));
+        }
+    }
 
 });

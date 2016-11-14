@@ -21,7 +21,7 @@
 
 
 .toolbar.is-visible {
-    animation: toolbar-fadein 111ms;
+ /*   animation: toolbar-fadein 111ms;*/
 }
 
 .toolbar input {

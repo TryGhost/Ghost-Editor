@@ -14,6 +14,6 @@ export default Ember.Component.extend({
     },
     init() {
         this._super(...arguments);
-        this.set('isEditing', true);
+        this.set('isEditing', false);
     }
 });
