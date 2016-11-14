@@ -6,7 +6,6 @@
 .ghost-editor {
     height: 100%;
     -webkit-overflow-scrolling: touch;
-    padding-bottom:500px; /* so launching the slash menu doesn't generate scroll bars */
 }
 
 .__mobiledoc-editor {
@@ -14,17 +13,9 @@
     min-height: 100%;
     outline: none;
     font-family: var(--font-family);
-    font-size: 1.6rem;
-    line-height: 2.5rem;
+    font-size: 1.7rem;
     resize: none;
-    padding-bottom:50px;
 }
-
-.__mobiledoc-editor p {
-    margin: 0;
-    padding: 0;
-}
-
 
 .dropper-bottom {
     border-bottom: 66px solid #5ba4e5;
