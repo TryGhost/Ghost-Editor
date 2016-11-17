@@ -38,22 +38,23 @@ A fantastic guide on the Ghost workflow is here: https://github.com/TryGhost/Gho
 
 Ghost-Editor is very much a WYSIWYG editor but it supports a subset of markdown as content shortcuts for those of us who are mouse adverse, specifically:
 
-\# H1
-\## H2
-\## H3
+```text
+# H1
+## H2
+## H3
 1. Ordered Lists
-\* Unordered Lists
-\- Unordered Lists
-\> Block Quote
-\*italic*
-\_italic_
-\*\*bold\*\*
-\_\_bold\_\_
-\~~strikethrough~~
-\[link](http://www.ghost.org)
-\!\[image](https://ghost.org/assets/logos-f93942864f8c9f4a0a9b0ecd6f7f055c.png)
-\`\`\` code blocks (generates a new markdown card) \`\`\`
-
+* Unordered Lists
+- Unordered Lists
+> Block Quote
+*italic*
+_italic_
+**bold**
+__bold__
+~~strikethrough~~
+[link](http://www.ghost.org)
+!\[image](https://ghost.org/assets/logos-f93942864f8c9f4a0a9b0ecd6f7f055c.png)
+``` code blocks (generates a new markdown card) ```
+```
 There's also has an inline menu that you can access by pressing the **/** key within the editor.
 
 Right now we only have three built in "cards", a markdown card, an HTML card, and an Image card. But we plan to add the ability to install custom cards in the near future and have some big and exciting plans (and we're even more excited about what the community will do with it.), so watch this space.
