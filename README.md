@@ -55,7 +55,7 @@ __bold__
 ![image](https://ghost.org/assets/logos-f93942864f8c9f4a0a9b0ecd6f7f055c.png)
 ``` code blocks (generates a new markdown card) ```
 ```
-There's also has an inline menu that you can access by pressing the **/** key within the editor.
+There's also an inline menu that you can access by pressing the **/** key within the editor.
 
 Right now we only have three built in "cards", a markdown card, an HTML card, and an Image card. But we plan to add the ability to install custom cards in the near future and have some big and exciting plans (and we're even more excited about what the community will do with it.), so watch this space.
 
