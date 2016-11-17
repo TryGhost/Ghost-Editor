@@ -41,7 +41,7 @@ Ghost-Editor is very much a WYSIWYG editor but it supports a subset of markdown 
 ```text
 # H1
 ## H2
-## H3
+### H3
 1. Ordered Lists
 * Unordered Lists
 - Unordered Lists
@@ -52,7 +52,7 @@ _italic_
 __bold__
 ~~strikethrough~~
 [link](http://www.ghost.org)
-!\[image](https://ghost.org/assets/logos-f93942864f8c9f4a0a9b0ecd6f7f055c.png)
+![image](https://ghost.org/assets/logos-f93942864f8c9f4a0a9b0ecd6f7f055c.png)
 ``` code blocks (generates a new markdown card) ```
 ```
 There's also has an inline menu that you can access by pressing the **/** key within the editor.
