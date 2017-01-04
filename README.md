@@ -59,3 +59,7 @@ There's also an inline menu that you can access by pressing the **/** key within
 
 Right now we only have three built in "cards", a markdown card, an HTML card, and an Image card. But we plan to add the ability to install custom cards in the near future and have some big and exciting plans (and we're even more excited about what the community will do with it.), so watch this space.
 
+# Copyright & License
+
+Copyright (c) 2016-2017 Ghost Foundation - Released under the [MIT license](LICENSE).
+
