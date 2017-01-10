@@ -6,7 +6,7 @@ const {testing} = Ember;
 
 export default XFileInput.extend({
     change(e) {
-        let files = testing ? (e.originalEvent || e).testingFiles : e.target.files;
+        const files = testing ? (e.originalEvent || e).testingFiles : e.target.files;
         this.sendAction('action', files);
     }
 });

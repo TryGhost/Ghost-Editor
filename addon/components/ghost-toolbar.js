@@ -41,55 +41,13 @@ export default Ember.Component.extend({
         let $this = this.$();
         let editor = this.editor;
         let $editor = Ember.$('.gh-editor-container'); // TODO - this element is part of ghost-admin, we need to seperate them more.
-
+        let isMousedown = false;
         if(!editor.range || editor.range.head.isBlank) {
             this.set('isVisible', false);
         }
-
-        editor.cursorDidChange(() => {
-            // if there is no cursor:
-            if((!editor.range || editor.range.head.isBlank)) {
-                if(!this.get('isLink')) {
-                    this.set('isVisible', false);
-                }
-                return;
-            }
-            this.propertyWillChange('toolbar');
-
-                if(!editor.range.isCollapsed) {
-                    // if we have a selection, then the toolbar appears just below said selection:
-
-                    let range = window.getSelection().getRangeAt(0); // get the actual range within the DOM.
-                    let position =  range.getBoundingClientRect();
-                    let edOffset = $editor.offset();
-
-                    this.set('isVisible', true);
-                    $this.css('top', position.top + $editor.scrollTop() - $this.height()-20); //- edOffset.top+10
-                    $this.css('left', position.left + (position.width / 2) + $editor.scrollLeft() - edOffset.left - ($this.width()/2));
-
-                    this.set('isLink', false);
-
-                    this.tools.forEach(tool => {
-                        if (tool.hasOwnProperty('checkElements')) {
-                            // if its a list we want to know what type
-                            let sectionTagName = editor.activeSection._tagName === 'li' ? editor.activeSection.parent._tagName : editor.activeSection._tagName;
-                            tool.checkElements(editor.activeMarkups.concat([{tagName: sectionTagName}]));
-                        }
-                    });
-
-
-
-                } else {
-                    if(this.isVisible) {
-                        this.set('isVisible', false);
-                        this.set('isLink', false);
-                    }
-
-
-                }
-
-            this.propertyDidChange('toolbar');
-        });
+        $editor.mousedown(() => isMousedown = true);
+        $editor.mouseup(() => { isMousedown = false; updateToolbarToRange(this, $this, $editor, isMousedown);});
+        editor.cursorDidChange(() => updateToolbarToRange(this, $this, $editor, isMousedown));
     },
     willDestroyElement() {
         this.editor.destroy();
@@ -122,3 +80,50 @@ export default Ember.Component.extend({
         this.set('linkRange', range);
     }
 });
+
+function updateToolbarToRange(self, $holder, $editor, isMouseDown) {
+        // if there is no cursor:
+        let editor = self.editor;
+        if(!editor.range || editor.range.head.isBlank || isMouseDown) {
+            if(!self.get('isLink')) {
+                self.set('isVisible', false);
+            }
+            return;
+        }
+        self.propertyWillChange('toolbar');
+
+        if(!editor.range.isCollapsed) {
+            // if we have a selection, then the toolbar appears just below said selection:
+
+            let range = window.getSelection().getRangeAt(0); // get the actual range within the DOM.
+            let position =  range.getBoundingClientRect();
+            let edOffset = $editor.offset();
+
+            self.set('isVisible', true);
+            $holder.css('top', position.top + $editor.scrollTop() - $holder.height()-20); //- edOffset.top+10
+            $holder.css('left', position.left + (position.width / 2) + $editor.scrollLeft() - edOffset.left - ($holder.width()/2));
+
+            self.set('isLink', false);
+
+            self.tools.forEach(tool => {
+                if (tool.hasOwnProperty('checkElements')) {
+                    // if its a list we want to know what type
+                    let sectionTagName = editor.activeSection._tagName === 'li' ? editor.activeSection.parent._tagName : editor.activeSection._tagName;
+                    tool.checkElements(editor.activeMarkups.concat([{tagName: sectionTagName}]));
+                }
+            });
+
+
+
+        } else {
+            if(self.isVisible) {
+                self.set('isVisible', false);
+                self.set('isLink', false);
+            }
+
+
+        }
+
+        self.propertyDidChange('toolbar');
+}
+
