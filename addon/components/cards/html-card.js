@@ -21,12 +21,8 @@ export default Ember.Component.extend({
     }),
     init() {
         this._super(...arguments);
-        let payload = this.get('payload');
-        if (payload.hasOwnProperty('html')) {
-            this.isEditing = false;
-        } else {
-            this.isEditing = true;
-        }
+        const payload = this.get('payload');
+        this.isEditing = !payload.hasOwnProperty('html');
     },
     didRender() {
     }

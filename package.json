@@ -1,6 +1,6 @@
 {
   "name": "ghost-editor",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A mobiledoc-kit based editor for Ghost. WARNING DO NOT USE!",
   "directories": {
     "doc": "doc",
@@ -43,7 +43,7 @@
     "emberx-file-input": "1.1.0",
     "ivy-codemirror": "2.0.2",
     "loader.js": "^4.0.1",
-    "mobiledoc-kit": "^0.10.10",
+    "mobiledoc-kit": "^0.10.13",
     "showdown-ghost": "0.3.6"
   },
   "keywords": [
@@ -54,7 +54,6 @@
     "broccoli-merge-trees": "^1.1.4",
     "ember-cli-babel": "^5.1.6",
     "ember-cli-htmlbars": "^1.1.0",
-    "mobiledoc-kit": "^0.10.11",
     "showdown-ghost": "^0.4.0"
   },
   "ember-addon": {

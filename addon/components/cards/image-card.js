@@ -44,7 +44,7 @@ export default Component.extend({
     // TODO: this wouldn't be necessary if the server could accept direct
     // file uploads
     formData: computed('file', function () {
-        let file = this.get('file');
+        const file = this.get('file');
         let formData = new FormData();
         formData.append('file', file);
 
@@ -52,13 +52,13 @@ export default Component.extend({
     }),
 
     description: computed('text', 'altText', function () {
-        let altText = this.get('altText');
+        const altText = this.get('altText');
 
         return this.get('text') || (altText ? `Upload image of "${altText}"` : 'Upload an image');
     }),
 
     progressStyle: computed('uploadPercentage', function () {
-        let percentage = this.get('uploadPercentage');
+        const percentage = this.get('uploadPercentage');
         let width = '';
 
         if (percentage > 0) {
@@ -75,19 +75,19 @@ export default Component.extend({
     }),
 
     showUploadForm: computed('formType', function () {
-        let canShowUploadForm = this.get('canShowUploadForm');
+        const canShowUploadForm = this.get('canShowUploadForm');
         let formType = this.get('formType');
 
         return formType === 'upload' && canShowUploadForm;
     }),
 
     didReceiveAttrs() {
-        let image = this.get('payload');
+        const image = this.get('payload');
         this.set('url', image.img);
     },
 
     dragOver(event) {
-        let showUploadForm = this.get('showUploadForm');
+        const showUploadForm = this.get('showUploadForm');
 
         if (!event.dataTransfer) {
             return;
@@ -107,7 +107,7 @@ export default Component.extend({
     },
 
     dragLeave(event) {
-        let showUploadForm = this.get('showUploadForm');
+        const showUploadForm = this.get('showUploadForm');
 
         event.preventDefault();
 
@@ -117,7 +117,7 @@ export default Component.extend({
     },
 
     drop(event) {
-        let showUploadForm = this.get('showUploadForm');
+        const showUploadForm = this.get('showUploadForm');
 
         event.preventDefault();
 
