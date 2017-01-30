@@ -43,13 +43,13 @@
     "emberx-file-input": "1.1.0",
     "ivy-codemirror": "2.0.2",
     "loader.js": "^4.0.1",
-    "mobiledoc-kit": "^0.10.13",
     "showdown-ghost": "0.3.6"
   },
   "keywords": [
     "ember-addon"
   ],
   "dependencies": {
+     "mobiledoc-kit": "^0.10.13",
     "broccoli-funnel": "^1.0.7",
     "broccoli-merge-trees": "^1.1.4",
     "ember-cli-babel": "^5.1.6",
