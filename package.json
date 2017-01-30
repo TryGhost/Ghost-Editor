@@ -52,7 +52,7 @@
     "emberx-file-input": "1.1.0",
     "ivy-codemirror": "2.0.2",
     "loader.js": "^4.0.1",
-    "mobiledoc-kit": "^0.10.13"
+    "mobiledoc-kit": "^0.10.10"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
