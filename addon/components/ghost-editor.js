@@ -118,6 +118,14 @@ export default Ember.Component.extend({
             this.editor._ensureFocus();
         }
 
+        this.editor.didUpdatePost(postEditor => {
+            let topSection = this.editor.post.sections.toArray()[0]; //todo create a .first();
+            if(topSection.tagName !== 'h1') {
+                let range = this.editor.post.sections.toArray()[0].toRange();
+                postEditor.toggleSection('h1', range);
+            }
+        });
+
 
     },
     willDestroy() {
