@@ -42,7 +42,7 @@ export default Ember.Component.extend({
         editor.cursorDidChange(() => {
 
             // if there is no cursor:
-            if(!editor.range || !editor.range.head.section) {
+            if(!editor.range || !editor.range.head.section || editor.range.head.section.tagName === 'h1') {
                 $this.fadeOut();
                 return;
             }
