@@ -130,6 +130,18 @@ export default Ember.Component.extend({
     },
     willDestroy() {
         this.editor.destroy();
+    },
+
+    // replace the title with a string.
+    setTitle(content) {
+        let range = this.editor.post.sections.toArray()[0].toRange();
+        this.editor.run(postEditor => {
+            let position = postEditor.deleteRange(range);
+            postEditor.insertTextWithMarkup(position, content);
+        });
+    },
+    getTitle() {
+        return this.editor.post.sections.toArray()[0].text;
     }
 
 });
