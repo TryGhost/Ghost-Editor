@@ -83,7 +83,11 @@ export default Component.extend({
 
     didReceiveAttrs() {
         const image = this.get('payload');
-        this.set('url', image.img);
+        if(image.url) {
+            this.set('url', image.img);
+        } else if(image.event) {
+            this.send('fileSelected', event.dataTransfer.files);
+        }
     },
 
     dragOver(event) {
