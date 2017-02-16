@@ -71,7 +71,7 @@ export default Ember.Component.extend({
         const el = this.$('textarea')[0];
 
         el.value = el.value.replace(placeholderText, imageText);
-
+        this.sendAction('updateValue');
     },
 
     _validate(file) {
@@ -111,7 +111,6 @@ export default Ember.Component.extend({
         let [, extension] = (/(?:\.([^.]+))?$/).exec(file.name);
 
         if (!isEmberArray(extensions)) {
-            alert("EXTENSIONS" + (typeof extensions) + extensions);
             extensions = extensions.split(',');
         }
 
@@ -209,7 +208,7 @@ export default Ember.Component.extend({
         let combinedLength = 0;
         for(let i = 0; i < files.length; i++) {
             let file = files[i];
-            let placeholderText = `![uploading:${file.name}]()`;
+            let placeholderText = `\r\n![uploading:${file.name}]()\r\n`;
             el.value = el.value.substring(0, start) + placeholderText + el.value.substring(end, el.value.length);
             combinedLength += placeholderText.length;
         }
