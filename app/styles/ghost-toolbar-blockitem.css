@@ -28,6 +28,12 @@
     float:left;
 }
 
+.toolbar-block ul li:first-child {
+    display:block;
+    width:32px;
+    opacity:0.3;
+}
+
 .toolbar-block:hover ul li {
     display:block;
     width:32px;

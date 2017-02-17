@@ -199,6 +199,7 @@ export default Ember.Component.extend({
     },
     drop(event) {
         event.preventDefault();
+        event.stopPropagation();
         const el = this.$('textarea')[0];
         const start = el.selectionStart;
         const end = el.selectionEnd;
