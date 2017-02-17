@@ -19,6 +19,7 @@ branches:
         - /^greenkeeper-.+$/
 
 cache:
+    yarn: true
     directories:
         - node_modules
 
@@ -31,16 +32,14 @@ packages:
     - google-chrome-stable
 
 before_install:
-    - npm config --global set spin false
-    - npm install -g npm@^2
 
 install:
-    - npm install -g bower
-    - npm install
-    - bower install
-
+  - npm i -g yarn
+  - yarn global add bower
+  - yarn install
+  - bower install
 before_script:
     - export DISPLAY=:99; sh -e /etc/init.d/xvfb start; sleep 3;
 
 script:
-    - npm test
+    - yarn test
