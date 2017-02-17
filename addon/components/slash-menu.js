@@ -92,7 +92,6 @@ export default Ember.Component.extend({
 
         this._node = editor.range.head.section;
         this._offset = editor.range.head.offset;
-        console.log("OFFSET", this._offset);
         this.isActive = true;
         this.cursorChange();
         let range = window.getSelection().getRangeAt(0); // get the actual range within the DOM.
@@ -101,8 +100,13 @@ export default Ember.Component.extend({
         let edOffset = $editor.offset();
 
         this.set('isVisible', true);
-        $this.css('top', position.top + $editor.scrollTop() - edOffset.top + 20); //- edOffset.top+10
-        $this.css('left', position.left + (position.width / 2) + $editor.scrollLeft() - edOffset.left );
+
+        Ember.run.schedule('afterRender', this,
+            () => {
+                $this.css('top', position.top + $editor.scrollTop() - edOffset.top + 20); //- edOffset.top+10
+                $this.css('left', position.left + (position.width / 2) + $editor.scrollLeft() - edOffset.left );
+            }
+        );
 
         this.query="";
         this.propertyDidChange('toolbar');
