@@ -123,8 +123,11 @@ export default Ember.Component.extend({
 
     drop(event) {
         event.preventDefault();
-        console.log(event.dataTransfer.files[0]);
-        this.editor.insertCard('image-card', {pos: 'top', event: event});
+        for(let i = 0; i < event.dataTransfer.files.length; i++) {
+            let file = [event.dataTransfer.files[i]];
+            this.editor.insertCard('image-card', {pos: 'top', file});
+        }
+
     },
 
     willDestroy() {
