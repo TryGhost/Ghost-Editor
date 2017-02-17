@@ -40,7 +40,7 @@ export default Ember.Component.extend({
     didRender() {
         let $this = this.$();
         let editor = this.editor;
-        let $editor = Ember.$('.gh-editor-container'); // TODO - this element is part of ghost-admin, we need to seperate them more.
+        let $editor = Ember.$('.gh-editor-container'); // TODO - this element is part of ghost-admin, we need to separate them more.
         let isMousedown = false;
         if(!editor.range || editor.range.head.isBlank) {
             this.set('isVisible', false);
@@ -81,6 +81,8 @@ export default Ember.Component.extend({
     }
 });
 
+
+// update the location of the toolbar and display it if the range is visible.
 function updateToolbarToRange(self, $holder, $editor, isMouseDown) {
         // if there is no cursor:
         let editor = self.editor;

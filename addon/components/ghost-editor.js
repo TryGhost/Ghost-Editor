@@ -23,7 +23,7 @@ export default Ember.Component.extend({
     emberCards: Ember.A([]),
     init() {
         this._super(...arguments);
-
+        this.container = document.querySelector(".gh-editor-container")[0];
 
         let mobiledoc = this.get('value') || BLANK_DOC;
         let userCards = this.get('cards') || [];
@@ -98,14 +98,13 @@ export default Ember.Component.extend({
             return;
         }
         let editorDom = this.$('.surface')[0];
-        editorDom.__GHOST_EDITOR = this.editor; // attach reference of editor to dom for debugging and testing.
-                                                // TODO - only do the above when in debug or testing mode
+        this.domContainer = editorDom.parentNode.parentNode.parentNode.parentNode; // nasty nasty nasty.
         this.editor.render(editorDom);
         this._rendered = true;
 
         window.editor = this.editor;
         defaultCommands(this.editor); // initialise the custom text handlers for MD, etc.
-        // shouldFocusEditor is only true when transitionaing from new to edit, otherwise it's false or undefined.
+        // shouldFocusEditor is only true when transitioning from new to edit, otherwise it's false or undefined.
         // therefore, if it's true it's after the first lot of content is entered and we expect the caret to be at the
         // end of the document.
         if (this.get('shouldFocusEditor')) {
@@ -118,16 +117,32 @@ export default Ember.Component.extend({
             this.editor._ensureFocus();
         }
 
+        this.editor.cursorDidChange(() => this.cursorMoved());
 
     },
-
+    // drag and drop images onto the editor
     drop(event) {
-        event.preventDefault();
-        for(let i = 0; i < event.dataTransfer.files.length; i++) {
-            let file = [event.dataTransfer.files[i]];
-            this.editor.insertCard('image-card', {pos: 'top', file});
+        if(event.dataTransfer.files.length) {
+            event.preventDefault();
+            for (let i = 0; i < event.dataTransfer.files.length; i++) {
+                let file = [event.dataTransfer.files[i]];
+                this.editor.insertCard('image-card', {pos: 'top', file});
+            }
         }
+    },
 
+    // makes sure the cursor is on screen.
+    cursorMoved() {
+        const scrollBuffer = 33; // the extra buffer to scroll.
+        const range = window.getSelection().getRangeAt(0); // get the actual range within the DOM.
+        const position =  range.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        if(position.bottom > windowHeight ) {
+            this.domContainer.scrollTop += position.bottom - windowHeight + scrollBuffer;
+        } else if(position.top < 0) {
+            this.domContainer.scrollTop += position.top - scrollBuffer;
+        }
     },
 
     willDestroy() {
