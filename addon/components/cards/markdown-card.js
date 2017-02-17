@@ -203,15 +203,20 @@ export default Ember.Component.extend({
         const start = el.selectionStart;
         const end = el.selectionEnd;
 
-        console.log(event.dataTransfer.files);
         let files = event.dataTransfer.files;
         let combinedLength = 0;
-        for(let i = 0; i < files.length; i++) {
-            let file = files[i];
-            let placeholderText = `\r\n![uploading:${file.name}]()\r\n`;
-            el.value = el.value.substring(0, start) + placeholderText + el.value.substring(end, el.value.length);
-            combinedLength += placeholderText.length;
-        }
+        // for(let i = 0; i < files.length; i++) {
+        //     let file = files[i];
+        //     let placeholderText = `\r\n![uploading:${file.name}]()\r\n`;
+        //     el.value = el.value.substring(0, start) + placeholderText + el.value.substring(end, el.value.length);
+        //     combinedLength += placeholderText.length;
+        // }
+
+        let file = files[0];
+        let placeholderText = `\r\n![uploading:${file.name}]()\r\n`;
+        el.value = el.value.substring(0, start) + placeholderText + el.value.substring(end, el.value.length);
+        combinedLength += placeholderText.length;
+
         el.selectionStart = start;
         el.selectionEnd = end + combinedLength;
 
