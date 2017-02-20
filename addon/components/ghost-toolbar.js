@@ -102,8 +102,12 @@ function updateToolbarToRange(self, $holder, $editor, isMouseDown) {
             let edOffset = $editor.offset();
 
             self.set('isVisible', true);
-            $holder.css('top', position.top + $editor.scrollTop() - $holder.height()-20); //- edOffset.top+10
-            $holder.css('left', position.left + (position.width / 2) + $editor.scrollLeft() - edOffset.left - ($holder.width()/2));
+            Ember.run.schedule('afterRender', this,
+                () => {
+                    $holder.css('top', position.top + $editor.scrollTop() - $holder.height()-20); //- edOffset.top+10
+                    $holder.css('left', position.left + (position.width / 2) + $editor.scrollLeft() - edOffset.left - ($holder.width()/2));
+                }
+            );
 
             self.set('isLink', false);
 
