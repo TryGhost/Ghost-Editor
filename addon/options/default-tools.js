@@ -80,21 +80,21 @@ export default function (editor, toolbar) {
                 Ember.set(this, "selected", elements.filter(element => element.tagName === 'blockquote').length > 0);
             }
         },
-        {
-            name: "pullquote",
-            label: 'Pull Quote',
-            icon: "pullquote.svg",
-            selected: false,
-            type: 'block',
-            onClick: (editor) => {
-                editor.run(postEditor => {
-                    postEditor.toggleSection('pull-quote');
-                });
-            },
-            checkElements: function (elements) {
-                Ember.set(this, "selected", elements.filter(element => element.tagName === 'pull-quote').length > 0);
-            }
-        },
+        // {
+        //     name: "pullquote",
+        //     label: 'Pull Quote',
+        //     icon: "pullquote.svg",
+        //     selected: false,
+        //     type: 'block',
+        //     onClick: (editor) => {
+        //         editor.run(postEditor => {
+        //             postEditor.toggleSection('pull-quote');
+        //         });
+        //     },
+        //     checkElements: function (elements) {
+        //         Ember.set(this, "selected", elements.filter(element => element.tagName === 'pull-quote').length > 0);
+        //     }
+        // },
         {
             name: "ul",
             label: "List Unordered",
