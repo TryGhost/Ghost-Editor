@@ -15,8 +15,11 @@
     {{content-for "head-footer"}}
   </head>
   <body>
-    {{content-for "body"}}
-
+    <div class="gh-editor-container">
+      <div class="gh-editor-inner">
+        {{content-for "body"}}
+      </div>
+    </div>
     <script src="{{rootURL}}assets/vendor.js"></script>
     <script src="{{rootURL}}assets/dummy.js"></script>
 
