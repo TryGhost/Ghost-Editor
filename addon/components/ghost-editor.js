@@ -23,7 +23,6 @@ export default Ember.Component.extend({
     emberCards: Ember.A([]),
     init() {
         this._super(...arguments);
-        this.container = document.querySelector(".gh-editor-container")[0];
 
         let mobiledoc = this.get('value') || BLANK_DOC;
         let userCards = this.get('cards') || [];
@@ -93,6 +92,7 @@ export default Ember.Component.extend({
 
     },
     didRender() {
+        this.container = document.querySelector(".gh-editor-container")[0];
 
         if(this._rendered) {
             return;

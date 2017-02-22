@@ -1,0 +1,20 @@
+.title, .title h1 {
+    padding:0;
+    margin:0
+}
+.title {
+    position:relative;
+}
+
+
+/* Place holder content that displays in the title if it is empty */
+.title.__mobiledoc-editor.__has-no-content:after {
+    content: attr(data-placeholder);
+    color: #bbb;
+    cursor: text;
+    position:absolute;
+    top:0;
+    font-size: 2rem;
+    line-height: 1.2em;
+    font-weight: 400;
+}

@@ -11,18 +11,76 @@
 
     <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
     <link rel="stylesheet" href="{{rootURL}}assets/dummy.css">
+      <style>
+          body {
+              color: rgb(75, 91, 98);
+              font-size: 1.4rem;
+              font-family: BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+              line-height: 1.65;
+              background-color:grey;
+              margin:0;
+              padding:0;
 
+          }
+          .ember-view {
+              padding:0;
+              margin:0;
+          }
+          .gh-editor-container {
+              position: relative;
+              overflow-y: auto;
+              width: 500px;
+              height: 100%;
+              background-color:#fff;
+              padding:100px;
+              margin:0 auto;
+          }
+          .title h2 {
+              font-size: 2rem;
+              line-height: 1.2em;
+              font-weight: 400;
+              padding:0;
+              margin:0;
+          }
+          .surface {
+              padding-bottom:400px;
+              font-size: 1.5rem;
+          }
+          ul,ol,li,h1,h2,h3,p,blockquote {
+              padding:0;
+              margin: 0 0 12px 0;
+              font-size:1rem;
+          }
+          li {
+              margin:0;
+          }
+          .surface h1 {
+              font-size: 2rem;
+              line-height: 1.2em;
+          }
+          .surface h2 {
+              font-size: 1.5rem;
+              line-height: 1.2em;
+          }
+          .surface h3 {
+              font-size: 1.33rem;
+              line-height: 1.2em;
+          }
+            blockquote {
+                border-left:10px solid;
+                margin-left:-20px;
+                padding-left:10px;
+            }
+      </style>
     {{content-for "head-footer"}}
   </head>
   <body>
-    <div class="gh-editor-container">
-      <div class="gh-editor-inner">
-        {{content-for "body"}}
-      </div>
-    </div>
-    <script src="{{rootURL}}assets/vendor.js"></script>
-    <script src="{{rootURL}}assets/dummy.js"></script>
 
-    {{content-for "body-footer"}}
+        {{content-for "body"}}
+
+            <script src="{{rootURL}}assets/vendor.js"></script>
+            <script src="{{rootURL}}assets/dummy.js"></script>
+
+            {{content-for "body-footer"}}
   </body>
 </html>

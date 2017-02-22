@@ -37,7 +37,8 @@ module.exports = {
         app.import('app/styles/ghost-toolbar.css');
         app.import('app/styles/ghost-toolbar-blockitem.css');
         app.import('app/styles/slash-menu.css');
-
+        app.import('app/styles/ghost-title.css');
+        app.import('app/styles/ghost-wordcount.css');
     },
 
     // temp

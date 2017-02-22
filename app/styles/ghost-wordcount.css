@@ -1,0 +1,10 @@
+.wordcount {
+    position: fixed;
+    bottom: 10px;
+
+    border: 1px solid;
+    border-radius: 5px;
+    padding:5px;
+    background-color:#fff;
+    font-size:0.8rem;
+}
