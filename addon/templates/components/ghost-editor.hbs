@@ -1,4 +1,4 @@
-{{ghost-title}}
+{{ghost-title editor=editor}}
 
 {{#each emberCards as |card|}}
     {{#ember-wormhole to=card.id}}
@@ -9,7 +9,7 @@
     <div class='surface' tabindex='{{tabindex}}'/>
 </div>
 
-{{ghost-wordcount}}
+{{ghost-wordcount editor=editor}}
 
 {{yield}}
 

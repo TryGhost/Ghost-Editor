@@ -119,6 +119,26 @@ export default Ember.Component.extend({
 
         this.editor.cursorDidChange(() => this.cursorMoved());
 
+        // hack to track key up to focus back on the title
+        this.editor.element.addEventListener('keydown', event => {
+            if(event.keyCode === 38) {
+                let range = window.getSelection().getRangeAt(0); // get the actual range within the DOM.
+                let cursorPositionOnScreen = range.getBoundingClientRect();
+                let topOfEditor = this.editor.element.getBoundingClientRect().top;
+                if(cursorPositionOnScreen.top < topOfEditor + 33) {
+                    let $title = Ember.$('.title > h2');
+                    let offset = findOffsetOnLastRow($title[0].firstChild,  cursorPositionOnScreen.left);
+
+                    let newRange = document.createRange();
+                    newRange.setStart($title[0].firstChild, offset);
+                    newRange.setEnd($title[0].firstChild, offset);
+                    console.log(newRange);
+                    updateCursor(newRange);
+
+                    return false;
+                }
+            }
+        });
     },
     // drag and drop images onto the editor
     drop(event) {
@@ -152,3 +172,27 @@ export default Ember.Component.extend({
 });
 
 
+function findOffsetOnLastRow(el, xPosition) {
+    let len = el.textContent.length;
+    let range = document.createRange();
+    for(let i = len -1; i > -1; i--) {
+        range.setStart(el, i);
+        range.setEnd(el, i + 1);
+        let rect = range.getBoundingClientRect();
+        if (rect.top === rect.bottom) {
+            continue;
+        }
+        if(rect.left <= xPosition && rect.right >= xPosition) {
+            return  i + (xPosition >= (rect.left + rect.right) / 2 ? 1 : 0);
+        }
+    }
+
+    return title.length;
+}
+
+function updateCursor(range) {
+
+    var selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+}
