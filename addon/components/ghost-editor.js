@@ -187,12 +187,12 @@ function findOffsetOnLastRow(el, xPosition) {
         }
     }
 
-    return title.length;
+    return el.length;
 }
 
 function updateCursor(range) {
 
-    var selection = window.getSelection();
+    let selection = window.getSelection();
     selection.removeAllRanges();
     selection.addRange(range);
 }
