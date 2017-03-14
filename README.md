@@ -1,3 +1,7 @@
+# This repository is depricated.
+Ghost-Editor is now integrated in ghost-admin https://github.com/TryGhost/Ghost-Admin/tree/master/lib/gh-koenig
+
+
 # Ghost-editor
 
 This is the new mobiledoc editor for Ghost-Admin. It's still a work in progress but we're very excited about it.
